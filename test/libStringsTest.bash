@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ${KSL_BASH_LIB}/libStrings.bash
+source "${KSL_BASH_LIB}"/libStrings.bash
 
 # -----------------------------------------------------------
 

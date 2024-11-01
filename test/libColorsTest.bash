@@ -1,13 +1,32 @@
 #!/usr/bin/env bash
 
-source ${KSL_BASH_LIB}/libColors.bash
+source "${KSL_BASH_LIB}"/libColors.bash
 
+# -----------------------------------------------------------
+
+test_isColorCapable()
+{
+    ksl::isColorCapable
+    assert "[[ $? -eq 0 || $? -gt 0 ]]"
+}
+
+# -----------------------------------------------------------
+
+test_enableColor()
+{
+    if ksl::enableColor; then
+        assert "[ -n "${KSL_USE_COLOR}" ]"
+        assert "[[ "${KSL_USE_COLOR}" == "true" || "${KSL_USE_COLOR}" == "false" ]]"
+    fi
+}
 # -----------------------------------------------------------
 
 printIt()
 {
-    echo -e "${1}${2}${CLEAR}"
+    echo -e "\t${1}${2}${CLEAR}"
 }
+
+# -----------------------------------------------------------
 
 test_fgColors()
 {

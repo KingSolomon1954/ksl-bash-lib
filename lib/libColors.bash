@@ -4,7 +4,9 @@
 #
 # Contains the following:
 #
-#     ksl::colorCapable()
+#     ksl::isColorCapable()
+#     ksl::enableColor()
+#     ksl::disableColor()
 #
 # -----------------------------------------------------------
 
@@ -13,6 +15,8 @@
 #
 [ -v libColorImported ] && [ "$1" != "-f" ] && return
 libColorImported=true
+
+export KSL_USE_COLOR=false
 
 export ESC="\033"
 export FG="${ESC}[38;5;0;"
@@ -56,3 +60,20 @@ ksl::isColorCapable()
 }
 
 # -----------------------------------------------------------
+
+ksl::enableColor()
+{
+    ksl::isColorCapable && KSL_USE_COLOR=true
+}
+
+# -----------------------------------------------------------
+
+ksl::disableColor()
+{
+    KSL_USE_COLOR=false
+}
+
+# -----------------------------------------------------------
+
+# Enable color if terminal is capable
+ksl::enableColor

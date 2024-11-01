@@ -23,6 +23,14 @@ libStdOutImported=true
 
 source "${KSL_BASH_LIB}"/libColors.bash
 
+# Defaults
+COLOR_TRACE=${FG_MAGENTA}
+COLOR_DEBUG=${FG_MAGENTA}
+COLOR_INFO=${FG_GREEN}
+COLOR_WARN=${FG_YELLOW}
+COLOR_ERROR=${FG_RED}
+COLOR_FATAL=${BOLD}${FG_RED}
+
 # -------------------------------------------------------
 #
 # Output text to standard out.
@@ -47,8 +55,13 @@ ksl::stdErr()
 #
 ksl::stdTrace()
 {
-    local s="${DIM}${FG_MAGENTA}[TRACE] $*${CLEAR}"
-    ksl::stdOut "$s"
+    local before="" after=""
+    if ${KSL_USE_COLOR}; then
+        before="${COLOR_TRACE}"
+        after="${CLEAR}"
+    fi
+    
+    ksl::stdOut "${before}[TRACE]${after} $*"
 }
 
 # -------------------------------------------------------
@@ -57,8 +70,12 @@ ksl::stdTrace()
 #
 ksl::stdDebug()
 {
-    local s="${FG_MAGENTA}[DEBUG] $*${CLEAR}"
-    ksl::stdOut "$s"
+    local before="" after=""
+    if ${KSL_USE_COLOR}; then
+        before="${COLOR_DEBUG}"
+        after="${CLEAR}"
+    fi
+    ksl::stdOut "${before}[DEBUG]${after} $*"
 }
 
 # -------------------------------------------------------
@@ -67,8 +84,12 @@ ksl::stdDebug()
 #
 ksl::stdInfo()
 {
-    local s="[INFO] $*"
-    ksl::stdOut "$s"
+    local before="" after=""
+    if ${KSL_USE_COLOR}; then
+        before="${COLOR_INFO}"
+        after="${CLEAR}"
+    fi
+    ksl::stdOut "${before}[INFO]${after} $*"
 }
 
 # -------------------------------------------------------
@@ -77,8 +98,12 @@ ksl::stdInfo()
 #
 ksl::stdWarn()
 {
-    local s="${FG_YELLOW}[WARN] $*${CLEAR}"
-    ksl::stdOut "$s"
+    local before="" after=""
+    if ${KSL_USE_COLOR}; then
+        before="${COLOR_WARN}"
+        after="${CLEAR}"
+    fi
+    ksl::stdOut "${before}[WARN]${after} $*"
 }
 
 # -------------------------------------------------------
@@ -87,8 +112,12 @@ ksl::stdWarn()
 #
 ksl::stdError()
 {
-    local s="${FG_RED}[ERROR] $*${CLEAR}"
-    ksl::stdErr "$s"
+    local before="" after=""
+    if ${KSL_USE_COLOR}; then
+        before="${COLOR_ERROR}"
+        after="${CLEAR}"
+    fi
+    ksl::stdErr "${before}[ERROR]${after} $*"
 }
 
 # -------------------------------------------------------
@@ -97,8 +126,12 @@ ksl::stdError()
 #
 ksl::stdFatal()
 {
-    local s="${BOLD}${FG_RED}[FATAL] $*${CLEAR}"
-    ksl::stdErr "$s"
+    local before="" after=""
+    if ${KSL_USE_COLOR}; then
+        before="${COLOR_FATAL}"
+        after="${CLEAR}"
+    fi
+    ksl::stdErr "${before}[FATAL]${after} $*"
 }
 
 # -------------------------------------------------------

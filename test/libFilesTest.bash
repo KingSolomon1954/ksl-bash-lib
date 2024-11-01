@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ${KSL_BASH_LIB}/libFiles.bash
+source "${KSL_BASH_LIB}"/libFiles.bash
 
 # -----------------------------------------------------------
 
@@ -22,8 +22,6 @@ test_dirName()
     assert_equals "music"   "$(ksl::dirName 'music/beatles/')"
     assert_equals "/music"  "$(ksl::dirName '/music/beatles/')"
     assert_equals "./music" "$(ksl::dirName './music/beatles/')"
-    
-#    assert_fail "envp.append"
 }
 
 # -----------------------------------------------------------
