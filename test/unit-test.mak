@@ -17,6 +17,7 @@ bash_unit_exec := $(D_TOOLS)/bash-unit/bash_unit
 UNIT_TESTS := \
 	test/libColorsTest.bash \
 	test/libEnvTest.bash \
+	test/libErrorTest.bash \
 	test/libFilesTest.bash \
 	test/libStringsTest.bash
 
