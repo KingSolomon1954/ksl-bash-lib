@@ -6,7 +6,9 @@ source "${KSL_BASH_LIB}"/libColors.bash
 
 test_isColorCapable()
 {
+    local -i ret
     ksl::isColorCapable
+    ret=$?
     assert "[[ $? -eq 0 || $? -gt 0 ]]"
 }
 
