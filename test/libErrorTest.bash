@@ -487,19 +487,245 @@ test_epErrorName()
     assert '[[ "${errorName}" == "" ]]'
 
     # put something readable in error name
-    ksl::epSetErrorName "UnderflowError"
+    ksl::epSetErrorName "CommunicationsError"
     errorName=$(ksl::epErrorName)
-    assert '[[ "${errorName}" == "UnderflowError" ]]'
+    assert '[[ "${errorName}" == "CommunicationsError" ]]'
 
     # call with different EPS
     ksl::epCreate ep2
     errorName=$(ksl::epErrorName ep2)
     assert '[[ "${errorName}" == "" ]]'
     errorName=$(ksl::epErrorName ep1)
-    assert '[[ "${errorName}" == "UnderflowError" ]]'
+    assert '[[ "${errorName}" == "CommunicationsError" ]]'
 
     unset ep1
     unset ep2
 }
 
 # -----------------------------------------------------------
+
+test_epSetErrorType()
+{
+    local -i ret
+    local diag
+    
+    # Consume known error diags by assigning to diag 
+    # variable so as to ignore them.
+    
+    # call with bad EPS
+    unset ep1
+    diag=$(ksl::epSetErrorType "ProcessingError")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+    
+    diag=$(ksl::epSetErrorType ep7 "ProcessingError")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+    
+    # create ep1
+    ksl::epCreate ep1
+    
+    # put value in description using default ep1
+    ksl::epSetErrorType "ProcessingError"
+    assert '[[ "${ep1[ERRTYPE]}" == "ProcessingError" ]]'
+
+    # this time supply ep1 and clobber previous value
+    ksl::epSetErrorType ep1 "EquipmentError"
+    assert '[[ "${ep1[ERRTYPE]}" == "EquipmentError" ]]'
+
+    # put value for non-existent EPS
+    diag=$(ksl::epSetErrorType ep2 "TimeoutError")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # put value into different existing EPS
+    ksl::epCreate ep2
+    ksl::epSetErrorType ep2 "TimeoutError"
+    assert '[[ "${ep2[ERRTYPE]}" == "TimeoutError" ]]'
+    assert '[[ "${ep1[ERRTYPE]}" == "EquipmentError" ]]'
+    
+    unset ep1
+    unset ep2
+}
+
+# -----------------------------------------------------------
+
+test_epErrorType()
+{
+    # call with non-existant EPS
+    local errorType
+    unset ep1
+    
+    errorType=$(ksl::epErrorType)
+    assert '[[ "${errorType}" == "epGetField() no such EPS:ep1" ]]'
+    
+    # call with existing EPS
+    ksl::epCreate ep1
+    errorType=$(ksl::epErrorType)
+    assert '[[ "${errorType}" == "" ]]'
+
+    # put something readable in error type
+    ksl::epSetErrorType "UnderflowError"
+    errorType=$(ksl::epErrorType)
+    assert '[[ "${errorType}" == "UnderflowError" ]]'
+
+    # call with different EPS
+    ksl::epCreate ep2
+    errorType=$(ksl::epErrorType ep2)
+    assert '[[ "${errorType}" == "" ]]'
+    errorType=$(ksl::epErrorType ep1)
+    assert '[[ "${errorType}" == "UnderflowError" ]]'
+
+    unset ep1
+    unset ep2
+}
+
+# -----------------------------------------------------------
+
+test_epSetSeverity()
+{
+    local -i ret
+    local diag
+    
+    # Consume known error diags by assigning to diag 
+    # variable so as to ignore them.
+    
+    # call with bad EPS
+    unset ep1
+    diag=$(ksl::epSetSeverity "Critical")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+    
+    diag=$(ksl::epSetSeverity ep7 "Critical")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+    
+    # create ep1
+    ksl::epCreate ep1
+    
+    # put value in description using default ep1
+    ksl::epSetSeverity "Critical"
+    assert '[[ "${ep1[SEVERITY]}" == "Critical" ]]'
+
+    # this time supply ep1 and clobber previous value
+    ksl::epSetSeverity ep1 "Major"
+    assert '[[ "${ep1[SEVERITY]}" == "Major" ]]'
+
+    # put value for non-existent EPS
+    diag=$(ksl::epSetSeverity ep2 "Major")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # put value into different existing EPS
+    ksl::epCreate ep2
+    ksl::epSetSeverity ep2 "Warn"
+    assert '[[ "${ep2[SEVERITY]}" == "Warn" ]]'
+    assert '[[ "${ep1[SEVERITY]}" == "Major" ]]'
+    
+    unset ep1
+    unset ep2
+}
+
+# -----------------------------------------------------------
+
+test_epSeverity()
+{
+    # call with non-existant EPS
+    local severity
+    unset ep1
+    
+    severity=$(ksl::epSeverity)
+    assert '[[ "${severity}" == "epGetField() no such EPS:ep1" ]]'
+    
+    # call with existing EPS
+    ksl::epCreate ep1
+    severity=$(ksl::epSeverity)
+    assert '[[ "${severity}" == "" ]]'
+
+    # put something readable in error type
+    ksl::epSetSeverity "Critical"
+    severity=$(ksl::epSeverity)
+    assert '[[ "${severity}" == "Critical" ]]'
+
+    # call with different EPS
+    ksl::epCreate ep2
+    severity=$(ksl::epSeverity ep2)
+    assert '[[ "${severity}" == "" ]]'
+    severity=$(ksl::epSeverity ep1)
+    assert '[[ "${severity}" == "Critical" ]]'
+
+    unset ep1
+    unset ep2
+}
+
+# -----------------------------------------------------------
+
+test_epSetFuncName()
+{
+    local -i ret
+    local diag
+    
+    # Consume known error diags by assigning to diag 
+    # variable so as to ignore them.
+    
+    # call with bad EPS
+    unset ep1
+    diag=$(ksl::epSetFuncName "parse()")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+    
+    diag=$(ksl::epSetFuncName ep7 "parse()")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+    
+    # create ep1
+    ksl::epCreate ep1
+    
+    # put value in description using default ep1
+    ksl::epSetFuncName "parse()"
+    assert '[[ "${ep1[FUNC]}" == "parse()" ]]'
+
+    # this time supply ep1 and clobber previous value
+    ksl::epSetFuncName ep1 "sort()"
+    assert '[[ "${ep1[FUNC]}" == "sort()" ]]'
+
+    # put value for non-existent EPS
+    diag=$(ksl::epSetFuncName ep2 "invert()")
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # put value into different existing EPS
+    ksl::epCreate ep2
+    ksl::epSetFuncName ep2 "invert()"
+    assert '[[ "${ep2[FUNC]}" == "invert()" ]]'
+    assert '[[ "${ep1[FUNC]}" == "sort()" ]]'
+    
+    unset ep1
+    unset ep2
+}
+
+# -----------------------------------------------------------
+
+test_epFuncName()
+{
+    # call with non-existant EPS
+    local funcName
+    unset ep1
+    
+    funcName=$(ksl::epFuncName)
+    assert '[[ "${funcName}" == "epGetField() no such EPS:ep1" ]]'
+    
+    # call with existing EPS
+    ksl::epCreate ep1
+    funcName=$(ksl::epFuncName)
+    assert '[[ "${funcName}" == "" ]]'
+
+    # put something readable in error type
+    ksl::epSetFuncName "sort()"
+    funcName=$(ksl::epFuncName)
+    assert '[[ "${funcName}" == "sort()" ]]'
+
+    # call with different EPS
+    ksl::epCreate ep2
+    funcName=$(ksl::epFuncName ep2)
+    assert '[[ "${funcName}" == "" ]]'
+    funcName=$(ksl::epFuncName ep1)
+    assert '[[ "${funcName}" == "sort()" ]]'
+
+    unset ep1
+    unset ep2
+}
+
+# -----------------------------------------------------------
+

@@ -13,25 +13,25 @@
 #     epClear done
 #     epPrepend done
 #     epAppend done
-#     epSetErrorName
-#     epSetErrorType
+#     epSetErrorName done
+#     epSetErrorType done
 #     epSetDescription done
-#     epSetSeverity
+#     epSetSeverity done
 #     epSetProbableCause
 #     epSetProposedRepair
 #     epSetFileName
-#     epSetFuncName
+#     epSetFuncName done
 #     epSetLineNum
 #     epSetCodeNum
 #     epSetTimestamp
 #
 # Observers
 #     epExists done
-#     epErrorName
-#     epErrorType
-#     epSeverity
+#     epErrorName done
+#     epErrorType done
+#     epSeverity done
 #     epFileName
-#     epFuncName
+#     epFuncName done
 #     epLineNum
 #     epCodeNum
 #     epFullDesc
@@ -297,11 +297,14 @@ ksl::epPrepend()
 #
 # If 2 args are given, then $1 is EPS and $2 is the error name.
 # If 1 arg is given, then $1 is the error name and the default 
-# EPS of "ep1" is used.
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
 #
 # Examples:
-#     epSetErrorName "Broken channel"        # ep1 is used
-#     epSetErrorName ep2 "Broken channel"
+#     epSetErrorName "OverflowError"        # ep1 is used
+#     epSetErrorName ep2 "OverflowError"
+#     epSetErrorName  ""                    # sets ep1 error name to empty
+#     epSetErrorName                        # no action
 #
 ksl::epSetErrorName()
 {
@@ -324,6 +327,126 @@ ksl::epSetErrorName()
 ksl::epErrorName()
 {
     ksl::_epGetField ${1:-ep1} ERRNAME
+}
+
+# -------------------------------------------------------
+#
+# Sets the error type in the given EPS.
+#
+# Overwrites any previous error name. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the error type.
+# If 1 arg is given, then $1 is the error type and the default 
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epSetErrorType "ProcessingError"       # ep1 is used
+#     epSetErrorType ep2 "ProcessingError"
+#     epSetErrorType  ""                    # sets ep1 error type to empty
+#     epSetErrorType                        # no action
+#
+ksl::epSetErrorType()
+{
+    local eps
+    local errType
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && errType="$1"
+    [ $# -eq 2 ] && eps="$1" && errType="$2"
+    ksl::_epSetField ${eps:-ep1} ERRTYPE "${errType}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the error type in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epErrorType()
+{
+    ksl::_epGetField ${1:-ep1} ERRTYPE
+}
+
+# -------------------------------------------------------
+#
+# Sets the error severity in the given EPS.
+#
+# Overwrites any previous severity. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the severity.
+# If 1 arg is given, then $1 is the severity and the default 
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epSetSeverity "Critical"        # ep1 is used
+#     epSetSeverity ep2 "Critical"
+#     epSetSeverity  ""               # sets ep1 severity to empty
+#     epSetSeverity                   # no action
+#
+ksl::epSetSeverity()
+{
+    local eps
+    local severity
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && severity="$1"
+    [ $# -eq 2 ] && eps="$1" && severity="$2"
+    ksl::_epSetField ${eps:-ep1} SEVERITY "${severity}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the error type in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epSeverity()
+{
+    ksl::_epGetField ${1:-ep1} SEVERITY
+}
+
+# -------------------------------------------------------
+#
+# Sets the function name in the given EPS.
+#
+# Overwrites any previous function name. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the function name.
+# If 1 arg is given, then $1 is the function name and the default 
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epSetFuncName "sort()"        # ep1 is used
+#     epSetFuncName ep2 "sort()"
+#     epSetFuncName  ""             # sets ep1 function name to empty
+#     epSetFuncName                 # no action
+#
+ksl::epSetFuncName()
+{
+    local eps
+    local funcName
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && funcName="$1"
+    [ $# -eq 2 ] && eps="$1" && funcName="$2"
+    ksl::_epSetField ${eps:-ep1} FUNC "${funcName}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the error type in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epFuncName()
+{
+    ksl::_epGetField ${1:-ep1} FUNC
 }
 
 # -------------------------------------------------------
