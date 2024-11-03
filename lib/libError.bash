@@ -4,37 +4,42 @@
 #
 # Contains the following:
 #
-# epCreate
-# epDestroy
-# epExists
-# epSet(-a -p -se -st -sev -des)
-# epClear
-# epPrepend
-# epAppend
-# epSetErrorName
-# epSetErrorType
-# epSetDescription
-# epSetSeverity
-# epSetProbableCause
-# epSetProposedRepair
-# epSetFileName
-# epSetFuncName
-# epSetLineNum
-# epSetCodeNum
-# epSetTimestamp
-# epErrorName
-# epErrorType
-# epSeverity
-# epFileName
-# epFuncName
-# epLineNum
-# epCodeNum
-# epFullDesc
-# epDescription
-# epProbableCause
-# epProposedRepair
-# epTimestamp
-# epHasError
+# Lifecycle
+#      epCreate done
+#      epDestroy done
+#
+# Modifiers
+#     epSet done
+#     epClear done
+#     epPrepend done
+#     epAppend done
+#     epSetErrorName
+#     epSetErrorType
+#     epSetDescription done
+#     epSetSeverity
+#     epSetProbableCause
+#     epSetProposedRepair
+#     epSetFileName
+#     epSetFuncName
+#     epSetLineNum
+#     epSetCodeNum
+#     epSetTimestamp
+#
+# Observers
+#     epExists done
+#     epErrorName
+#     epErrorType
+#     epSeverity
+#     epFileName
+#     epFuncName
+#     epLineNum
+#     epCodeNum
+#     epFullDesc
+#     epDescription done
+#     epProbableCause
+#     epProposedRepair
+#     epTimestamp
+#     epHasError
 #
 # ERRNAME choices
 #     UnsetErrorName
@@ -133,16 +138,11 @@ ksl::epExists()
 
 ksl::epClear()
 {
-# echo "Howie called: args $#"
-local eps=${1-"ep1"}
-# echo "Howie eps: ${eps}"
-
+    local eps=${1-"ep1"}
     ! ksl::epExists "${eps}" && return 1
-# echo "Howie before name"
     local -n name="${eps}"
 
-# echo "Howie clearing"
-    name[DESC]=""
+    name[DESC]=
     name[FUNC]=
     name[FILE]=
     name[LINENUM]=
@@ -156,26 +156,174 @@ local eps=${1-"ep1"}
 }
 
 # -------------------------------------------------------
+
+ksl::_isValidKey()
+{
+    return 0
+}
+
+# -------------------------------------------------------
+
+ksl::_epSetField()
+{
+    local eps=$1
+    local key=$2
+    local str=$3
+
+    [ $# -ne 3 ]                && echo "epSetField() missing args"       && return 1
+    ! ksl::epExists "${eps}"    && echo "epSetField() no such EPS:${eps}" && return 1
+    ! ksl::_isValidKey "${key}" && echo "epSetField() no such Key:${key}" && return 1
+
+    eval ${eps}[${key}]=\""\${str}"\"
+}
+
+# -------------------------------------------------------
+
+ksl::_epGetField()
+{
+    local eps=$1
+    local key=$2
+
+    [ $# -ne 2 ]                && echo "epGetField() missing args"       && return 1
+    ! ksl::epExists "${eps}"    && echo "epGetField() no such EPS:${eps}" && return 1
+    ! ksl::_isValidKey "${key}" && echo "epGetField() no such Key:${key}" && return 1
+
+    eval echo "\${${eps}[${key}]}"
+}
+
+# -------------------------------------------------------
 #
 # Sets the description in the given EPS.
 #
 # Overwrites any previous description. EPS must already exist.
+#
 # If 2 args are given, then $1 is EPS and $2 is the description.
-# If 1 arg is given, then $1 is the description and ep1 is the EPS.
+# If 1 arg is given, then $1 is the description and the default 
+# EPS of "ep1" is used. If 0 args, then no action is taken and
+# not an error.
+#
 # Examples:
-#     epSetDescription "Broken channel"        # ep1 is assumed
+#     epSetDescription "Broken channel"        # ep1 is used
 #     epSetDescription ep2 "Broken channel"
+#     epSetDescription ""                      # sets ep1 it to empty
+#     epSetDescription                         # no action
 #
 ksl::epSetDescription()
 {
     local eps
     local description
 
-    [ $# -eq 0 ] && return
-    [ $# -eq 1 ] && description="$1";
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && description="$1"
     [ $# -eq 2 ] && eps="$1" && description="$2"
+    ksl::_epSetField ${eps:-ep1} DESC "${description}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the description in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epDescription()
+{
+    ksl::_epGetField ${1:-ep1} DESC
+}
+
+# -------------------------------------------------------
+#
+# Appends given string to the description in the given EPS.
+#
+# EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the string
+#  to append. If 1 arg is given, then $1 is the string to 
+# append and the default EPS of "ep1" is used. If 0 args, then
+# no action is taken and not an error.
+#
+# Examples:
+#     epAppend "Broken channel"        # ep1 is used
+#     epAppend ep2 "Broken channel"
+#     epAppend ""                      # append empty string ep1
+#     epAppend                         # no action
+#
+ksl::epAppend()
+{
+    local eps
+    local str
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && str="$1";
+    [ $# -eq 2 ] && eps="$1" && str="$2"
     ! ksl::epExists ${eps:=ep1} && return 1
-    eval ${eps}[DESC]="\${description}"
+    eval ${eps}[DESC]=\${${eps}[DESC]}"\${str}"
+}
+
+# -------------------------------------------------------
+#
+# Prepends given string to the description in the given EPS.
+#
+# EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the string to
+# prepend. If 1 arg is given, then $1 is the string to prepend 
+# and the default EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epPrepend "Broken channel"        # ep1 is used
+#     epPrepend ep2 "Broken channel"
+#     epPrepend ""                      # prepends empty string ep1
+#     epPrepend                         # no action
+#
+ksl::epPrepend()
+{
+    local eps
+    local str
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && str="$1";
+    [ $# -eq 2 ] && eps="$1" && str="$2"
+    ! ksl::epExists ${eps:=ep1} && return 1
+    eval ${eps}[DESC]="\${str}"\${${eps}[DESC]}
+}
+
+# -------------------------------------------------------
+#
+# Sets the error name in the given EPS.
+#
+# Overwrites any previous error name. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the error name.
+# If 1 arg is given, then $1 is the error name and the default 
+# EPS of "ep1" is used.
+#
+# Examples:
+#     epSetErrorName "Broken channel"        # ep1 is used
+#     epSetErrorName ep2 "Broken channel"
+#
+ksl::epSetErrorName()
+{
+    local eps
+    local errName
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && errName="$1"
+    [ $# -eq 2 ] && eps="$1" && errName="$2"
+    ksl::_epSetField ${eps:-ep1} ERRNAME "${errName}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the error name in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epErrorName()
+{
+    ksl::_epGetField ${1:-ep1} ERRNAME
 }
 
 # -------------------------------------------------------
