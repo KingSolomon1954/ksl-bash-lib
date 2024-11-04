@@ -135,24 +135,31 @@ ksl::epExists()
 }
 
 # -------------------------------------------------------
-
+#
+# Re-initializes an existing EPS to empty, so it can be
+# reused again. The timestamp is also set to null. It is
+# expected that the user will issue an epSet() for the
+# next usage.
+#
+# This is not necessary 
+#
 ksl::epClear()
 {
     local eps=${1-"ep1"}
     ! ksl::epExists "${eps}" && return 1
     local -n name="${eps}"
 
+    name[CAUSE]=
+    name[CODENUM]=
     name[DESC]=
-    name[FUNC]=
-    name[FILE]=
-    name[LINENUM]=
-    name[SEVERITY]=
     name[ERRNAME]=
     name[ERRTYPE]=
-    name[CODENUM]=
-    name[TIMESTAMP]=
-    name[CAUSE]=
+    name[FILE]=
+    name[FUNC]=
+    name[LINENUM]=
     name[REPAIR]=
+    name[SEVERITY]=
+    name[TIMESTAMP]=
 }
 
 # -------------------------------------------------------
@@ -399,7 +406,7 @@ ksl::epSetSeverity()
 
 # -------------------------------------------------------
 #
-# Returns the error type in the given EPS.
+# Returns the severity in the given EPS.
 #
 # $1 is the EPS and optional. If not supplied the default EPS
 # of "ep1" is used.
@@ -439,7 +446,7 @@ ksl::epSetFuncName()
 
 # -------------------------------------------------------
 #
-# Returns the error type in the given EPS.
+# Returns the funcition name in the given EPS.
 #
 # $1 is the EPS and optional. If not supplied the default EPS
 # of "ep1" is used.
@@ -447,6 +454,219 @@ ksl::epSetFuncName()
 ksl::epFuncName()
 {
     ksl::_epGetField ${1:-ep1} FUNC
+}
+
+# -------------------------------------------------------
+#
+# Sets the file name in the given EPS.
+#
+# Overwrites any previous file name. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the file name.
+# If 1 arg is given, then $1 is the file name and the default 
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epSetFileName "sort()"        # ep1 is used
+#     epSetFileName ep2 "sort()"
+#     epSetFileName  ""             # sets ep1 file name to empty
+#     epSetFileName                 # no action
+#
+ksl::epSetFileName()
+{
+    local eps
+    local fileName
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && fileName="$1"
+    [ $# -eq 2 ] && eps="$1" && fileName="$2"
+    ksl::_epSetField ${eps:-ep1} FILE "${fileName}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the file name in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epFileName()
+{
+    ksl::_epGetField ${1:-ep1} FILE
+}
+
+# -------------------------------------------------------
+#
+# Sets the line number in the given EPS.
+#
+# Overwrites any previous line number. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the line number.
+# If 1 arg is given, then $1 is the line number and the default 
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epSetLineNum "sort()"        # ep1 is used
+#     epSetLineNum ep2 "sort()"
+#     epSetLineNum  ""             # sets ep1 line number to empty
+#     epSetLineNum                 # no action
+#
+ksl::epSetLineNum()
+{
+    local eps
+    local lineNum
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && lineNum="$1"
+    [ $# -eq 2 ] && eps="$1" && lineNum="$2"
+    ksl::_epSetField ${eps:-ep1} LINENUM "${lineNum}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the line number in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epLineNum()
+{
+    ksl::_epGetField ${1:-ep1} LINENUM
+}
+
+# -------------------------------------------------------
+#
+# Sets a code number in the given EPS.
+#
+# Overwrites any previous code number. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the code number.
+# If 1 arg is given, then $1 is the code number and the default 
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epSetCodeNum "sort()"        # ep1 is used
+#     epSetCodeNum ep2 "sort()"
+#     epSetCodeNum  ""             # sets ep1 code number to empty
+#     epSetCodeNum                 # no action
+#
+ksl::epSetCodeNum()
+{
+    local eps
+    local codeNum
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && codeNum="$1"
+    [ $# -eq 2 ] && eps="$1" && codeNum="$2"
+    ksl::_epSetField ${eps:-ep1} CODENUM "${codeNum}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the code number in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epCodeNum()
+{
+    ksl::_epGetField ${1:-ep1} CODENUM
+}
+
+# -------------------------------------------------------
+#
+# Sets a probably cause string in the given EPS.
+#
+# Overwrites any previous cause. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the cause.
+# If 1 arg is given, then $1 is the cause and the default 
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epSetCause "sort()"        # ep1 is used
+#     epSetCause ep2 "sort()"
+#     epSetCause  ""             # sets ep1 cause to empty
+#     epSetCause                 # no action
+#
+ksl::epSetCause()
+{
+    local eps
+    local cause
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && cause="$1"
+    [ $# -eq 2 ] && eps="$1" && cause="$2"
+    ksl::_epSetField ${eps:-ep1} CAUSE "${cause}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the probable cause in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epCause()
+{
+    ksl::_epGetField ${1:-ep1} CAUSE
+}
+
+# -------------------------------------------------------
+#
+# Sets a probable repair string in the given EPS.
+#
+# Overwrites any previous repair. EPS must already exist.
+#
+# If 2 args are given, then $1 is EPS and $2 is the repair.
+# If 1 arg is given, then $1 is the repair and the default 
+# EPS of "ep1" is used. If 0 args, then no action
+# is taken and not an error.
+#
+# Examples:
+#     epSetRepair "sort()"        # ep1 is used
+#     epSetRepair ep2 "sort()"
+#     epSetRepair  ""             # sets ep1 repair to empty
+#     epSetRepair                 # no action
+#
+ksl::epSetRepair()
+{
+    local eps
+    local repair
+
+    [ $# -eq 0 ] && return 0
+    [ $# -eq 1 ] && repair="$1"
+    [ $# -eq 2 ] && eps="$1" && repair="$2"
+    ksl::_epSetField ${eps:-ep1} REPAIR "${repair}"
+}
+
+# -------------------------------------------------------
+#
+# Returns the probable repair in the given EPS.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epRepair()
+{
+    ksl::_epGetField ${1:-ep1} REPAIR
+}
+
+# -------------------------------------------------------
+#
+# Returns the timestamp in the given EPS. The value for
+# timestamp was established on the most recent call to epSet().
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
+ksl::epTimestamp()
+{
+    ksl::_epGetField ${1:-ep1} TIMESTAMP
 }
 
 # -------------------------------------------------------
@@ -468,7 +688,7 @@ ksl::epFuncName()
 # supplied options.
 #
 # If there are no options given, then epSet() is effectively equivalent
-# to invoking epClear().
+# to invoking epClear() except a current timestamp is set.
 #
 # epSet() is meant to be called at the lowest level of call tree.
 # Generally the leaf most function does the epSet. Each parent up along
@@ -479,18 +699,18 @@ ksl::epFuncName()
 ksl::epSet()
 {
     local eps
+    local cause
+    local codeNum
     local description
+    local errorName
+    local errorType
     local fileName
     local funcName
     local lineNum
-    local severity
-    local errorName
-    local errorType
-    local codeNum
-    local cause
     local repair
+    local severity
     
-    while [ $# -gt 0 ]; do        # parse arguments
+    while [ $# -gt 0 ]; do
         case $1 in
         -p|--pretty-print)
             # Example of handling an option which doesn't require an argument
@@ -516,7 +736,7 @@ ksl::epSet()
             fi
             funcName="$2"
             shift;;
-        -li|--linenum)
+        -li|--lineNum)
             if [ $# -lt 2 ]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
@@ -578,17 +798,17 @@ ksl::epSet()
     ksl::epCreate ${eps:=ep1}     # harmless if already exists
     ksl::epClear ${eps}           # always clear it 
     
-    [ -n "${description}" ] && eval ${eps}[DESC]="\${description}"
-    [ -n "${fileName}" ]    && eval ${eps}[FILE]="\${fileName}"
-    [ -n "${funcName}" ]    && eval ${eps}[FUNC]="\${funcName}"
-    [ -n "${lineNum}" ]     && eval ${eps}[LINENUM]="\${lineNum}"
-    [ -n "${severity}" ]    && eval ${eps}[SEVERITY]="\${severity}"
-    [ -n "${errorName}" ]   && eval ${eps}[ERRNAME]="\${errorName}"
-    [ -n "${errorType}" ]   && eval ${eps}[ERRTYPE]="\${errorType}"
-    [ -n "${codeNum}" ]     && eval ${eps}[CODENUM]="\${codeNum}"
-    [ -n "${cause}" ]       && eval ${eps}[CAUSE]="\${cause}"
-    [ -n "${repair}" ]      && eval ${eps}[REPAIR]="\${repair}"
-
+    [ -n "${cause}"       ] && ksl::epSetCause       ${eps} "${cause}"
+    [ -n "${codeNum}"     ] && ksl::epSetCodeNum     ${eps} "${codeNum}"
+    [ -n "${description}" ] && ksl::epSetDescription ${eps} "${description}"
+    [ -n "${errorName}"   ] && ksl::epSetErrorName   ${eps} "${errorName}"
+    [ -n "${errorType}"   ] && ksl::epSetErrorType   ${eps} "${errorType}"
+    [ -n "${fileName}"    ] && ksl::epSetFileName    ${eps} "${fileName}"
+    [ -n "${funcName}"    ] && ksl::epSetFuncName    ${eps} "${funcName}"
+    [ -n "${lineNum}"     ] && ksl::epSetLineNum     ${eps} "${lineNum}"
+    [ -n "${repair}"      ] && ksl::epSetRepair      ${eps} "${repair}"
+    [ -n "${severity}"    ] && ksl::epSetSeverity    ${eps} "${severity}"
+    
     eval ${eps}[TIMESTAMP]="\$(date)"
 }
 
