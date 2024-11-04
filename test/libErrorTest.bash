@@ -12,81 +12,31 @@ source "${KSL_BASH_LIB}"/libError.bash
 # 
 #     assert 'ksl::epCreate ep1"'
 #
-# Additionally, in the above case with epCreate, ep1 seems to be
-# shadowed. Some kind of scoping thing with bash_unit. Not sure.
+# Additionally, in the above function with epCreate, ep1 seems to be
+# shadowed. So some kind of scoping thing with bash_unit. Not sure.
 #
-# There are two alternatives. First form uses assert in a 
-# multi-conditional idiom like so:
+# There are two alternatives instead of that assert.
+# First alternative uses assert in a multi-conditional idiom like so:
 #
 #     ksl::epCreate ep1 && assert "false"   # expected negative condition
 #     ! ksl::epCreate ep1 && assert "false" # expected positive condition
 #
-# Just be careful as the test subject must always be negated from
-# the expected response. Kind of a head scratcher. Note that only
-# the '&& assert "false"' form is workable, otherwise the truth
-# table is not properly covered.
+# Just be careful as the test condition itself must always be negated
+# from the expected response. Kind of a head scratcher. Note that only
+# the '&& assert "false"' form is workable, otherwise the truth table is
+# not properly covered.
 #
 # Second alternative is more verbose but reads better and less error
 # prone since the test condition is always positve. Just need to flip
 # the -eq test between 0 and 1 for positive and negative conditions,
-# similar to the first alternative. This also has the advantage of being
-# able to test for specific return values instead of just success/fail.
+# similar to the first alternative. And should the case arise, this form
+# also has the advantage of being able to test for multiple return
+# values instead of just success/fail.
 #
 #     local -i ret
 #     ksl::epCreate ep1
 #     ret=$?; assert '[[ $ret -eq 0 ]]'
 #
-# -----------------------------------------------------------
-
-test_epCreate()
-{
-    # create
-
-    local -i ret
-    # create ep1, expect success
-    ksl::epCreate ep1
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-    assert '[[ ${#ep1[@]} -gt 0 ]]'
-
-    # create same again - error this time
-    ksl::epCreate ep1
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    # create missing args
-    ksl::epCreate
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
-    assert '[[ ${#ep1[@]} -eq 11 ]]'
-    
-    unset ep1
-}
-
-# -----------------------------------------------------------
-
-test_epDestroy()
-{
-    local -i ret
-    
-    # destroy but missing args
-    ksl::epDestroy
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    # destroy but doesn't exist, error
-    unset ep1
-    ksl::epDestroy ep1
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    # destroy, good params, expect success
-    ksl::epCreate ep1
-    ksl::epDestroy ep1
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-
-    ksl::epExists ep1
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    unset ep1
-}
-
 # -----------------------------------------------------------
 
 test_epExists()
@@ -97,44 +47,16 @@ test_epExists()
     ksl::epExists
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
-    # good args but no exist
+    # good args but doesn't exist
     unset ep1
     ksl::epExists ep1
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # good args, yes exists
-    ksl::epCreate ep1
+    ksl::epSet
     ret=$?; assert '[[ $ret -eq 0 ]]'
     ksl::epExists ep1
     ret=$?; assert '[[ $ret -eq 0 ]]'
-
-    unset ep1
-}
-
-# -----------------------------------------------------------
-
-test_epClear()
-{
-    local -i ret
-    unset ep1
-
-    # clear on unset EPS, will use ep1, expect fail
-    ksl::epClear
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    # clear on freshly created EPS, expect success
-    ksl::epCreate ep1
-    ksl::epClear
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-
-    # set a value into description
-    ksl::epSetDescription "illegal value"
-    assert '[[ "${ep1[DESC]}" == "illegal value" ]]'
-
-    # now clear, expect null description
-    ksl::epClear
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-    assert '[[ "${ep1[DESC]}" == "" ]]'
 
     unset ep1
 }
@@ -150,7 +72,7 @@ test_epSet()
     ksl::epSet
     ret=$?; assert '[[ $ret -eq 0 ]]'
 
-    # explicity specifiy ep1,
+    # explicity specify ep1,
     unset ep1
     ksl::epSet ep1
     ret=$?; assert '[[ $ret -eq 0 ]]'
@@ -170,49 +92,11 @@ test_epSet()
     ksl::epExists ep2
     ret=$?; assert '[[ $ret -eq 0 ]]'
     
+    unset ep1
     unset ep2
 
-    # assign description
-    unset ep1
-    ksl::epSet -d "ETH2 network is down"
-    ksl::epExists ep1
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-    assert "[[ ${#ep1[@]} -gt 0 ]]"
-    assert '[[ "${ep1[DESC]}" == "ETH2 network is down" ]]'
-    
-    # assign file name
-    ksl::epSet -fi "libStrings.bash"
-    ksl::epExists ep1
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-    assert "[[ ${#ep1[@]} -gt 0 ]]"
-    assert '[[ "${ep1[FILE]}" == "libStrings.bash" ]]'
-
-    # assign func name
-    ksl::epSet -fu "ksl::uppercase()"
-    ksl::epExists ep1
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-    assert "[[ ${#ep1[@]} -gt 0 ]]"
-    assert '[[ "${ep1[FUNC]}" == "ksl::uppercase()" ]]'
-
-    # assign three at once, clobbering old values
-    ksl::epSet -d "Broken initialization" -fi "/etc/init" -fu "ksl::lowercase()"
-    assert '[[ "${ep1[DESC]}" == "Broken initialization" ]]'
-    assert '[[ "${ep1[FILE]}" == "/etc/init" ]]'
-    assert '[[ "${ep1[FUNC]}" == "ksl::lowercase()" ]]'
-
-    # operate on different EPS's, ensure both ep1 and ep2 are intact
-    # relies on ep1 from previous
-    # create a new ep2 with different values
-    ksl::epSet ep2 -d "communications timeout" -fi "/usr/lib" -fu "socket()"
-    assert '[[ "${ep1[DESC]}" == "Broken initialization" ]]'
-    assert '[[ "${ep1[FILE]}" == "/etc/init" ]]'
-    assert '[[ "${ep1[FUNC]}" == "ksl::lowercase()" ]]'
-    assert '[[ "${ep2[DESC]}" == "communications timeout" ]]'
-    assert '[[ "${ep2[FILE]}" == "/usr/lib" ]]'
-    assert '[[ "${ep2[FUNC]}" == "socket()" ]]'
-
-    # new EPS setting all fields
-    ksl::epSet ep3 \
+    # setting all fields
+    ksl::epSet ep1 \
                -ca "power outage" \
                -cn "200" \
                -d "boo boo" \
@@ -223,21 +107,33 @@ test_epSet()
                -li "100" \
                -rp "turn power on" \
                -sv "Major"
-    assert '[[ "${ep3[CAUSE]}" == "power outage" ]]'
-    assert '[[ "${ep3[CODENUM]}" == "200" ]]'
-    assert '[[ "${ep3[DESC]}" == "boo boo" ]]'
-    assert '[[ "${ep3[ERRNAME]}" == "InputOutputError" ]]'
-    assert '[[ "${ep3[ERRTYPE]}" == "CommunicationsError" ]]'
-    assert '[[ "${ep3[FILE]}" == "sort.bash" ]]'
-    assert '[[ "${ep3[FUNC]}" == "sort()" ]]'
-    assert '[[ "${ep3[LINENUM]}" == "100" ]]'
-    assert '[[ "${ep3[REPAIR]}" == "turn power on" ]]'
-    assert '[[ "${ep3[SEVERITY]}" == "Major" ]]'
-    assert '[[ "${ep3[TIMESTAMP]}" != "" ]]'
+    assert '[[ "${ep1[CAUSE]}" == "power outage" ]]'
+    assert '[[ "${ep1[CODENUM]}" == "200" ]]'
+    assert '[[ "${ep1[DESC]}" == "boo boo" ]]'
+    assert '[[ "${ep1[ERRNAME]}" == "InputOutputError" ]]'
+    assert '[[ "${ep1[ERRTYPE]}" == "CommunicationsError" ]]'
+    assert '[[ "${ep1[FILE]}" == "sort.bash" ]]'
+    assert '[[ "${ep1[FUNC]}" == "sort()" ]]'
+    assert '[[ "${ep1[LINENUM]}" == "100" ]]'
+    assert '[[ "${ep1[REPAIR]}" == "turn power on" ]]'
+    assert '[[ "${ep1[SEVERITY]}" == "Major" ]]'
+    assert '[[ "${ep1[TIMESTAMP]}" != "" ]]'
     
-    ksl::epDestroy ep1
-    ksl::epDestroy ep2
-    ksl::epDestroy ep3
+    # call it again on same EPS with no args, all fields should be empty
+    ksl::epSet ep1
+    assert '[[ "${ep1[CAUSE]}" == "" ]]'
+    assert '[[ "${ep1[CODENUM]}" == "" ]]'
+    assert '[[ "${ep1[DESC]}" == "" ]]'
+    assert '[[ "${ep1[ERRNAME]}" == "" ]]'
+    assert '[[ "${ep1[ERRTYPE]}" == "" ]]'
+    assert '[[ "${ep1[FILE]}" == "" ]]'
+    assert '[[ "${ep1[FUNC]}" == "" ]]'
+    assert '[[ "${ep1[LINENUM]}" == "" ]]'
+    assert '[[ "${ep1[REPAIR]}" == "" ]]'
+    assert '[[ "${ep1[SEVERITY]}" == "" ]]'
+    assert '[[ "${ep1[TIMESTAMP]}" != "" ]]'
+    
+    unset ep1
 }
 
 # -----------------------------------------------------------
@@ -268,8 +164,9 @@ test_epSetField()
     diag=$(ksl::_epSetField ep7 DESC "my description")
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
-    # create ep1
-    ksl::epCreate ep1
+    # create an ep1, don't use epSet, chicken-and-egg
+    local -A ep1
+    ep1[TIMESTAMP]=$(date)
 
     # call with good settings, if a problem occurs
     # with presumably good args then diag will display on stdout
@@ -335,7 +232,8 @@ test_epSetDescription()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[DESC]}" == "" ]]'
     
     # put value in description using default ep1
     ksl::epSetDescription "I/O error"
@@ -350,13 +248,13 @@ test_epSetDescription()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetDescription ep2 "missing parameter"
     assert '[[ "${ep2[DESC]}" == "missing parameter" ]]'
     assert '[[ "${ep1[DESC]}" == "Configuration bad value" ]]'
     
-    ksl::epDestroy ep1
-    ksl::epDestroy ep2
+    unset ep1
+    unset ep2
 }
 
 # -----------------------------------------------------------
@@ -370,7 +268,7 @@ test_epDescription()
     assert '[[ "${desc}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     desc=$(ksl::epDescription)
     assert '[[ "${desc}" == "" ]]'
 
@@ -380,7 +278,7 @@ test_epDescription()
     assert '[[ "${desc}" == "Input/output error" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     desc=$(ksl::epDescription ep2)
     assert '[[ "${desc}" == "" ]]'
     desc=$(ksl::epDescription ep1)
@@ -418,7 +316,7 @@ test_epAppend()
     desc=$(ksl::epDescription)
     assert '[[ "${desc}" == "bad CRC: on input channel 6." ]]'
     
-    ksl::epDestroy ep1
+    unset ep1
 }
 
 # -----------------------------------------------------------
@@ -449,7 +347,7 @@ test_epPrepend()
     desc=$(ksl::epDescription)
     assert '[[ "${desc}" == "I/O error: bad CRC" ]]'
     
-    ksl::epDestroy ep1
+    unset ep1
 }
 
 # -----------------------------------------------------------
@@ -471,9 +369,10 @@ test_epSetErrorName()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[ERRNAME]}" == "" ]]'
     
-    # put value in description using default ep1
+    # put value in error name using default ep1
     ksl::epSetErrorName "OverflowError"
     assert '[[ "${ep1[ERRNAME]}" == "OverflowError" ]]'
 
@@ -486,7 +385,7 @@ test_epSetErrorName()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetErrorName ep2 "TimeoutError"
     assert '[[ "${ep2[ERRNAME]}" == "TimeoutError" ]]'
     assert '[[ "${ep1[ERRNAME]}" == "UnderflowError" ]]'
@@ -507,7 +406,7 @@ test_epErrorName()
     assert '[[ "${errorName}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     errorName=$(ksl::epErrorName)
     assert '[[ "${errorName}" == "" ]]'
 
@@ -517,7 +416,7 @@ test_epErrorName()
     assert '[[ "${errorName}" == "CommunicationsError" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     errorName=$(ksl::epErrorName ep2)
     assert '[[ "${errorName}" == "" ]]'
     errorName=$(ksl::epErrorName ep1)
@@ -546,9 +445,10 @@ test_epSetErrorType()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[ERRTYPE]}" == "" ]]'
     
-    # put value in description using default ep1
+    # put value in error type using default ep1
     ksl::epSetErrorType "ProcessingError"
     assert '[[ "${ep1[ERRTYPE]}" == "ProcessingError" ]]'
 
@@ -561,7 +461,7 @@ test_epSetErrorType()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetErrorType ep2 "TimeoutError"
     assert '[[ "${ep2[ERRTYPE]}" == "TimeoutError" ]]'
     assert '[[ "${ep1[ERRTYPE]}" == "EquipmentError" ]]'
@@ -582,7 +482,7 @@ test_epErrorType()
     assert '[[ "${errorType}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     errorType=$(ksl::epErrorType)
     assert '[[ "${errorType}" == "" ]]'
 
@@ -592,7 +492,7 @@ test_epErrorType()
     assert '[[ "${errorType}" == "UnderflowError" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     errorType=$(ksl::epErrorType ep2)
     assert '[[ "${errorType}" == "" ]]'
     errorType=$(ksl::epErrorType ep1)
@@ -621,9 +521,10 @@ test_epSetSeverity()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[SEVERITY]}" == "" ]]'
     
-    # put value in description using default ep1
+    # put value in severity using default ep1
     ksl::epSetSeverity "Critical"
     assert '[[ "${ep1[SEVERITY]}" == "Critical" ]]'
 
@@ -636,7 +537,7 @@ test_epSetSeverity()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetSeverity ep2 "Warn"
     assert '[[ "${ep2[SEVERITY]}" == "Warn" ]]'
     assert '[[ "${ep1[SEVERITY]}" == "Major" ]]'
@@ -657,7 +558,7 @@ test_epSeverity()
     assert '[[ "${severity}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     severity=$(ksl::epSeverity)
     assert '[[ "${severity}" == "" ]]'
 
@@ -667,7 +568,7 @@ test_epSeverity()
     assert '[[ "${severity}" == "Critical" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     severity=$(ksl::epSeverity ep2)
     assert '[[ "${severity}" == "" ]]'
     severity=$(ksl::epSeverity ep1)
@@ -696,7 +597,8 @@ test_epSetFuncName()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[FUNC]}" == "" ]]'
     
     # put value in description using default ep1
     ksl::epSetFuncName "parse()"
@@ -711,7 +613,7 @@ test_epSetFuncName()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetFuncName ep2 "invert()"
     assert '[[ "${ep2[FUNC]}" == "invert()" ]]'
     assert '[[ "${ep1[FUNC]}" == "sort()" ]]'
@@ -732,7 +634,7 @@ test_epFuncName()
     assert '[[ "${funcName}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     funcName=$(ksl::epFuncName)
     assert '[[ "${funcName}" == "" ]]'
 
@@ -742,7 +644,7 @@ test_epFuncName()
     assert '[[ "${funcName}" == "sort()" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     funcName=$(ksl::epFuncName ep2)
     assert '[[ "${funcName}" == "" ]]'
     funcName=$(ksl::epFuncName ep1)
@@ -771,7 +673,8 @@ test_epSetFileName()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[FILE]}" == "" ]]'
     
     # put value in description using default ep1
     ksl::epSetFileName "commands.bash"
@@ -786,7 +689,7 @@ test_epSetFileName()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetFileName ep2 "sort.bash"
     assert '[[ "${ep2[FILE]}" == "sort.bash" ]]'
     assert '[[ "${ep1[FILE]}" == "constants.bash" ]]'
@@ -807,7 +710,7 @@ test_epFileName()
     assert '[[ "${fileName}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     fileName=$(ksl::epFileName)
     assert '[[ "${fileName}" == "" ]]'
 
@@ -817,7 +720,7 @@ test_epFileName()
     assert '[[ "${fileName}" == "commands.bash" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     fileName=$(ksl::epFileName ep2)
     assert '[[ "${fileName}" == "" ]]'
     fileName=$(ksl::epFileName ep1)
@@ -846,7 +749,8 @@ test_epSetLineNum()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[LINENUM]}" == "" ]]'
     
     # put value in description using default ep1
     ksl::epSetLineNum "100"
@@ -861,7 +765,7 @@ test_epSetLineNum()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetLineNum ep2 "300"
     assert '[[ "${ep2[LINENUM]}" == "300" ]]'
     assert '[[ "${ep1[LINENUM]}" == "200" ]]'
@@ -882,7 +786,7 @@ test_epLineNum()
     assert '[[ "${lineNum}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     lineNum=$(ksl::epLineNum)
     assert '[[ "${lineNum}" == "" ]]'
 
@@ -892,7 +796,7 @@ test_epLineNum()
     assert '[[ "${lineNum}" == "100" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     lineNum=$(ksl::epLineNum ep2)
     assert '[[ "${lineNum}" == "" ]]'
     lineNum=$(ksl::epLineNum ep1)
@@ -921,7 +825,8 @@ test_epSetCodeNum()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[CODENUM]}" == "" ]]'
     
     # put value in description using default ep1
     ksl::epSetCodeNum "100"
@@ -936,7 +841,7 @@ test_epSetCodeNum()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetCodeNum ep2 "300"
     assert '[[ "${ep2[CODENUM]}" == "300" ]]'
     assert '[[ "${ep1[CODENUM]}" == "200" ]]'
@@ -957,7 +862,7 @@ test_epCodeNum()
     assert '[[ "${codeNum}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     codeNum=$(ksl::epCodeNum)
     assert '[[ "${codeNum}" == "" ]]'
 
@@ -967,7 +872,7 @@ test_epCodeNum()
     assert '[[ "${codeNum}" == "100" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     codeNum=$(ksl::epCodeNum ep2)
     assert '[[ "${codeNum}" == "" ]]'
     codeNum=$(ksl::epCodeNum ep1)
@@ -996,7 +901,8 @@ test_epSetCause()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[CAUSE]}" == "" ]]'
     
     # put value in description using default ep1
     ksl::epSetCause "hardware fault"
@@ -1011,7 +917,7 @@ test_epSetCause()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetCause ep2 "power outage"
     assert '[[ "${ep2[CAUSE]}" == "power outage" ]]'
     assert '[[ "${ep1[CAUSE]}" == "overheating" ]]'
@@ -1032,7 +938,7 @@ test_epCause()
     assert '[[ "${cause}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     cause=$(ksl::epCause)
     assert '[[ "${cause}" == "" ]]'
 
@@ -1042,7 +948,7 @@ test_epCause()
     assert '[[ "${cause}" == "100" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     cause=$(ksl::epCause ep2)
     assert '[[ "${cause}" == "" ]]'
     cause=$(ksl::epCause ep1)
@@ -1071,7 +977,8 @@ test_epSetRepair()
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
     # create ep1
-    ksl::epCreate ep1
+    ksl::epSet ep1
+    assert '[[ "${ep1[REPAIR]}" == "" ]]'
     
     # put value in description using default ep1
     ksl::epSetRepair "turn power on"
@@ -1086,7 +993,7 @@ test_epSetRepair()
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     ksl::epSetRepair ep2 "replace sensor"
     assert '[[ "${ep2[REPAIR]}" == "replace sensor" ]]'
     assert '[[ "${ep1[REPAIR]}" == "recycle power" ]]'
@@ -1107,7 +1014,7 @@ test_epRepair()
     assert '[[ "${repair}" == "epGetField() no such EPS:ep1" ]]'
     
     # call with existing EPS
-    ksl::epCreate ep1
+    ksl::epSet ep1
     repair=$(ksl::epRepair)
     assert '[[ "${repair}" == "" ]]'
 
@@ -1117,12 +1024,40 @@ test_epRepair()
     assert '[[ "${repair}" == "100" ]]'
 
     # call with different EPS
-    ksl::epCreate ep2
+    ksl::epSet ep2
     repair=$(ksl::epRepair ep2)
     assert '[[ "${repair}" == "" ]]'
     repair=$(ksl::epRepair ep1)
     assert '[[ "${repair}" == "100" ]]'
 
+    unset ep1
+    unset ep2
+}
+
+# -----------------------------------------------------------
+
+test_epTimestamp()
+{
+    local ts1 ts2
+    
+    # call with non-existant EPS, fail
+    unset ep1
+    ts1=$(ksl::epTimestamp ep1)
+    assert '[[ "${ts1}" == "epGetField() no such EPS:ep1" ]]'
+
+    # create ep1 empty, cause no args, but timestamp is set
+    ksl::epSet ep1
+    ts1=$(ksl::epTimestamp ep1)
+    assert '[[ "${ts1}" != "" ]]'
+    
+    sleep 0.01
+    
+    # call with different EPS
+    ksl::epSet ep2
+    ts2=$(ksl::epTimestamp ep2)
+    assert '[[ "${ts2}" != "" ]]'
+    assert '[[ "${ts1}" != "${ts2}" ]]'
+    
     unset ep1
     unset ep2
 }

@@ -1,47 +1,61 @@
+# TODO    epHasError()
+# TODO    _epIsValidKey()
+
 # -----------------------------------------------------------
 #
 # Functions to support error passing
 #
+# Error passing is a technique where lower layer functions
+# set values in an error passing structure, and higher layer
+# functions along the call tree, add more context and detail
+# to form strong diagnostics.
+#
+# epSet() is meant to be called at the lowest level of call tree.
+# Generally the leaf most function does the epSet. Each parent function
+# up along the call chain tests for a returned fail condition (testing
+# either the child function return code or checking the EPS itself using
+# epHasError) and then contributes to the error passing structure by
+# appending, prepending, and setting additional fields to provide
+# improved context and diagnostics to its caller. As the level in the
+# program where the error can be analyzed for severity, the error
+# passing structure is usually printed.
+#
 # Contains the following:
 #
 # Lifecycle
-#      epCreate done
-#      epDestroy done
+#      epSet
 #
 # Modifiers
-#     epSet done
-#     epClear done
-#     epPrepend done
-#     epAppend done
-#     epSetErrorName done
-#     epSetErrorType done
-#     epSetDescription done
-#     epSetSeverity done
+#     epPrepend
+#     epAppend
+#     epSetErrorName
+#     epSetErrorType
+#     epSetDescription
+#     epSetSeverity
 #     epSetProbableCause
 #     epSetProposedRepair
 #     epSetFileName
-#     epSetFuncName done
+#     epSetFuncName
 #     epSetLineNum
 #     epSetCodeNum
-#     epSetTimestamp
 #
 # Observers
-#     epExists done
-#     epErrorName done
-#     epErrorType done
-#     epSeverity done
+#     epExists
+#     epErrorName
+#     epErrorType
+#     epSeverity
 #     epFileName
-#     epFuncName done
+#     epFuncName
 #     epLineNum
 #     epCodeNum
 #     epFullDesc
-#     epDescription done
+#     epDescription
 #     epProbableCause
 #     epProposedRepair
 #     epTimestamp
 #     epHasError
 #
-# ERRNAME choices
+# Choices for ERRNAME
 #     UnsetErrorName
 #     CaughtException
 #     ConfigurationError
@@ -67,7 +81,7 @@
 #     TimeoutError
 #     UnderflowError
 #
-# ERRTYPE choices
+# Choices for ERRTYPE 
 #     ErrorTypeNotSpecified
 #     CommunicationsError
 #     ConfigurationError
@@ -76,7 +90,7 @@
 #     ProcessingError
 #     QualityOfServiceError
 #
-# SEVERITY choices
+# Choices for SEVERITY
 #     UnsetSeverity
 #     Indeterminate
 #     Critical
@@ -93,73 +107,12 @@
 libErrorImported=true
 
 # -------------------------------------------------------
-#
-# Output text to standard out.
-#
-# epCreate errPass
-ksl::epCreate()
-{
-    [ -z "$1" ] && return 1
-    ksl::epExists "$1" && return 1
-    local -A -g "$1"
-    local -n name="$1"
-    name[DESC]=
-    name[FUNC]=
-    name[FILE]=
-    name[LINENUM]=
-    name[SEVERITY]=
-    name[ERRNAME]=
-    name[ERRTYPE]=
-    name[CODENUM]=
-    name[TIMESTAMP]=
-    name[CAUSE]=
-    name[REPAIR]=
-}
-
-# -------------------------------------------------------
-
-ksl::epDestroy()
-{
-    [ $# -eq 0 ] && return 1
-    ! ksl::epExists "$1" && return 1
-    unset "$1"
-}
-
-# -------------------------------------------------------
 
 ksl::epExists()
 {
     [ $# -eq 0 ] && return 1
     local -n name="$1"
     [[ ${#name[@]} -gt 0 ]]
-}
-
-# -------------------------------------------------------
-#
-# Re-initializes an existing EPS to empty, so it can be
-# reused again. The timestamp is also set to null. It is
-# expected that the user will issue an epSet() for the
-# next usage.
-#
-# This is not necessary 
-#
-ksl::epClear()
-{
-    local eps=${1-"ep1"}
-    ! ksl::epExists "${eps}" && return 1
-    local -n name="${eps}"
-
-    name[CAUSE]=
-    name[CODENUM]=
-    name[DESC]=
-    name[ERRNAME]=
-    name[ERRTYPE]=
-    name[FILE]=
-    name[FUNC]=
-    name[LINENUM]=
-    name[REPAIR]=
-    name[SEVERITY]=
-    name[TIMESTAMP]=
 }
 
 # -------------------------------------------------------
@@ -673,7 +626,19 @@ ksl::epTimestamp()
 #
 # Set values in an error passing structure.
 #
-# epSet [options...] <error passing structure: default = ep1>
+# epSet <error passing structure: default = ep1> [options...] 
+#
+# OPTIONS
+#     -ca, --cause
+#     -cn, --codeNum
+#      -d, --description
+#     -en, --errorName
+#     -et, --errorType
+#     -fi, --fileName
+#     -fn, --funcName
+#     -li, --lineNum
+#     -rp, --repair
+#     -sv, --severity
 #
 # With no args, epSet works on the default "ep1" error passing structure
 # (EPS). You can pass in ep1 explicitly or supply your own EPS. If the
@@ -687,28 +652,20 @@ ksl::epTimestamp()
 # with the timestamp set to current time, followed by setting any
 # supplied options.
 #
-# If there are no options given, then epSet() is effectively equivalent
-# to invoking epClear() except a current timestamp is set.
-#
-# epSet() is meant to be called at the lowest level of call tree.
-# Generally the leaf most function does the epSet. Each parent up along
-# the call chain tests for a fail condition and then supplements the EPS
-# by appending, prepending, and setting additional fields to provide
-# improved context and diagnostics.
 #
 ksl::epSet()
 {
     local eps
-    local cause
-    local codeNum
-    local description
-    local errorName
-    local errorType
-    local fileName
-    local funcName
-    local lineNum
-    local repair
-    local severity
+    local cause=""
+    local codeNum=""
+    local description=""
+    local errorName=""
+    local errorType=""
+    local fileName=""
+    local funcName=""
+    local lineNum=""
+    local repair=""
+    local severity=""
     
     while [ $# -gt 0 ]; do
         case $1 in
@@ -794,22 +751,22 @@ ksl::epSet()
         shift
     done
 
-    # may need to +set noerrexit ??
-    ksl::epCreate ${eps:=ep1}     # harmless if already exists
-    ksl::epClear ${eps}           # always clear it 
-    
-    [ -n "${cause}"       ] && ksl::epSetCause       ${eps} "${cause}"
-    [ -n "${codeNum}"     ] && ksl::epSetCodeNum     ${eps} "${codeNum}"
-    [ -n "${description}" ] && ksl::epSetDescription ${eps} "${description}"
-    [ -n "${errorName}"   ] && ksl::epSetErrorName   ${eps} "${errorName}"
-    [ -n "${errorType}"   ] && ksl::epSetErrorType   ${eps} "${errorType}"
-    [ -n "${fileName}"    ] && ksl::epSetFileName    ${eps} "${fileName}"
-    [ -n "${funcName}"    ] && ksl::epSetFuncName    ${eps} "${funcName}"
-    [ -n "${lineNum}"     ] && ksl::epSetLineNum     ${eps} "${lineNum}"
-    [ -n "${repair}"      ] && ksl::epSetRepair      ${eps} "${repair}"
-    [ -n "${severity}"    ] && ksl::epSetSeverity    ${eps} "${severity}"
-    
-    eval ${eps}[TIMESTAMP]="\$(date)"
+    declare -A -g ${eps:=ep1}
+
+    # Ensure at least one field is created here before
+    # calling sets, otherwise eps would be seen as non-existent.
+    eval ${eps}[TIMESTAMP]="\$(date --rfc-3339=ns)"
+
+    ksl::epSetCause       ${eps} "${cause}"
+    ksl::epSetCodeNum     ${eps} "${codeNum}"
+    ksl::epSetDescription ${eps} "${description}"
+    ksl::epSetErrorName   ${eps} "${errorName}"
+    ksl::epSetErrorType   ${eps} "${errorType}"
+    ksl::epSetFileName    ${eps} "${fileName}"
+    ksl::epSetFuncName    ${eps} "${funcName}"
+    ksl::epSetLineNum     ${eps} "${lineNum}"
+    ksl::epSetRepair      ${eps} "${repair}"
+    ksl::epSetSeverity    ${eps} "${severity}"
 }
 
 # -------------------------------------------------------
