@@ -160,7 +160,7 @@ test_epSetField()
     unset ep1
     diag=$(ksl::_epSetField ep1 DESC "my description")
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     diag=$(ksl::_epSetField ep7 DESC "my description")
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
@@ -171,6 +171,7 @@ test_epSetField()
     # call with good settings, if a problem occurs
     # with presumably good args then diag will display on stdout
     ksl::_epSetField ep1 DESC "my description"
+    ret=$?; assert '[[ $ret -eq 0 ]]'
     assert '[[ "${ep1[DESC]}" == "my description" ]]'
     
     unset ep1
@@ -1064,3 +1065,53 @@ test_epTimestamp()
 
 # -----------------------------------------------------------
 
+test_epHasError()
+{
+    local -i ret
+    local diag
+    
+    # call with non-existant EPS, fail
+    unset ep1
+    diag=$(ksl::epHasError)
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with valid EPS, expect no hasError
+    ksl::epSet
+    ksl::epHasError
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # set description field, hasError is true
+    ksl::epSetDescription "bad socket"
+    ksl::epExists ep1
+    ret=$?; assert '[[ $ret -eq 0 ]]'
+    ksl::epHasError ep1
+    ret=$?; assert '[[ $ret -eq 0 ]]'
+
+    # unset description field, hasError is false
+    ksl::epSetDescription ""
+    ksl::epHasError
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # set code number field, hasError is true
+    ksl::epSetCodeNum "500"
+    ksl::epHasError
+    ret=$?; assert '[[ $ret -eq 0 ]]'
+
+    # set code number and description field, hasError is true
+    ksl::epSetDescription "we have a boo boo"
+    ksl::epHasError
+    ret=$?; assert '[[ $ret -eq 0 ]]'
+    return 0
+}
+
+# -----------------------------------------------------------
+
+
+
+
+
+
+test_errorPassingExample()
+{
+    
+}

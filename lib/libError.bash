@@ -1,5 +1,4 @@
-# TODO    epHasError()
-# TODO    _epIsValidKey()
+# TODO epPrint
 
 # -----------------------------------------------------------
 #
@@ -117,22 +116,15 @@ ksl::epExists()
 
 # -------------------------------------------------------
 
-ksl::_isValidKey()
-{
-    return 0
-}
-
-# -------------------------------------------------------
-
 ksl::_epSetField()
 {
     local eps=$1
     local key=$2
     local str=$3
 
-    [ $# -ne 3 ]                && echo "epSetField() missing args"       && return 1
-    ! ksl::epExists "${eps}"    && echo "epSetField() no such EPS:${eps}" && return 1
-    ! ksl::_isValidKey "${key}" && echo "epSetField() no such Key:${key}" && return 1
+    [ $# -ne 3 ]                  && echo "epSetField() missing args"       && return 1
+    ! ksl::epExists ${eps}        && echo "epSetField() no such EPS:${eps}" && return 1
+    ! ksl::_epIsValidKey "${key}" && echo "epSetField() no such Key:${key}" && return 1
 
     eval ${eps}[${key}]=\""\${str}"\"
 }
@@ -144,11 +136,24 @@ ksl::_epGetField()
     local eps=$1
     local key=$2
 
-    [ $# -ne 2 ]                && echo "epGetField() missing args"       && return 1
-    ! ksl::epExists "${eps}"    && echo "epGetField() no such EPS:${eps}" && return 1
-    ! ksl::_isValidKey "${key}" && echo "epGetField() no such Key:${key}" && return 1
+    [ $# -ne 2 ]                  && echo "epGetField() missing args"       && return 1
+    ! ksl::epExists ${eps}        && echo "epGetField() no such EPS:${eps}" && return 1
+    ! ksl::_epIsValidKey "${key}" && echo "epGetField() no such Key:${key}" && return 1
 
     eval echo "\${${eps}[${key}]}"
+}
+
+# -------------------------------------------------------
+
+ksl::_epIsValidKey()
+{
+    keys="CAUSE CODENUM DESC ERRNAME ERRTYPE FILE
+          FUNC LINENUM REPAIR SEVERITY TIMESTAMP"
+    local key=$1
+    for k in ${keys}; do
+        [[ $1 == $k ]] && return 0
+    done
+    return 1
 }
 
 # -------------------------------------------------------
@@ -165,7 +170,7 @@ ksl::_epGetField()
 # Examples:
 #     epSetDescription "Broken channel"        # ep1 is used
 #     epSetDescription ep2 "Broken channel"
-#     epSetDescription ""                      # sets ep1 it to empty
+#     epSetDescription ""                      # sets ep1 description to empty
 #     epSetDescription                         # no action
 #
 ksl::epSetDescription()
@@ -620,6 +625,28 @@ ksl::epRepair()
 ksl::epTimestamp()
 {
     ksl::_epGetField ${1:-ep1} TIMESTAMP
+}
+
+# -------------------------------------------------------
+#
+# Returns true if EPS is carrying an error.
+#
+# The EPS is considered to be carrying an error if
+# either the description field or the code number
+# field is non-empty.
+#
+ksl::epHasError()
+{
+    local arg=${1:-ep1}
+    local -n eps=${arg}
+    
+    ! ksl::epExists ${arg} &&
+        echo "epHasError() no such EPS:${1}" && return 1
+
+    [[ -z ${eps[DESC]}    ]] &&
+    [[ -z ${eps[CODENUM]} ]] && return 1
+    
+    return 0
 }
 
 # -------------------------------------------------------
