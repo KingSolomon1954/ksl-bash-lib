@@ -59,7 +59,7 @@
 #     CaughtException
 #     ConfigurationError
 #     DataFormatError
-#     ExistsError
+#     AlreadyExistsError
 #     IllegalStateError
 #     InputOutputError
 #     InvalidAccessError
@@ -105,6 +105,8 @@
 [ -v libErrorImported ] && [ "$1" != "-f" ] && return
 libErrorImported=true
 
+source "${KSL_BASH_LIB}"/libColors.bash
+
 # -------------------------------------------------------
 
 ksl::epExists()
@@ -122,9 +124,9 @@ ksl::_epSetField()
     local key=$2
     local str=$3
 
-    [ $# -ne 3 ]                  && echo "epSetField() missing args"       && return 1
-    ! ksl::epExists ${eps}        && echo "epSetField() no such EPS:${eps}" && return 1
-    ! ksl::_epIsValidKey "${key}" && echo "epSetField() no such Key:${key}" && return 1
+    [ $# -ne 3 ]                && echo "epSetField() missing args"       && return 1
+    ! ksl::epExists ${eps}      && echo "epSetField() no such EPS:${eps}" && return 1
+    ! ksl::_epIsValidKey ${key} && echo "epSetField() no such Key:${key}" && return 1
 
     eval ${eps}[${key}]=\""\${str}"\"
 }
@@ -136,9 +138,9 @@ ksl::_epGetField()
     local eps=$1
     local key=$2
 
-    [ $# -ne 2 ]                  && echo "epGetField() missing args"       && return 1
-    ! ksl::epExists ${eps}        && echo "epGetField() no such EPS:${eps}" && return 1
-    ! ksl::_epIsValidKey "${key}" && echo "epGetField() no such Key:${key}" && return 1
+    [ $# -ne 2 ]                && echo "epGetField() missing args"       && return 1
+    ! ksl::epExists ${eps}      && echo "epGetField() no such EPS:${eps}" && return 1
+    ! ksl::_epIsValidKey ${key} && echo "epGetField() no such Key:${key}" && return 1
 
     eval echo "\${${eps}[${key}]}"
 }
@@ -147,13 +149,23 @@ ksl::_epGetField()
 
 ksl::_epIsValidKey()
 {
-    keys="CAUSE CODENUM DESC ERRNAME ERRTYPE FILE
-          FUNC LINENUM REPAIR SEVERITY TIMESTAMP"
     local key=$1
-    for k in ${keys}; do
-        [[ $1 == $k ]] && return 0
-    done
-    return 1
+    # Using a case statement instead of a for loop over a
+    # list of names - want to avoid unreliability of IFS.
+    case $key in
+        CAUSE)     return;;
+        CODENUM)   return;;
+        DESC)      return;;
+        ERRNAME)   return;;
+        ERRTYPE)   return;;
+        FILE)      return;;
+        FUNC)      return;;
+        LINENUM)   return;;
+        REPAIR)    return;;
+        SEVERITY)  return;;
+        TIMESTAMP) return;;
+        *)         return 1;;
+    esac
 }
 
 # -------------------------------------------------------
@@ -797,3 +809,35 @@ ksl::epSet()
 }
 
 # -------------------------------------------------------
+
+ksl::epPrint()
+{
+    local arg=${1:-ep1}
+    local -n eps=${arg}
+    ! ksl::epExists ${arg} && 
+        echo "epPrint() no such EPS:${1}" && return 1
+
+    if ksl::useColor; then
+        local fmt="${FG_RED}${BOLD}${UNDERLINE}Error${CLEAR}\n"
+        for ((i=1; i<11; i++)); do
+            fmt+="${FG_GREEN}%20s: ${FG_YELLOW}%s${CLEAR}\n"
+        done
+    else
+        local fmt="Error\n"
+        for ((i=1; i<11; i++)); do
+            fmt+="%20s: %s\n"
+        done
+    fi
+    
+    printf "$fmt" \
+                   "Error" "$(ksl::epErrorName   ${eps})" \
+                    "Type" "$(ksl::epErrorType   ${eps})" \
+                "Severity" "$(ksl::epSeverity    ${eps})" \
+             "Description" "$(ksl::epDescription ${eps})" \
+               "Date/Time" "$(ksl::epTimestamp   ${eps})" \
+                    "File" "$(ksl::epFileName    ${eps}):$(ksl::epLineNum ${eps})" \
+                "Function" "$(ksl::epFuncName    ${eps})()" \
+          "Probable Cause" "$(ksl::epCause       ${eps})" \
+         "Proposed Repair" "$(ksl::epRepair      ${eps})" \
+              "Error Code" "$(ksl::epCodeNum     ${eps})"
+}

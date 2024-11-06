@@ -7,6 +7,7 @@
 #     ksl::isColorCapable()
 #     ksl::enableColor()
 #     ksl::disableColor()
+#     ksl::useColor()
 #
 # -----------------------------------------------------------
 
@@ -71,6 +72,13 @@ ksl::enableColor()
 ksl::disableColor()
 {
     KSL_USE_COLOR=false
+}
+
+# -----------------------------------------------------------
+
+ksl::useColor()
+{
+    ${KSL_USE_COLOR}
 }
 
 # -----------------------------------------------------------
