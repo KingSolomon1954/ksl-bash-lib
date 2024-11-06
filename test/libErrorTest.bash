@@ -164,9 +164,8 @@ test_epSetField()
     diag=$(ksl::_epSetField ep7 DESC "my description")
     ret=$?; assert '[[ $ret -eq 1 ]]'
     
-    # create an ep1, don't use epSet, chicken-and-egg
-    local -A ep1
-    ep1[TIMESTAMP]=$(date)
+    # create an ep1
+    ksl::epSet
 
     # call with good settings, if a problem occurs
     # with presumably good args then diag will display on stdout

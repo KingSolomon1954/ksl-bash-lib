@@ -22,37 +22,37 @@
 # Contains the following:
 #
 # Lifecycle
-#      epSet
+#      epSet()
 #
 # Modifiers
-#     epPrepend
-#     epAppend
-#     epSetErrorName
-#     epSetErrorType
-#     epSetDescription
-#     epSetSeverity
-#     epSetProbableCause
-#     epSetProposedRepair
-#     epSetFileName
-#     epSetFuncName
-#     epSetLineNum
-#     epSetCodeNum
+#     epPrepend()
+#     epAppend()
+#     epSetErrorName()
+#     epSetErrorType()
+#     epSetDescription()
+#     epSetSeverity()
+#     epSetProbableCause()
+#     epSetProposedRepair()
+#     epSetFileName()
+#     epSetFuncName()
+#     epSetLineNum()
+#     epSetCodeNum()
 #
 # Observers
-#     epExists
-#     epErrorName
-#     epErrorType
-#     epSeverity
-#     epFileName
-#     epFuncName
-#     epLineNum
-#     epCodeNum
-#     epFullDesc
-#     epDescription
-#     epProbableCause
-#     epProposedRepair
-#     epTimestamp
-#     epHasError
+#     epExists()
+#     epErrorName()
+#     epErrorType()
+#     epSeverity()
+#     epFileName()
+#     epFuncName()
+#     epLineNum()
+#     epCodeNum()
+#     epFullDesc()
+#     epDescription()
+#     epProbableCause()
+#     epProposedRepair()
+#     epTimestamp()
+#     epHasError()
 #
 # Choices for ERRNAME
 #     UnsetErrorName
@@ -105,6 +105,7 @@
 [[ -v libErrorImported ]] && [[ "$1" != "-f" ]] && return
 libErrorImported=true
 
+source "${KSL_BASH_LIB}"/libArrays.bash
 source "${KSL_BASH_LIB}"/libColors.bash
 
 # -------------------------------------------------------
@@ -113,7 +114,7 @@ ksl::epExists()
 {
     [[ $# -eq 0 ]] && return 1
     local -n name="$1"
-    [[ ${#name[@]} -gt 0 ]]
+    (( ${#name[@]} ))
 }
 
 # -------------------------------------------------------
@@ -124,11 +125,11 @@ ksl::_epSetField()
     local key=$2
     local str=$3
 
-    [[ $# -ne 3 ]]              && echo "epSetField() missing args"       && return 1
-    ! ksl::epExists ${eps}      && echo "epSetField() no such EPS:${eps}" && return 1
-    ! ksl::_epIsValidKey ${key} && echo "epSetField() no such Key:${key}" && return 1
+    [[ $# -ne 3 ]]               && echo "epSetField() missing args"     && return 1
+    ! ksl::epExists $eps         && echo "epSetField() no such EPS:$eps" && return 1
+    ! ksl::arrayHasKey $eps $key && echo "epSetField() no such Key:$key" && return 1
 
-    eval ${eps}[${key}]=\""\${str}"\"
+    ksl::arraySetField $eps $key "$str"
 }
 
 # -------------------------------------------------------
@@ -138,34 +139,11 @@ ksl::_epGetField()
     local eps=$1
     local key=$2
 
-    [[ $# -ne 2 ]]              && echo "epGetField() missing args"       && return 1
-    ! ksl::epExists ${eps}      && echo "epGetField() no such EPS:${eps}" && return 1
-    ! ksl::_epIsValidKey ${key} && echo "epGetField() no such Key:${key}" && return 1
+    [[ $# -ne 2 ]]               && echo "epGetField() missing args"     && return 1
+    ! ksl::epExists $eps         && echo "epGetField() no such EPS:$eps" && return 1
+    ! ksl::arrayHasKey $eps $key && echo "epGetField() no such Key:$key" && return 1
 
-    eval echo "\${${eps}[${key}]}"
-}
-
-# -------------------------------------------------------
-
-ksl::_epIsValidKey()
-{
-    local key=$1
-    # Using a case statement instead of a for loop over a
-    # list of names - want to avoid unreliability of IFS.
-    case $key in
-        CAUSE)     return;;
-        CODENUM)   return;;
-        DESC)      return;;
-        ERRNAME)   return;;
-        ERRTYPE)   return;;
-        FILE)      return;;
-        FUNC)      return;;
-        LINENUM)   return;;
-        REPAIR)    return;;
-        SEVERITY)  return;;
-        TIMESTAMP) return;;
-        *)         return 1;;
-    esac
+    ksl::arrayGetField $eps $key
 }
 
 # -------------------------------------------------------
@@ -234,7 +212,7 @@ ksl::epAppend()
     [[ $# -eq 1 ]] && str="$1";
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
     ! ksl::epExists ${eps:=ep1} && return 1
-    eval ${eps}[DESC]=\${${eps}[DESC]}"\${str}"
+    eval "$eps[DESC]+=\$str"
 }
 
 # -------------------------------------------------------
@@ -263,7 +241,7 @@ ksl::epPrepend()
     [[ $# -eq 1 ]] && str="$1";
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
     ! ksl::epExists ${eps:=ep1} && return 1
-    eval ${eps}[DESC]="\${str}"\${${eps}[DESC]}
+    eval "$eps[DESC]=\$str\${$eps[DESC]}"
 }
 
 # -------------------------------------------------------
@@ -792,20 +770,17 @@ ksl::epSet()
 
     declare -A -g ${eps:=ep1}
 
-    # Ensure at least one field is created here before
-    # calling sets, otherwise eps would be seen as non-existent.
-    eval ${eps}[TIMESTAMP]="\$(date --rfc-3339=ns)"
-
-    ksl::epSetCause       ${eps} "${cause}"
-    ksl::epSetCodeNum     ${eps} "${codeNum}"
-    ksl::epSetDescription ${eps} "${description}"
-    ksl::epSetErrorName   ${eps} "${errorName}"
-    ksl::epSetErrorType   ${eps} "${errorType}"
-    ksl::epSetFileName    ${eps} "${fileName}"
-    ksl::epSetFuncName    ${eps} "${funcName}"
-    ksl::epSetLineNum     ${eps} "${lineNum}"
-    ksl::epSetRepair      ${eps} "${repair}"
-    ksl::epSetSeverity    ${eps} "${severity}"
+    ksl::arraySetField $eps CAUSE     "$cause"
+    ksl::arraySetField $eps CODENUM   "$codeNum"
+    ksl::arraySetField $eps DESC      "$description"
+    ksl::arraySetField $eps ERRNAME   "$errorName"
+    ksl::arraySetField $eps ERRTYPE   "$errorType"
+    ksl::arraySetField $eps FILE      "$fileName"
+    ksl::arraySetField $eps FUNC      "$funcName"
+    ksl::arraySetField $eps LINENUM   "$lineNum"
+    ksl::arraySetField $eps REPAIR    "$repair"
+    ksl::arraySetField $eps SEVERITY  "$severity"
+    ksl::arraySetField $eps TIMESTAMP "$(date --rfc-3339=ns)"
 }
 
 # -------------------------------------------------------
