@@ -18,7 +18,7 @@
 # Avoid double inclusion, but optionally allow a forcing option
 # mainly for developers. For example: "source libStdOut -f"
 #
-[ -v libStdOutImported ] && [ "$1" != "-f" ] && return
+[[ -v libStdOutImported ]] && [[ "$1" != "-f" ]] && return
 libStdOutImported=true
 
 source "${KSL_BASH_LIB}"/libColors.bash

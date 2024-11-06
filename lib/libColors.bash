@@ -14,7 +14,7 @@
 # Avoid double inclusion, but optionally allow a forcing option
 # mainly for developers. For example: "source libStdOut -f"
 #
-[ -v libColorImported ] && [ "$1" != "-f" ] && return
+[[ -v libColorImported ]] && [[ "$1" != "-f" ]] && return
 libColorImported=true
 
 export KSL_USE_COLOR=false

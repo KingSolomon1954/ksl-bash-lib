@@ -15,7 +15,7 @@
 # Avoid double inclusion, but optionally allow a forcing option
 # mainly for developers. For example: "source libStdOut -f"
 #
-[ -v libFilesImported ] && [ "$1" != "-f" ] && return
+[[ -v libFilesImported ]] && [[ "$1" != "-f" ]] && return
 libFilesImported=true
 
 # -----------------------------------------------------------
@@ -45,9 +45,9 @@ ksl::dirName ()
     # level, the path must be to something in the current dir, so the result
     # should just be the current dir. Otherwise,
     #
-    if [ "${tmp2}" = "" ]; then
+    if [[ "${tmp2}" = "" ]]; then
         tmp2=/
-    elif [ "${tmp2}" = "${tmp1}" ]; then
+    elif [[ "${tmp2}" = "${tmp1}" ]]; then
         tmp2=.
     fi
 

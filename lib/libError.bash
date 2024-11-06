@@ -102,7 +102,7 @@
 # Avoid double inclusion, but optionally allow a forcing option
 # mainly for developers. For example: "source libStdOut -f"
 #
-[ -v libErrorImported ] && [ "$1" != "-f" ] && return
+[[ -v libErrorImported ]] && [[ "$1" != "-f" ]] && return
 libErrorImported=true
 
 source "${KSL_BASH_LIB}"/libColors.bash
@@ -111,7 +111,7 @@ source "${KSL_BASH_LIB}"/libColors.bash
 
 ksl::epExists()
 {
-    [ $# -eq 0 ] && return 1
+    [[ $# -eq 0 ]] && return 1
     local -n name="$1"
     [[ ${#name[@]} -gt 0 ]]
 }
@@ -124,7 +124,7 @@ ksl::_epSetField()
     local key=$2
     local str=$3
 
-    [ $# -ne 3 ]                && echo "epSetField() missing args"       && return 1
+    [[ $# -ne 3 ]]              && echo "epSetField() missing args"       && return 1
     ! ksl::epExists ${eps}      && echo "epSetField() no such EPS:${eps}" && return 1
     ! ksl::_epIsValidKey ${key} && echo "epSetField() no such Key:${key}" && return 1
 
@@ -138,7 +138,7 @@ ksl::_epGetField()
     local eps=$1
     local key=$2
 
-    [ $# -ne 2 ]                && echo "epGetField() missing args"       && return 1
+    [[ $# -ne 2 ]]              && echo "epGetField() missing args"       && return 1
     ! ksl::epExists ${eps}      && echo "epGetField() no such EPS:${eps}" && return 1
     ! ksl::_epIsValidKey ${key} && echo "epGetField() no such Key:${key}" && return 1
 
@@ -190,9 +190,9 @@ ksl::epSetDescription()
     local eps
     local description
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && description="$1"
-    [ $# -eq 2 ] && eps="$1" && description="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && description="$1"
+    [[ $# -eq 2 ]] && eps="$1" && description="$2"
     ksl::_epSetField ${eps:-ep1} DESC "${description}"
 }
 
@@ -230,9 +230,9 @@ ksl::epAppend()
     local eps
     local str
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && str="$1";
-    [ $# -eq 2 ] && eps="$1" && str="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && str="$1";
+    [[ $# -eq 2 ]] && eps="$1" && str="$2"
     ! ksl::epExists ${eps:=ep1} && return 1
     eval ${eps}[DESC]=\${${eps}[DESC]}"\${str}"
 }
@@ -259,9 +259,9 @@ ksl::epPrepend()
     local eps
     local str
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && str="$1";
-    [ $# -eq 2 ] && eps="$1" && str="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && str="$1";
+    [[ $# -eq 2 ]] && eps="$1" && str="$2"
     ! ksl::epExists ${eps:=ep1} && return 1
     eval ${eps}[DESC]="\${str}"\${${eps}[DESC]}
 }
@@ -288,9 +288,9 @@ ksl::epSetErrorName()
     local eps
     local errName
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && errName="$1"
-    [ $# -eq 2 ] && eps="$1" && errName="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && errName="$1"
+    [[ $# -eq 2 ]] && eps="$1" && errName="$2"
     ksl::_epSetField ${eps:-ep1} ERRNAME "${errName}"
 }
 
@@ -328,9 +328,9 @@ ksl::epSetErrorType()
     local eps
     local errType
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && errType="$1"
-    [ $# -eq 2 ] && eps="$1" && errType="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && errType="$1"
+    [[ $# -eq 2 ]] && eps="$1" && errType="$2"
     ksl::_epSetField ${eps:-ep1} ERRTYPE "${errType}"
 }
 
@@ -368,9 +368,9 @@ ksl::epSetSeverity()
     local eps
     local severity
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && severity="$1"
-    [ $# -eq 2 ] && eps="$1" && severity="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && severity="$1"
+    [[ $# -eq 2 ]] && eps="$1" && severity="$2"
     ksl::_epSetField ${eps:-ep1} SEVERITY "${severity}"
 }
 
@@ -408,9 +408,9 @@ ksl::epSetFuncName()
     local eps
     local funcName
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && funcName="$1"
-    [ $# -eq 2 ] && eps="$1" && funcName="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && funcName="$1"
+    [[ $# -eq 2 ]] && eps="$1" && funcName="$2"
     ksl::_epSetField ${eps:-ep1} FUNC "${funcName}"
 }
 
@@ -448,9 +448,9 @@ ksl::epSetFileName()
     local eps
     local fileName
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && fileName="$1"
-    [ $# -eq 2 ] && eps="$1" && fileName="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && fileName="$1"
+    [[ $# -eq 2 ]] && eps="$1" && fileName="$2"
     ksl::_epSetField ${eps:-ep1} FILE "${fileName}"
 }
 
@@ -488,9 +488,9 @@ ksl::epSetLineNum()
     local eps
     local lineNum
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && lineNum="$1"
-    [ $# -eq 2 ] && eps="$1" && lineNum="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && lineNum="$1"
+    [[ $# -eq 2 ]] && eps="$1" && lineNum="$2"
     ksl::_epSetField ${eps:-ep1} LINENUM "${lineNum}"
 }
 
@@ -528,9 +528,9 @@ ksl::epSetCodeNum()
     local eps
     local codeNum
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && codeNum="$1"
-    [ $# -eq 2 ] && eps="$1" && codeNum="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && codeNum="$1"
+    [[ $# -eq 2 ]] && eps="$1" && codeNum="$2"
     ksl::_epSetField ${eps:-ep1} CODENUM "${codeNum}"
 }
 
@@ -568,9 +568,9 @@ ksl::epSetCause()
     local eps
     local cause
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && cause="$1"
-    [ $# -eq 2 ] && eps="$1" && cause="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && cause="$1"
+    [[ $# -eq 2 ]] && eps="$1" && cause="$2"
     ksl::_epSetField ${eps:-ep1} CAUSE "${cause}"
 }
 
@@ -608,9 +608,9 @@ ksl::epSetRepair()
     local eps
     local repair
 
-    [ $# -eq 0 ] && return 0
-    [ $# -eq 1 ] && repair="$1"
-    [ $# -eq 2 ] && eps="$1" && repair="$2"
+    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 1 ]] && repair="$1"
+    [[ $# -eq 2 ]] && eps="$1" && repair="$2"
     ksl::_epSetField ${eps:-ep1} REPAIR "${repair}"
 }
 
@@ -706,76 +706,76 @@ ksl::epSet()
     local repair=""
     local severity=""
     
-    while [ $# -gt 0 ]; do
+    while [[ $# -gt 0 ]]; do
         case $1 in
         -p|--pretty-print)
             # Example of handling an option which doesn't require an argument
             prettyPrint=true;;
         -d|--description)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             description="$2"
             shift;;
         -fi|--fileName)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             fileName="$2"
             shift;;
         -fu|--funcName)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             funcName="$2"
             shift;;
         -li|--lineNum)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             lineNum="$2"
             shift;;
         -sv|--severity)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             severity="$2"
             shift;;
         -en|--errorName)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             errorName="$2"
             shift;;
         -et|--errorType)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             errorType="$2"
             shift;;
         -cn|--codeNum)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             codeNum="$2"
             shift;;
         -ca|--cause)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
             cause="$2"
             shift;;
         -rp|--repair)
-            if [ $# -lt 2 ]; then
+            if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
                 return 1
             fi
@@ -819,12 +819,12 @@ ksl::epPrint()
 
     if ksl::useColor; then
         local fmt="${FG_RED}${BOLD}${UNDERLINE}Error${CLEAR}\n"
-        for ((i=1; i<11; i++)); do
+        for ((i=1; i<=10; i++)); do
             fmt+="${FG_GREEN}%20s: ${FG_YELLOW}%s${CLEAR}\n"
         done
     else
         local fmt="Error\n"
-        for ((i=1; i<11; i++)); do
+        for ((i=1; i<=10; i++)); do
             fmt+="%20s: %s\n"
         done
     fi
@@ -841,3 +841,5 @@ ksl::epPrint()
          "Proposed Repair" "$(ksl::epRepair      ${eps})" \
               "Error Code" "$(ksl::epCodeNum     ${eps})"
 }
+
+# -------------------------------------------------------

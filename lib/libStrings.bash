@@ -36,7 +36,7 @@
 # -----------------------------------------------------------
 
 # Avoid double inclusion
-[ -v libStringImported ] && [ "$1" != "-f" ] && return
+[[ -v libStringImported ]] && [[ "$1" != "-f" ]] && return
 libStringImported=true
 
 # -----------------------------------------------------------
@@ -64,7 +64,7 @@ ksl::strlen ()
 #
 ksl::strlenR ()
 {
-    [ -z "${1:-}" ] && echo 0 && return
+    [[ -z "${1:-}" ]] && echo 0 && return
     local -nr s=$1
     echo ${#s}
 }
@@ -79,7 +79,7 @@ ksl::strlenR ()
 #
 ksl::isEmpty ()
 {
-    [ -z "${1}" ]
+    [[ -z "${1}" ]]
 }
 
 # -----------------------------------------------------------
@@ -93,9 +93,9 @@ ksl::isEmpty ()
 #
 ksl::isEmptyR ()
 {
-    [ -z "${1:-}" ] && return     # empty or no arg
+    [[ -z "${1:-}" ]] && return     # empty or no arg
     local -nr s=$1
-    [ ${#s} == 0 ]
+    [[ ${#s} == 0 ]]
 }
 
 # -----------------------------------------------------------
@@ -105,7 +105,7 @@ ksl::isEmptyR ()
 #
 ksl::startsWith()
 {
-    [ -z "${2}" ] && return 1
+    [[ -z "${2}" ]] && return 1
     [[ $1 =~ ^"$2" ]]
 }
 
@@ -116,7 +116,7 @@ ksl::startsWith()
 #
 ksl::endsWith()
 {
-    [ -z "${2}" ] && return 1
+    [[ -z "${2}" ]] && return 1
     [[ $1 =~ "$2"$ ]]
 }
 
@@ -171,7 +171,7 @@ ksl::trimWhitespace()
 #
 ksl::contains()
 {
-    [ -z "$2" ] && return 1
+    [[ -z "$2" ]] && return 1
     [[ "$1" == *$2* ]]
 }
 
