@@ -1,5 +1,3 @@
-# TODO epPrint
-
 # -----------------------------------------------------------
 #
 # Functions to support error passing
@@ -143,7 +141,7 @@ ksl::_epGetField()
     ! ksl::epExists $eps         && echo "epGetField() no such EPS:$eps" && return 1
     ! ksl::arrayHasKey $eps $key && echo "epGetField() no such Key:$key" && return 1
 
-    ksl::arrayGetField $eps $key
+    ksl::arrayGetValue $eps $key
 }
 
 # -------------------------------------------------------
@@ -241,6 +239,7 @@ ksl::epPrepend()
     [[ $# -eq 1 ]] && str="$1";
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
     ! ksl::epExists ${eps:=ep1} && return 1
+
     eval "$eps[DESC]=\$str\${$eps[DESC]}"
 }
 
@@ -631,7 +630,7 @@ ksl::epHasError()
     local -n eps=${arg}
     
     ! ksl::epExists ${arg} &&
-        echo "epHasError() no such EPS:${1}" && return 1
+        echo "epHasError() no such EPS:$1" && return 1
 
     [[ -z ${eps[DESC]}    ]] &&
     [[ -z ${eps[CODENUM]} ]] && return 1
@@ -790,7 +789,7 @@ ksl::epPrint()
     local arg=${1:-ep1}
     local -n eps=${arg}
     ! ksl::epExists ${arg} && 
-        echo "epPrint() no such EPS:${1}" && return 1
+        echo "epPrint() no such EPS:$1" && return 1
 
     if ksl::useColor; then
         local fmt="${FG_RED}${BOLD}${UNDERLINE}Error${CLEAR}\n"
@@ -805,16 +804,16 @@ ksl::epPrint()
     fi
     
     printf "$fmt" \
-                   "Error" "$(ksl::epErrorName   ${eps})" \
-                    "Type" "$(ksl::epErrorType   ${eps})" \
-                "Severity" "$(ksl::epSeverity    ${eps})" \
-             "Description" "$(ksl::epDescription ${eps})" \
-               "Date/Time" "$(ksl::epTimestamp   ${eps})" \
-                    "File" "$(ksl::epFileName    ${eps}):$(ksl::epLineNum ${eps})" \
-                "Function" "$(ksl::epFuncName    ${eps})()" \
-          "Probable Cause" "$(ksl::epCause       ${eps})" \
-         "Proposed Repair" "$(ksl::epRepair      ${eps})" \
-              "Error Code" "$(ksl::epCodeNum     ${eps})"
+                   "Error" "$(ksl::epErrorName   $eps)" \
+                    "Type" "$(ksl::epErrorType   $eps)" \
+                "Severity" "$(ksl::epSeverity    $eps)" \
+             "Description" "$(ksl::epDescription $eps)" \
+               "Date/Time" "$(ksl::epTimestamp   $eps)" \
+                    "File" "$(ksl::epFileName    $eps):$(ksl::epLineNum $eps)" \
+                "Function" "$(ksl::epFuncName    $eps)()" \
+          "Probable Cause" "$(ksl::epCause       $eps)" \
+         "Proposed Repair" "$(ksl::epRepair      $eps)" \
+              "Error Code" "$(ksl::epCodeNum     $eps)"
 }
 
 # -------------------------------------------------------
