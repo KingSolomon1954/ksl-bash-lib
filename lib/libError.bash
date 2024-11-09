@@ -4,7 +4,7 @@
 #
 # Error passing is a technique where lower layer functions
 # set values in an error passing structure, and higher layer
-# functions along the call tree, add more context and detail
+# functions up along the call tree add more context and detail
 # to form strong diagnostics.
 #
 # epSet() is meant to be called at the lowest level of call tree.
@@ -15,7 +15,7 @@
 # appending, prepending, and setting additional fields to provide
 # improved context and diagnostics to its caller. As the level in the
 # program where the error can be analyzed for severity, the error
-# passing structure is usually printed.
+# passing structure is usually printed or logged.
 #
 # Contains the following:
 #
@@ -52,7 +52,6 @@
 #     epHasError()
 #
 # Choices for ERRNAME
-#     UnsetErrorName
 #     CaughtException
 #     ConfigurationError
 #     DataFormatError
@@ -78,7 +77,6 @@
 #     UnderflowError
 #
 # Choices for ERRTYPE 
-#     ErrorTypeNotSpecified
 #     CommunicationsError
 #     ConfigurationError
 #     EnvironmentalError
@@ -87,7 +85,6 @@
 #     QualityOfServiceError
 #
 # Choices for SEVERITY
-#     UnsetSeverity
 #     Indeterminate
 #     Critical
 #     Major

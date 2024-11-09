@@ -4,7 +4,7 @@ source "${KSL_BASH_LIB}"/libArrays.bash
 
 # -----------------------------------------------------------
 
-test_arrayExists ()
+test_arrayExists()
 {
     local -i ret
 
@@ -28,7 +28,7 @@ test_arrayExists ()
     ret=$?; assert '[[ $ret -eq 0 ]]'
 }
 
-test_arraySize ()
+test_arraySize()
 {
     local -i ret
     local val
@@ -59,7 +59,7 @@ test_arraySize ()
 
 # -----------------------------------------------------------
 
-test_arrayHasKey ()
+test_arrayHasKey()
 {
     local -i ret
 
@@ -99,7 +99,7 @@ test_arrayHasKey ()
 
 # -----------------------------------------------------------
 
-test_arrayGetValue ()
+test_arrayGetValue()
 {
     local -i ret
     local val
@@ -143,7 +143,7 @@ test_arrayGetValue ()
 
 # -----------------------------------------------------------
 
-test_arraySetValue ()
+test_arraySetValue()
 {
     local -i ret
     local val
@@ -186,7 +186,7 @@ test_arraySetValue ()
 
 # -----------------------------------------------------------
 
-test_arrayAppendValue ()
+test_arrayAppendValue()
 {
     local -i ret
     local val
@@ -227,7 +227,7 @@ test_arrayAppendValue ()
 
 # -----------------------------------------------------------
 
-test_arrayPrependValue ()
+test_arrayPrependValue()
 {
     local -i ret
     local val
@@ -264,6 +264,53 @@ test_arrayPrependValue ()
     ksl::arrayPrepend dogs "GREAT DANE" " the greatest"
     ret=$?; assert '[[ $ret -eq 0 ]]'
     assert_equals " the greatestI am a great dane" "${dogs[GREAT DANE]}" 
+}
+
+# -----------------------------------------------------------
+
+# $1 = value from array
+# $2 = index | key
+# $3 = array name
+# [args...]
+#
+visitAll()
+{
+    # echo "visitAll value: $1, key: $2, array: $3 \$4:$4 \$5:$5"
+    (( numVisits++ ))
+}
+
+# $1 = value from array
+# $2 = index | key
+# $3 = array name
+# [args...]
+#
+findValue()
+{
+    # echo "findValue(): $1, key: $2, array: $3, looking for: $4"
+    if [[ "$1" == "$4" ]]; then
+        # echo Found it at key/index: "$2"
+        return 10
+    fi
+}
+
+test_arrayVisit()
+{
+    declare -A dogs
+    dogs["big shepard"]="I am sheppy"
+    dogs["irish setter"]="I am irish"
+    dogs["great dane"]="I am danish"
+
+    local -i ret
+    declare -i numVisits=0
+    ksl::arrayVisit dogs visitAll "happy and smiling" sad
+    ret=$?; assert '[[ $ret -eq 0 ]]'
+    assert '[[ numVisits -eq 3 ]]'
+    
+    ksl::arrayVisit dogs findValue "I am irish"
+    ret=$?; assert '[[ $ret -eq 10 ]]'
+
+    ksl::arrayVisit dogs findValue "I am xxirish"
+    ret=$?; assert '[[ $ret -eq 0 ]]'
 }
 
 # -----------------------------------------------------------

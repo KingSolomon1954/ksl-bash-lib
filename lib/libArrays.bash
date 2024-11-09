@@ -22,7 +22,7 @@ libArraysImported=true
 
 # -----------------------------------------------------------
 
-ksl::arrayExists ()
+ksl::arrayExists()
 {
     [[ $# -eq 0 ]] && return 1
     local -n ref=$1
@@ -33,7 +33,7 @@ ksl::arrayExists ()
 #
 # $1 = array name
 #
-ksl::arraySize ()
+ksl::arraySize()
 {
     [[ $# -eq 0 ]] && return 1
     ! ksl::arrayExists $1 && return 1
@@ -48,7 +48,7 @@ ksl::arraySize ()
 # 
 # example: ksl::arrayHasKey acronyms CRC
 #
-ksl::arrayHasKey ()
+ksl::arrayHasKey()
 {
     [[ $# -ne 2 ]] && return 1
     ! ksl::arrayExists $1 && return 1
@@ -64,7 +64,7 @@ ksl::arrayHasKey ()
 #
 # example: ksl::arraySetValue acronyms CRC "Cyclic Redundancy Check"
 #
-ksl::arraySetValue ()
+ksl::arraySetValue()
 {
     [[ $# -ne 3 ]]        && echo "arraySetValue() missing args"          && return 1
     ! ksl::arrayExists $1 && echo "arraySetValue() no such array: \"$1\"" && return 1
@@ -79,7 +79,7 @@ ksl::arraySetValue ()
 # 
 # example: val=$(ksl::arrayGetValue acronyms CRC)
 #
-ksl::arrayGetValue ()
+ksl::arrayGetValue()
 {
     ! ksl::arrayExists $1 && echo "arrayGetValue() no such array: \"$1\"" && return 1
     ! ksl::arrayHasKey $1 "$2" && echo "arrayGetValue() no such key: \"$2\""   && return 1
@@ -95,7 +95,7 @@ ksl::arrayGetValue ()
 #
 # example: ksl::arrayAppend errpass DESC " on channel 12"
 #
-ksl::arrayAppend ()
+ksl::arrayAppend()
 {
     [[ $# -lt 2 ]] && return 1
     ! ksl::arrayExists $1 && echo "arrayAppend() no such array: \"$1\"" && return 1
@@ -112,7 +112,7 @@ ksl::arrayAppend ()
 #
 # example: ksl::arrayPrepend errpass DESC "Fatal error: "
 #
-ksl::arrayPrepend ()
+ksl::arrayPrepend()
 {
     [[ $# -lt 2 ]] && return 1
     ! ksl::arrayExists $1      && echo "arrayPrepend() no such array: \"$1\"" && return 1
@@ -122,10 +122,60 @@ ksl::arrayPrepend ()
 }
 
 # -----------------------------------------------------------
+#
+# Visits each element in array and invokes your function on it.
+#
+# $1 = array (required)
+# $2 = function to call on each element (required)
+# [args...] additional arguments (optional) to pass into your function
+#
+# Your function is called with three args, plus your additional args if any:
+#     <value>, <key|index>, <array name> and [args...]
+#     If your function returns 10 or 11, then visit() will
+#     stop visiting any more elements. Typically use 10 to exit
+#     early with success, and 11 to exit early with an error.
+#     But you can apply any meaning to these two values as they
+#     both exit early for whatever reason.
+#
+# Returns (0) success if all elements have been visited
+#         (10) success if your function stopped visiting with a 10
+#         (11) error if your function stopped visiting with an 11
+#
+# Example:
+#    ksl::arrayVisit dogs findValue "Roving rover"
+#    ret=$?
+#    [[ $ret -eq 0 ]]  && echo "Not found"
+#    [[ $ret -eq 10 ]] && echo "Found it"
+#    [[ $ret -eq 11 ]] && echo "Error from findValue()"
+#
+#    findValue()
+#    {
+#        # $1 = element value 
+#        # $2 = element key|index
+#        # $3 = array name
+#        # $4 = "Roving rover"
+#        [[ "$1" == "$4" ]] && return 10
+#    }
+#
+ksl::arrayVisit()
+{
+    local arrayName=$1
+    local func=$2;
+    local -n ref=$1;
+    shift 2
+    local -i ret
+    
+    for k in "${!ref[@]}"; do
+        $func "${ref["$k"]}" "$k" $arrayName "$@"
+        ret=$?
+        [[ $ret -eq 10 ]] || [[ $ret -eq 11 ]] && return $ret
+    done
+    return 0
+}
 
+# -----------------------------------------------------------
 
-
-array.contains() {
+xxarray.contains() {
   local element
 
   @return # is it required? TODO: test
