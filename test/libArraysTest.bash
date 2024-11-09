@@ -28,6 +28,35 @@ test_arrayExists ()
     ret=$?; assert '[[ $ret -eq 0 ]]'
 }
 
+test_arraySize ()
+{
+    local -i ret
+    local val
+    
+    # Missing args
+    val=$(ksl::arraySize)
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # Bad array, doesn't exist
+    unset dogs
+    val=$(ksl::arraySize dogs)
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # Good array, no elements
+    local -A dogs
+    val=$(ksl::arraySize dogs)
+    ret=$?; assert '[[ $ret -eq 0 ]]'
+    assert_equals "0" "$val"
+    
+    # Good array, several elements
+    dogs[SPOT]=
+    dogs[ROVER]=
+    dogs[FIDO]=
+    val=$(ksl::arraySize dogs)
+    ret=$?; assert '[[ $ret -eq 0 ]]'
+    assert_equals "3" "$val"
+}
+
 # -----------------------------------------------------------
 
 test_arrayHasKey ()

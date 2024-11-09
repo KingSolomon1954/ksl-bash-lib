@@ -4,9 +4,13 @@
 #
 # Contains the following:
 #
+#     ksl::arrayExists()
+#     ksl::arraySize()
 #     ksl::arrayHasKey()
-#     ksl::arrayGetField()
-#     ksl::arraySetField()
+#     ksl::arrayGetValue()
+#     ksl::arraySetValue()
+#     ksl::arrayAppendValue()
+#     ksl::arrayPrependValue()
 #
 # -----------------------------------------------------------
 
@@ -15,6 +19,8 @@
 #
 [[ -v libArraysImported ]] && [[ "$1" != "-f" ]] && return
 libArraysImported=true
+
+# -----------------------------------------------------------
 
 ksl::arrayExists ()
 {
@@ -25,16 +31,23 @@ ksl::arrayExists ()
 
 # -----------------------------------------------------------
 #
+# $1 = array name
+#
+ksl::arraySize ()
+{
+    [[ $# -eq 0 ]] && return 1
+    ! ksl::arrayExists $1 && return 1
+    local -n ref=$1
+    echo ${#ref[@]}
+}
+
+# -----------------------------------------------------------
+#
 # $1 = name of array
 # $2 = name of key in array
 # 
 # example: ksl::arrayHasKey acronyms CRC
 #
-xxksl::arrayHasKey ()
-{
-    eval "[[ \${$1[$2]+_} == _ ]]"
-}
-
 ksl::arrayHasKey ()
 {
     [[ $# -ne 2 ]] && return 1
@@ -47,14 +60,25 @@ ksl::arrayHasKey ()
 #
 # $1 = name of array
 # $2 = name of key in array
-# 
-# example: ksl::arrayGetValue acronyms CRC
+# $3 = value to set
 #
-xxksl::arrayGetValue ()
+# example: ksl::arraySetValue acronyms CRC "Cyclic Redundancy Check"
+#
+ksl::arraySetValue ()
 {
-    eval "echo \${$1[$2]}"
+    [[ $# -ne 3 ]]        && echo "arraySetValue() missing args"          && return 1
+    ! ksl::arrayExists $1 && echo "arraySetValue() no such array: \"$1\"" && return 1
+
+    eval "$1[$2]=\$3"
 }
 
+# -----------------------------------------------------------
+#
+# $1 = name of array
+# $2 = name of key in array
+# 
+# example: val=$(ksl::arrayGetValue acronyms CRC)
+#
 ksl::arrayGetValue ()
 {
     ! ksl::arrayExists $1 && echo "arrayGetValue() no such array: \"$1\"" && return 1
@@ -64,7 +88,13 @@ ksl::arrayGetValue ()
 }
 
 # -----------------------------------------------------------
-
+#
+# $1 = name of array
+# $2 = name of key in array
+# $3 = value to append
+#
+# example: ksl::arrayAppend errpass DESC " on channel 12"
+#
 ksl::arrayAppend ()
 {
     [[ $# -lt 2 ]] && return 1
@@ -72,11 +102,16 @@ ksl::arrayAppend ()
     ! ksl::arrayHasKey $1 "$2" && echo "arrayAppend() no such key: \"$2\""   && return 1
 
     eval "$1[$2]=\${$1[$2]}\$3"
-#   eval "$1[$2]=\${$1[$2]}\$3"  works
 }
 
 # -----------------------------------------------------------
-
+#
+# $1 = name of array
+# $2 = name of key in array
+# $3 = value to prepend
+#
+# example: ksl::arrayPrepend errpass DESC "Fatal error: "
+#
 ksl::arrayPrepend ()
 {
     [[ $# -lt 2 ]] && return 1
@@ -84,16 +119,6 @@ ksl::arrayPrepend ()
     ! ksl::arrayHasKey $1 "$2" && echo "arrayPrepend() no such key: \"$2\""   && return 1
 
     eval "$1[$2]=\$3\${$1[$2]}"
-}
-
-# -----------------------------------------------------------
-
-ksl::arraySetValue ()
-{
-    [[ $# -ne 3 ]]        && echo "arraySetValue() missing args"          && return 1
-    ! ksl::arrayExists $1 && echo "arraySetValue() no such array: \"$1\"" && return 1
-
-    eval "$1[$2]=\$3"
 }
 
 # -----------------------------------------------------------
