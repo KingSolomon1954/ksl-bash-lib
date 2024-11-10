@@ -11,6 +11,7 @@
 #     ksl::arraySetValue()
 #     ksl::arrayAppendValue()
 #     ksl::arrayPrependValue()
+#     ksl::arrayVisit()
 #
 # -----------------------------------------------------------
 
@@ -36,6 +37,7 @@ ksl::arrayExists()
 ksl::arraySize()
 {
     [[ $# -eq 0 ]] && return 1
+    # shellcheck disable=SC2086
     ! ksl::arrayExists $1 && return 1
     local -n ref=$1
     echo ${#ref[@]}
@@ -51,6 +53,7 @@ ksl::arraySize()
 ksl::arrayHasKey()
 {
     [[ $# -ne 2 ]] && return 1
+    # shellcheck disable=SC2086
     ! ksl::arrayExists $1 && return 1
     local -n ref=$1
     [[ ${ref["$2"]+_} == _ ]]
@@ -67,6 +70,7 @@ ksl::arrayHasKey()
 ksl::arraySetValue()
 {
     [[ $# -ne 3 ]]        && echo "arraySetValue() missing args"          && return 1
+    # shellcheck disable=SC2086
     ! ksl::arrayExists $1 && echo "arraySetValue() no such array: \"$1\"" && return 1
 
     eval "$1[$2]=\$3"
@@ -81,7 +85,9 @@ ksl::arraySetValue()
 #
 ksl::arrayGetValue()
 {
+    # shellcheck disable=SC2086
     ! ksl::arrayExists $1 && echo "arrayGetValue() no such array: \"$1\"" && return 1
+    # shellcheck disable=SC2086
     ! ksl::arrayHasKey $1 "$2" && echo "arrayGetValue() no such key: \"$2\""   && return 1
     local -n ref=$1
     echo "${ref[$2]}"
@@ -98,7 +104,9 @@ ksl::arrayGetValue()
 ksl::arrayAppend()
 {
     [[ $# -lt 2 ]] && return 1
+    # shellcheck disable=SC2086
     ! ksl::arrayExists $1 && echo "arrayAppend() no such array: \"$1\"" && return 1
+    # shellcheck disable=SC2086
     ! ksl::arrayHasKey $1 "$2" && echo "arrayAppend() no such key: \"$2\""   && return 1
 
     eval "$1[$2]=\${$1[$2]}\$3"
@@ -115,7 +123,9 @@ ksl::arrayAppend()
 ksl::arrayPrepend()
 {
     [[ $# -lt 2 ]] && return 1
+    # shellcheck disable=SC2086
     ! ksl::arrayExists $1      && echo "arrayPrepend() no such array: \"$1\"" && return 1
+    # shellcheck disable=SC2086
     ! ksl::arrayHasKey $1 "$2" && echo "arrayPrepend() no such key: \"$2\""   && return 1
 
     eval "$1[$2]=\$3\${$1[$2]}"
@@ -123,7 +133,7 @@ ksl::arrayPrepend()
 
 # -----------------------------------------------------------
 #
-# Visits each element in array and invokes your function on it.
+# Visits each element in an array and invokes your function on it.
 #
 # $1 = array (required)
 # $2 = function to call on each element (required)
@@ -132,7 +142,7 @@ ksl::arrayPrepend()
 # Your function is called with three args, plus your additional args if any:
 #     <value>, <key|index>, <array name> and [args...]
 #     If your function returns 10 or 11, then visit() will
-#     stop visiting any more elements. Typically use 10 to exit
+#     stop visiting remaining elements. Typically use 10 to exit
 #     early with success, and 11 to exit early with an error.
 #     But you can apply any meaning to these two values as they
 #     both exit early for whatever reason.
@@ -166,6 +176,7 @@ ksl::arrayVisit()
     local -i ret
     
     for k in "${!ref[@]}"; do
+        # shellcheck disable=SC2086
         $func "${ref["$k"]}" "$k" $arrayName "$@"
         ret=$?
         [[ $ret -eq 10 ]] || [[ $ret -eq 11 ]] && return $ret
@@ -174,18 +185,3 @@ ksl::arrayVisit()
 }
 
 # -----------------------------------------------------------
-
-xxarray.contains() {
-  local element
-
-  @return # is it required? TODO: test
-
-  ## TODO: probably should return a [boolean] type, not normal return
-
-  for element in "${this[@]}"
-  do
-    [[ "$element" == "$1" ]] && return 0
-  done
-  return 1
-}
-
