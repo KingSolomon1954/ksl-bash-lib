@@ -22,7 +22,9 @@
 libArraysImported=true
 
 # -----------------------------------------------------------
-
+#
+# $1 = name of array 
+#
 ksl::arrayExists()
 {
     [[ $# -eq 0 ]] && return 1
@@ -32,7 +34,7 @@ ksl::arrayExists()
 
 # -----------------------------------------------------------
 #
-# $1 = array name
+# $1 = name of array
 #
 ksl::arraySize()
 {
@@ -135,7 +137,7 @@ ksl::arrayPrepend()
 #
 # Visits each element in an array and invokes your function on it.
 #
-# $1 = array (required)
+# $1 = name of array (required)
 # $2 = function to call on each element (required)
 # [args...] additional arguments (optional) to pass into your function
 #

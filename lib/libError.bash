@@ -739,7 +739,12 @@ ksl::epSet()
 }
 
 # -------------------------------------------------------
-
+#
+# Prints the given EPS in a formatted style to stdout.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
 ksl::epPrint()
 {
     local arg=${1:-ep1}
