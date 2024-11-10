@@ -1,12 +1,10 @@
-# TODO epPrint
-
 # -----------------------------------------------------------
 #
 # Functions to support error passing
 #
 # Error passing is a technique where lower layer functions
 # set values in an error passing structure, and higher layer
-# functions along the call tree, add more context and detail
+# functions up along the call tree add more context and detail
 # to form strong diagnostics.
 #
 # epSet() is meant to be called at the lowest level of call tree.
@@ -17,7 +15,7 @@
 # appending, prepending, and setting additional fields to provide
 # improved context and diagnostics to its caller. As the level in the
 # program where the error can be analyzed for severity, the error
-# passing structure is usually printed.
+# passing structure is usually printed or logged.
 #
 # Contains the following:
 #
@@ -39,7 +37,6 @@
 #     epSetCodeNum()
 #
 # Observers
-#     epExists()
 #     epErrorName()
 #     epErrorType()
 #     epSeverity()
@@ -55,7 +52,6 @@
 #     epHasError()
 #
 # Choices for ERRNAME
-#     UnsetErrorName
 #     CaughtException
 #     ConfigurationError
 #     DataFormatError
@@ -81,7 +77,6 @@
 #     UnderflowError
 #
 # Choices for ERRTYPE 
-#     ErrorTypeNotSpecified
 #     CommunicationsError
 #     ConfigurationError
 #     EnvironmentalError
@@ -90,7 +85,6 @@
 #     QualityOfServiceError
 #
 # Choices for SEVERITY
-#     UnsetSeverity
 #     Indeterminate
 #     Critical
 #     Major
@@ -107,44 +101,6 @@ libErrorImported=true
 
 source "${KSL_BASH_LIB}"/libArrays.bash
 source "${KSL_BASH_LIB}"/libColors.bash
-
-# -------------------------------------------------------
-
-ksl::epExists()
-{
-    [[ $# -eq 0 ]] && return 1
-    local -n name="$1"
-    (( ${#name[@]} ))
-}
-
-# -------------------------------------------------------
-
-ksl::_epSetField()
-{
-    local eps=$1
-    local key=$2
-    local str=$3
-
-    [[ $# -ne 3 ]]               && echo "epSetField() missing args"     && return 1
-    ! ksl::epExists $eps         && echo "epSetField() no such EPS:$eps" && return 1
-    ! ksl::arrayHasKey $eps $key && echo "epSetField() no such Key:$key" && return 1
-
-    ksl::arraySetField $eps $key "$str"
-}
-
-# -------------------------------------------------------
-
-ksl::_epGetField()
-{
-    local eps=$1
-    local key=$2
-
-    [[ $# -ne 2 ]]               && echo "epGetField() missing args"     && return 1
-    ! ksl::epExists $eps         && echo "epGetField() no such EPS:$eps" && return 1
-    ! ksl::arrayHasKey $eps $key && echo "epGetField() no such Key:$key" && return 1
-
-    ksl::arrayGetField $eps $key
-}
 
 # -------------------------------------------------------
 #
@@ -171,7 +127,7 @@ ksl::epSetDescription()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && description="$1"
     [[ $# -eq 2 ]] && eps="$1" && description="$2"
-    ksl::_epSetField ${eps:-ep1} DESC "${description}"
+    ksl::arraySetValue "${eps:-ep1}" DESC "${description}"
 }
 
 # -------------------------------------------------------
@@ -183,7 +139,7 @@ ksl::epSetDescription()
 #
 ksl::epDescription()
 {
-    ksl::_epGetField ${1:-ep1} DESC
+    ksl::arrayGetValue "${1:-ep1}" DESC
 }
 
 # -------------------------------------------------------
@@ -211,8 +167,8 @@ ksl::epAppend()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && str="$1";
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
-    ! ksl::epExists ${eps:=ep1} && return 1
-    eval "$eps[DESC]+=\$str"
+    ! ksl::arrayExists "${eps:=ep1}" && return 1
+    eval "${eps}[DESC]+=\$str"
 }
 
 # -------------------------------------------------------
@@ -239,9 +195,11 @@ ksl::epPrepend()
 
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && str="$1";
+    # shellcheck disable=SC2034
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
-    ! ksl::epExists ${eps:=ep1} && return 1
-    eval "$eps[DESC]=\$str\${$eps[DESC]}"
+    ! ksl::arrayExists "${eps:=ep1}" && return 1
+
+    eval "${eps}[DESC]=\$str\${${eps}[DESC]}"
 }
 
 # -------------------------------------------------------
@@ -269,7 +227,7 @@ ksl::epSetErrorName()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && errName="$1"
     [[ $# -eq 2 ]] && eps="$1" && errName="$2"
-    ksl::_epSetField ${eps:-ep1} ERRNAME "${errName}"
+    ksl::arraySetValue "${eps:-ep1}" ERRNAME "${errName}"
 }
 
 # -------------------------------------------------------
@@ -281,7 +239,7 @@ ksl::epSetErrorName()
 #
 ksl::epErrorName()
 {
-    ksl::_epGetField ${1:-ep1} ERRNAME
+    ksl::arrayGetValue "${1:-ep1}" ERRNAME
 }
 
 # -------------------------------------------------------
@@ -309,7 +267,7 @@ ksl::epSetErrorType()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && errType="$1"
     [[ $# -eq 2 ]] && eps="$1" && errType="$2"
-    ksl::_epSetField ${eps:-ep1} ERRTYPE "${errType}"
+    ksl::arraySetValue "${eps:-ep1}" ERRTYPE "${errType}"
 }
 
 # -------------------------------------------------------
@@ -321,7 +279,7 @@ ksl::epSetErrorType()
 #
 ksl::epErrorType()
 {
-    ksl::_epGetField ${1:-ep1} ERRTYPE
+    ksl::arrayGetValue "${1:-ep1}" ERRTYPE
 }
 
 # -------------------------------------------------------
@@ -349,7 +307,7 @@ ksl::epSetSeverity()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && severity="$1"
     [[ $# -eq 2 ]] && eps="$1" && severity="$2"
-    ksl::_epSetField ${eps:-ep1} SEVERITY "${severity}"
+    ksl::arraySetValue "${eps:-ep1}" SEVERITY "${severity}"
 }
 
 # -------------------------------------------------------
@@ -361,7 +319,7 @@ ksl::epSetSeverity()
 #
 ksl::epSeverity()
 {
-    ksl::_epGetField ${1:-ep1} SEVERITY
+    ksl::arrayGetValue "${1:-ep1}" SEVERITY
 }
 
 # -------------------------------------------------------
@@ -389,7 +347,7 @@ ksl::epSetFuncName()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && funcName="$1"
     [[ $# -eq 2 ]] && eps="$1" && funcName="$2"
-    ksl::_epSetField ${eps:-ep1} FUNC "${funcName}"
+    ksl::arraySetValue "${eps:-ep1}" FUNC "${funcName}"
 }
 
 # -------------------------------------------------------
@@ -401,7 +359,7 @@ ksl::epSetFuncName()
 #
 ksl::epFuncName()
 {
-    ksl::_epGetField ${1:-ep1} FUNC
+    ksl::arrayGetValue "${1:-ep1}" FUNC
 }
 
 # -------------------------------------------------------
@@ -429,7 +387,7 @@ ksl::epSetFileName()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && fileName="$1"
     [[ $# -eq 2 ]] && eps="$1" && fileName="$2"
-    ksl::_epSetField ${eps:-ep1} FILE "${fileName}"
+    ksl::arraySetValue "${eps:-ep1}" FILE "${fileName}"
 }
 
 # -------------------------------------------------------
@@ -441,7 +399,7 @@ ksl::epSetFileName()
 #
 ksl::epFileName()
 {
-    ksl::_epGetField ${1:-ep1} FILE
+    ksl::arrayGetValue "${1:-ep1}" FILE
 }
 
 # -------------------------------------------------------
@@ -469,7 +427,7 @@ ksl::epSetLineNum()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && lineNum="$1"
     [[ $# -eq 2 ]] && eps="$1" && lineNum="$2"
-    ksl::_epSetField ${eps:-ep1} LINENUM "${lineNum}"
+    ksl::arraySetValue "${eps:-ep1}" LINENUM "${lineNum}"
 }
 
 # -------------------------------------------------------
@@ -481,7 +439,7 @@ ksl::epSetLineNum()
 #
 ksl::epLineNum()
 {
-    ksl::_epGetField ${1:-ep1} LINENUM
+    ksl::arrayGetValue "${1:-ep1}" LINENUM
 }
 
 # -------------------------------------------------------
@@ -509,7 +467,7 @@ ksl::epSetCodeNum()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && codeNum="$1"
     [[ $# -eq 2 ]] && eps="$1" && codeNum="$2"
-    ksl::_epSetField ${eps:-ep1} CODENUM "${codeNum}"
+    ksl::arraySetValue "${eps:-ep1}" CODENUM "${codeNum}"
 }
 
 # -------------------------------------------------------
@@ -521,7 +479,7 @@ ksl::epSetCodeNum()
 #
 ksl::epCodeNum()
 {
-    ksl::_epGetField ${1:-ep1} CODENUM
+    ksl::arrayGetValue "${1:-ep1}" CODENUM
 }
 
 # -------------------------------------------------------
@@ -549,7 +507,7 @@ ksl::epSetCause()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && cause="$1"
     [[ $# -eq 2 ]] && eps="$1" && cause="$2"
-    ksl::_epSetField ${eps:-ep1} CAUSE "${cause}"
+    ksl::arraySetValue "${eps:-ep1}" CAUSE "${cause}"
 }
 
 # -------------------------------------------------------
@@ -561,7 +519,7 @@ ksl::epSetCause()
 #
 ksl::epCause()
 {
-    ksl::_epGetField ${1:-ep1} CAUSE
+    ksl::arrayGetValue "${1:-ep1}" CAUSE
 }
 
 # -------------------------------------------------------
@@ -589,7 +547,7 @@ ksl::epSetRepair()
     [[ $# -eq 0 ]] && return 0
     [[ $# -eq 1 ]] && repair="$1"
     [[ $# -eq 2 ]] && eps="$1" && repair="$2"
-    ksl::_epSetField ${eps:-ep1} REPAIR "${repair}"
+    ksl::arraySetValue "${eps:-ep1}" REPAIR "${repair}"
 }
 
 # -------------------------------------------------------
@@ -601,7 +559,7 @@ ksl::epSetRepair()
 #
 ksl::epRepair()
 {
-    ksl::_epGetField ${1:-ep1} REPAIR
+    ksl::arrayGetValue "${1:-ep1}" REPAIR
 }
 
 # -------------------------------------------------------
@@ -614,7 +572,7 @@ ksl::epRepair()
 #
 ksl::epTimestamp()
 {
-    ksl::_epGetField ${1:-ep1} TIMESTAMP
+    ksl::arrayGetValue "${1:-ep1}" TIMESTAMP
 }
 
 # -------------------------------------------------------
@@ -630,8 +588,8 @@ ksl::epHasError()
     local arg=${1:-ep1}
     local -n eps=${arg}
     
-    ! ksl::epExists ${arg} &&
-        echo "epHasError() no such EPS:${1}" && return 1
+    ! ksl::arrayExists "$arg" &&
+        echo "epHasError() no such EPS:$1" && return 1
 
     [[ -z ${eps[DESC]}    ]] &&
     [[ -z ${eps[CODENUM]} ]] && return 1
@@ -686,9 +644,6 @@ ksl::epSet()
     
     while [[ $# -gt 0 ]]; do
         case $1 in
-        -p|--pretty-print)
-            # Example of handling an option which doesn't require an argument
-            prettyPrint=true;;
         -d|--description)
             if [[ $# -lt 2 ]]; then
                 echo "epSet(): No argument specified along with \"$1\" option."
@@ -768,29 +723,34 @@ ksl::epSet()
         shift
     done
 
-    declare -A -g ${eps:=ep1}
+    declare -A -g "${eps:=ep1}"
 
-    ksl::arraySetField $eps CAUSE     "$cause"
-    ksl::arraySetField $eps CODENUM   "$codeNum"
-    ksl::arraySetField $eps DESC      "$description"
-    ksl::arraySetField $eps ERRNAME   "$errorName"
-    ksl::arraySetField $eps ERRTYPE   "$errorType"
-    ksl::arraySetField $eps FILE      "$fileName"
-    ksl::arraySetField $eps FUNC      "$funcName"
-    ksl::arraySetField $eps LINENUM   "$lineNum"
-    ksl::arraySetField $eps REPAIR    "$repair"
-    ksl::arraySetField $eps SEVERITY  "$severity"
-    ksl::arraySetField $eps TIMESTAMP "$(date --rfc-3339=ns)"
+    ksl::arraySetValue "$eps" CAUSE     "$cause"
+    ksl::arraySetValue "$eps" CODENUM   "$codeNum"
+    ksl::arraySetValue "$eps" DESC      "$description"
+    ksl::arraySetValue "$eps" ERRNAME   "$errorName"
+    ksl::arraySetValue "$eps" ERRTYPE   "$errorType"
+    ksl::arraySetValue "$eps" FILE      "$fileName"
+    ksl::arraySetValue "$eps" FUNC      "$funcName"
+    ksl::arraySetValue "$eps" LINENUM   "$lineNum"
+    ksl::arraySetValue "$eps" REPAIR    "$repair"
+    ksl::arraySetValue "$eps" SEVERITY  "$severity"
+    ksl::arraySetValue "$eps" TIMESTAMP "$(date --rfc-3339=ns)"
 }
 
 # -------------------------------------------------------
-
+#
+# Prints the given EPS in a formatted style to stdout.
+#
+# $1 is the EPS and optional. If not supplied the default EPS
+# of "ep1" is used.
+#
 ksl::epPrint()
 {
     local arg=${1:-ep1}
     local -n eps=${arg}
-    ! ksl::epExists ${arg} && 
-        echo "epPrint() no such EPS:${1}" && return 1
+    ! ksl::arrayExists "$arg" && 
+        echo "epPrint() no such EPS:$1" && return 1
 
     if ksl::useColor; then
         local fmt="${FG_RED}${BOLD}${UNDERLINE}Error${CLEAR}\n"
@@ -803,18 +763,19 @@ ksl::epPrint()
             fmt+="%20s: %s\n"
         done
     fi
-    
+
+    # shellcheck disable=SC2059
     printf "$fmt" \
-                   "Error" "$(ksl::epErrorName   ${eps})" \
-                    "Type" "$(ksl::epErrorType   ${eps})" \
-                "Severity" "$(ksl::epSeverity    ${eps})" \
-             "Description" "$(ksl::epDescription ${eps})" \
-               "Date/Time" "$(ksl::epTimestamp   ${eps})" \
-                    "File" "$(ksl::epFileName    ${eps}):$(ksl::epLineNum ${eps})" \
-                "Function" "$(ksl::epFuncName    ${eps})()" \
-          "Probable Cause" "$(ksl::epCause       ${eps})" \
-         "Proposed Repair" "$(ksl::epRepair      ${eps})" \
-              "Error Code" "$(ksl::epCodeNum     ${eps})"
+                   "Error" "$(ksl::epErrorName   "$eps")" \
+                    "Type" "$(ksl::epErrorType   "$eps")" \
+                "Severity" "$(ksl::epSeverity    "$eps")" \
+             "Description" "$(ksl::epDescription "$eps")" \
+               "Date/Time" "$(ksl::epTimestamp   "$eps")" \
+                    "File" "$(ksl::epFileName    "$eps"):$(ksl::epLineNum "$eps")" \
+                "Function" "$(ksl::epFuncName    "$eps")()" \
+          "Probable Cause" "$(ksl::epCause       "$eps")" \
+         "Proposed Repair" "$(ksl::epRepair      "$eps")" \
+              "Error Code" "$(ksl::epCodeNum     "$eps")"
 }
 
 # -------------------------------------------------------
