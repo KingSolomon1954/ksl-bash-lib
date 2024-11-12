@@ -1,9 +1,10 @@
 # -----------------------------------------------------------
 #
-# @name libArrays
+# @name libColors
 # @brief Functions to help with color.
 #
 # @description
+#
 # Functions to help with color.
 #
 # Contains the following:
@@ -57,7 +58,8 @@ export HIDDEN="${ESC}[8m"
 
 # -----------------------------------------------------------
 #
-# See if terminal supports colors.
+# @description Determines if terminal is capable of color.
+# 
 #
 ksl::isColorCapable()
 {
@@ -89,3 +91,5 @@ ksl::useColor()
 
 # Enable color if terminal is capable
 ksl::enableColor
+
+# -----------------------------------------------------------

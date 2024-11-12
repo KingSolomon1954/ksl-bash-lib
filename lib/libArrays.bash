@@ -27,6 +27,8 @@ libArraysImported=true
 
 # -----------------------------------------------------------
 #
+# @description Returns true if the array exists.
+#
 # $1 = name of array 
 #
 ksl::arrayExists()

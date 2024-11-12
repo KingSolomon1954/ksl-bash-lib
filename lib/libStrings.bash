@@ -45,7 +45,8 @@ libStringImported=true
 
 # -----------------------------------------------------------
 #
-# Returns the number of characters in string.
+# @description Returns the number of characters in string.
+# 
 # Pass string by value. See also strLenR() next.
 #
 # Example:

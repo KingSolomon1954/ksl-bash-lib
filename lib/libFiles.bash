@@ -23,7 +23,9 @@
 libFilesImported=true
 
 # -----------------------------------------------------------
-
+#
+# @description Returns the base name of the given file.
+#
 ksl::baseName ()
 {
     local s="${1}"    

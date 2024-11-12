@@ -37,7 +37,7 @@ COLOR_FATAL=${BOLD}${FG_RED}
 
 # -------------------------------------------------------
 #
-# Output text to standard out.
+# @description Output text to standard out.
 #
 ksl::stdOut()
 {

@@ -35,7 +35,7 @@ envSep=":"
 
 # -----------------------------------------------------------
 #
-# True if path style variable $1 contains the string in $2.
+# @description True if path style variable $1 contains the string in $2.
 #
 # This is slightly different than just looking for a contained
 # string as with ksl:contains(). Here the string to look for

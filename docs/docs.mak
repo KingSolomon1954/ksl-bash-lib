@@ -13,49 +13,40 @@ endif
 ifndef D_MAK
     $(error Parent makefile must define 'D_MAK')
 endif
-ifndef D_TOOLS
-    $(error Parent makefile must define 'D_TOOLS')
-endif
 
-include $(D_MAK)/container-tech.mak
-include $(D_MAK)/container-names-pandoc.mak
+D_DOCS_BLD   := $(D_BLD)/docs/src
+D_DOCS_SITE  := $(D_BLD)/docs/site
 
-_D_DOCS_OUT := $(D_BLD)/docs
-SHDOC       := $(D_TOOLS)/shdoc/shdoc
+docs: docs-prep-out docs-shdoc docs-sphinx 
 
-docs: docs-src
+docs-sphinx: docs-shdoc-cmd docs-sphinx-cmd
 
-docs-src: $(addsuffix .rst,$(basename $(wildcard lib/*.bash)))
-
-%.rst : %.md
-	# Converting it to $@
-	$(CNTR_TECH) run -t --rm \
-	    --volume $(PWD):/work \
-	    $(CNTR_PANDOC_TOOLS_PATH) \
-	    -s /work/$(_D_DOCS_OUT)/$^ \
-	    -t rst -o /work/$(_D_DOCS_OUT)/lib/$(@F)
-
-# $(CNTR_TECH) run --rm --volume=$(pwd):/work pandoc/core
-# -s /work/_build/docs/libArrays.md
-# -t rst -o /work/_build/docs/libArrays.rst
-
-%.md : %.bash $(_D_DOCS_OUT)/lib
-	# Creating $@
-	$(SHDOC) < $(<) > _build/docs/lib/$(@F)
-
-$(_D_DOCS_OUT)/lib:
-	mkdir -p $@
+docs-shdoc: docs-sphinx 
 
 docs-clean:
-	rm -rf $(_D_DOCS_OUT)
+	rm -rf $(D_DOCS_BLD) $(D_DOCS_SITE)
 
-.PHONY: docs
+# Always remove and then recreate docs tree
+# so to catch deleted files between runs.
+#
+docs-prep-out:
+	rm -rf   $(D_DOCS_BLD) $(D_DOCS_SITE)
+	mkdir -p $(D_DOCS_BLD)
+	cp -r $(D_DOCS)/src/* $(D_DOCS_BLD)
+
+.PHONY: docs          docs-clean \
+        docs-sphinx   docs-shdoc \
+        docs-prep-out
+
+include $(D_MAK)/docs-sphinx.mak
+include $(D_MAK)/docs-shdoc.mak
 
 # ------------ Help Section ------------
 
 HELP_TXT += "\n\
-docs,       Builds all the docs\n\
-docs-src,   Builds API docs from bash sources\n\
-docs-clean, Deletes generated docs\n\
+docs,        Builds all the docs\n\
+docs-sphinx, Generates only Sphinx docs\n\
+docs-shdoc,  Generates only bash API docs\n\
+docs-clean,  Deletes generated docs\n\
 "
 endif
