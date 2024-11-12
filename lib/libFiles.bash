@@ -1,14 +1,18 @@
 # -------------------------------------------------------
 #
+# @name libFiles
+# @brief Functions to manipulate directory and file names.
+#
+# @description
 # Functions to manipulate directory and file names.
 #
 # Contains the following:
 #
-#     ksl::baseName()
-#     ksl::dirName()
-#     ksl::scriptName()
-#     ksl::scriptDir()
-#     ksl::suffix()
+#     * ksl::baseName()
+#     * ksl::dirName()
+#     * ksl::scriptName()
+#     * ksl::scriptDir()
+#     * ksl::suffix()
 #
 # -----------------------------------------------------------
 

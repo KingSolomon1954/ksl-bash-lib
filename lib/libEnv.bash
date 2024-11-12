@@ -1,22 +1,27 @@
 # -------------------------------------------------------
 #
-# Functions to manipulate shell environment PATH like variables
-# with entries separated by ":" such as MANPATH and PATH itself.
+# @name libEnv
+# @brief Functions to manipulate environment PATH like variables
+#
+# @description
+#
+# Functions to manipulate shell environment PATH like variables with
+# entries normally separated by ":" such as `MANPATH` and `PATH` itself.
 #
 # Often these variables contain directory paths but they don't have to,
-# for example HISTCONTROL. Between each path element is a separator
+# for example `HISTCONTROL`. Between each path element is a separator
 # character, normally a colon ":" but this can be changed by setting
-# evpSep.
+# `evpSep`.
 #
 # Contains the following:
 #
-#     ksl::envContains()
-#     ksl::envAppend()
-#     ksl::envPrepend()
-#     ksl::envDelete()
-#     ksl::envDeleteFirst()
-#     ksl::envDeleteLast()
-#     ksl::envSetSeparator()
+#     * ksl::envContains()
+#     * ksl::envAppend()
+#     * ksl::envPrepend()
+#     * ksl::envDelete()
+#     * ksl::envDeleteFirst()
+#     * ksl::envDeleteLast()
+#     * ksl::envSetSeparator()
 #
 # -----------------------------------------------------------
 

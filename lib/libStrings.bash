@@ -1,37 +1,41 @@
 # -----------------------------------------------------------
 #
-# Functions to manipulate shell strings.
+# @name libStrings
+# @brief Functions to process shell strings.
+#
+# @description
+# Functions to process and manipulate shell strings.
 #
 # Contains the following:
 #
-#     ksl::strlen()
-#     ksl::strlenR()
-#     ksl::isEmpty()
-#     ksl::isEmptyR()
-#     ksl::startsWith()
-#     ksl::endsWith()
-#     ksl::trimRight()
-#     ksl::trimLeft()
-#     ksl::trimWhitespace()
-#     ksl::contains()
-#     ksl::toLower()
-#     ksl::toUpper()
-#     ksl::capitalize()
-#     ksl::isAlphNum()
-#     ksl::isAlpha()
-#     ksl::# isAscii()
-#     ksl::isBlank()
-#     ksl::isCntrl()
-#     ksl::isDigit()
-#     ksl::isGraph()
-#     ksl::isLower()
-#     ksl::isInteger()
-#     ksl::isPrint()
-#     ksl::isPunct()
-#     ksl::isSpace()
-#     ksl::isUpper()
-#     ksl::# isWord()
-#     ksl::isXdigit()
+#     * ksl::strlen()
+#     * ksl::strlenR()
+#     * ksl::isEmpty()
+#     * ksl::isEmptyR()
+#     * ksl::startsWith()
+#     * ksl::endsWith()
+#     * ksl::trimRight()
+#     * ksl::trimLeft()
+#     * ksl::trimWhitespace()
+#     * ksl::contains()
+#     * ksl::toLower()
+#     * ksl::toUpper()
+#     * ksl::capitalize()
+#     * ksl::isAlphNum()
+#     * ksl::isAlpha()
+#     * ksl::# isAscii()
+#     * ksl::isBlank()
+#     * ksl::isCntrl()
+#     * ksl::isDigit()
+#     * ksl::isGraph()
+#     * ksl::isLower()
+#     * ksl::isInteger()
+#     * ksl::isPrint()
+#     * ksl::isPunct()
+#     * ksl::isSpace()
+#     * ksl::isUpper()
+#     * ksl::# isWord()
+#     * ksl::isXdigit()
 #
 # -----------------------------------------------------------
 

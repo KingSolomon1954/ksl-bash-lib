@@ -1,17 +1,21 @@
 # -----------------------------------------------------------
 #
+# @name libStdOut
+# @brief Functions to help print messages.
+#
+# @description
 # Functions to help print messages.
 #
 # Contains the following:
 #
-#    ksl::stdOut()
-#    ksl::stdErr()
-#    ksl::stdTrace()
-#    ksl::stdDebug()
-#    ksl::stdInfo()
-#    ksl::stdWarn()
-#    ksl::stdError()
-#    ksl::stdFatal()
+#    * ksl::stdOut()
+#    * ksl::stdErr()
+#    * ksl::stdTrace()
+#    * ksl::stdDebug()
+#    * ksl::stdInfo()
+#    * ksl::stdWarn()
+#    * ksl::stdError()
+#    * ksl::stdFatal()
 #
 # -----------------------------------------------------------
 

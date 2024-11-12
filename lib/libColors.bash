@@ -1,13 +1,17 @@
 # -----------------------------------------------------------
 #
+# @name libArrays
+# @brief Functions to help with color.
+#
+# @description
 # Functions to help with color.
 #
 # Contains the following:
 #
-#     ksl::isColorCapable()
-#     ksl::enableColor()
-#     ksl::disableColor()
-#     ksl::useColor()
+#     * ksl::isColorCapable()
+#     * ksl::enableColor()
+#     * ksl::disableColor()
+#     * ksl::useColor()
 #
 # -----------------------------------------------------------
 

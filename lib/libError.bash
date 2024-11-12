@@ -1,95 +1,103 @@
 # -----------------------------------------------------------
 #
-# Functions to support error passing
+# @name libError
+# @brief Functions to support error passing
 #
+# @description
 # Error passing is a technique where lower layer functions
 # set values in an error passing structure, and higher layer
 # functions up along the call tree add more context and detail
 # to form strong diagnostics.
 #
-# epSet() is meant to be called at the lowest level of call tree.
-# Generally the leaf most function does the epSet. Each parent function
-# up along the call chain tests for a returned fail condition (testing
-# either the child function return code or checking the EPS itself using
-# epHasError) and then contributes to the error passing structure by
-# appending, prepending, and setting additional fields to provide
-# improved context and diagnostics to its caller. As the level in the
-# program where the error can be analyzed for severity, the error
-# passing structure is usually printed or logged.
+# `epSet()` is meant to be called at the lowest level of a call tree.
+# Generally the leaf most function does the `epSet()`. Each parent
+# function up along the call chain tests for a returned fail condition,
+# testing either the child function return code or checking the error
+# passing structure (EPS) itself using `epHasError()`, and then
+# contributes to the error passing structure by appending, prepending,
+# and setting additional fields to provide improved context and
+# diagnostics to its caller. As the level in the program where the error
+# can be analyzed for severity, the EPS is usually printed or logged.
 #
 # Contains the following:
 #
-# Lifecycle
-#      epSet()
+# **Lifecycle**
 #
-# Modifiers
-#     epPrepend()
-#     epAppend()
-#     epSetErrorName()
-#     epSetErrorType()
-#     epSetDescription()
-#     epSetSeverity()
-#     epSetProbableCause()
-#     epSetProposedRepair()
-#     epSetFileName()
-#     epSetFuncName()
-#     epSetLineNum()
-#     epSetCodeNum()
+#     * epSet()
 #
-# Observers
-#     epErrorName()
-#     epErrorType()
-#     epSeverity()
-#     epFileName()
-#     epFuncName()
-#     epLineNum()
-#     epCodeNum()
-#     epFullDesc()
-#     epDescription()
-#     epProbableCause()
-#     epProposedRepair()
-#     epTimestamp()
-#     epHasError()
+# **Modifiers**
 #
-# Choices for ERRNAME
-#     CaughtException
-#     ConfigurationError
-#     DataFormatError
-#     AlreadyExistsError
-#     IllegalStateError
-#     InputOutputError
-#     InvalidAccessError
-#     InvalidArgumentError
-#     LengthError
-#     LogicError
-#     NetworkError
-#     NoPermissionError
-#     NotFoundError
-#     NotImplementedError
-#     NullPointerError
-#     NullValueError
-#     OperationNotPossibleError
-#     OverflowError
-#     RangeError
-#     SignalError
-#     SystemCallError
-#     TimeoutError
-#     UnderflowError
+#     * epPrepend()
+#     * epAppend()
+#     * epSetErrorName()
+#     * epSetErrorType()
+#     * epSetDescription()
+#     * epSetSeverity()
+#     * epSetProbableCause()
+#     * epSetProposedRepair()
+#     * epSetFileName()
+#     * epSetFuncName()
+#     * epSetLineNum()
+#     * epSetCodeNum()
 #
-# Choices for ERRTYPE 
-#     CommunicationsError
-#     ConfigurationError
-#     EnvironmentalError
-#     EquipmentError
-#     ProcessingError
-#     QualityOfServiceError
+# **Observers**
 #
-# Choices for SEVERITY
-#     Indeterminate
-#     Critical
-#     Major
-#     Minor
-#     Warning
+#     * epErrorName()
+#     * epErrorType()
+#     * epSeverity()
+#     * epFileName()
+#     * epFuncName()
+#     * epLineNum()
+#     * epCodeNum()
+#     * epFullDesc()
+#     * epDescription()
+#     * epProbableCause()
+#     * epProposedRepair()
+#     * epTimestamp()
+#     * epHasError()
+#
+# **Choices for `SEVERITY`**
+#
+#     * Indeterminate
+#     * Critical
+#     * Major
+#     * Minor
+#     * Warning
+#
+# **Choices for `ERRNAME`**
+#
+#     * CaughtException
+#     * ConfigurationError
+#     * DataFormatError
+#     * AlreadyExistsError
+#     * IllegalStateError
+#     * InputOutputError
+#     * InvalidAccessError
+#     * InvalidArgumentError
+#     * LengthError
+#     * LogicError
+#     * NetworkError
+#     * NoPermissionError
+#     * NotFoundError
+#     * NotImplementedError
+#     * NullPointerError
+#     * NullValueError
+#     * OperationNotPossibleError
+#     * OverflowError
+#     * RangeError
+#     * SignalError
+#     * SystemCallError
+#     * TimeoutError
+#     * UnderflowError
+#
+# **Choices for `ERRTYPE`**
+#
+#     * CommunicationsError
+#     * ConfigurationError
+#     * EnvironmentalError
+#     * EquipmentError
+#     * ProcessingError
+#     * QualityOfServiceError
 #
 # -----------------------------------------------------------
 
@@ -104,27 +112,35 @@ source "${KSL_BASH_LIB}"/libColors.bash
 
 # -------------------------------------------------------
 #
-# Sets the description in the given EPS.
-#
+# @description Sets the description field in the given EPS.
+# 
 # Overwrites any previous description. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the description.
-# If 1 arg is given, then $1 is the description and the default 
-# EPS of "ep1" is used. If 0 args, then no action is taken and
-# not an error.
+# If two args are given, then $1 is EPS and $2 is the description.
+# If one arg is given, then $1 is the description and the default 
+# EPS of `ep1` is used.
+
+# @arg $1 array is either the EPS or the description depending on number of args as described above.
+# @arg $2 string is the description if two args are given.
 #
-# Examples:
+# @exitcode 0 Success - description was set.
+# @exitcode 1 Failed - no description was set. Could be bad EPS or missing description arg.
+#
+# @example
 #     epSetDescription "Broken channel"        # ep1 is used
-#     epSetDescription ep2 "Broken channel"
+#     epSetDescription ep2 "Broken channel"    # ep2 is used
 #     epSetDescription ""                      # sets ep1 description to empty
-#     epSetDescription                         # no action
+#     epSetDescription                         # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array
 #
 ksl::epSetDescription()
 {
     local eps
     local description
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && description="$1"
     [[ $# -eq 2 ]] && eps="$1" && description="$2"
     ksl::arraySetValue "${eps:-ep1}" DESC "${description}"
@@ -224,7 +240,7 @@ ksl::epSetErrorName()
     local eps
     local errName
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && errName="$1"
     [[ $# -eq 2 ]] && eps="$1" && errName="$2"
     ksl::arraySetValue "${eps:-ep1}" ERRNAME "${errName}"
@@ -264,7 +280,7 @@ ksl::epSetErrorType()
     local eps
     local errType
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && errType="$1"
     [[ $# -eq 2 ]] && eps="$1" && errType="$2"
     ksl::arraySetValue "${eps:-ep1}" ERRTYPE "${errType}"
@@ -304,7 +320,7 @@ ksl::epSetSeverity()
     local eps
     local severity
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && severity="$1"
     [[ $# -eq 2 ]] && eps="$1" && severity="$2"
     ksl::arraySetValue "${eps:-ep1}" SEVERITY "${severity}"
@@ -344,7 +360,7 @@ ksl::epSetFuncName()
     local eps
     local funcName
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && funcName="$1"
     [[ $# -eq 2 ]] && eps="$1" && funcName="$2"
     ksl::arraySetValue "${eps:-ep1}" FUNC "${funcName}"
@@ -384,7 +400,7 @@ ksl::epSetFileName()
     local eps
     local fileName
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && fileName="$1"
     [[ $# -eq 2 ]] && eps="$1" && fileName="$2"
     ksl::arraySetValue "${eps:-ep1}" FILE "${fileName}"
@@ -424,7 +440,7 @@ ksl::epSetLineNum()
     local eps
     local lineNum
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && lineNum="$1"
     [[ $# -eq 2 ]] && eps="$1" && lineNum="$2"
     ksl::arraySetValue "${eps:-ep1}" LINENUM "${lineNum}"
@@ -544,7 +560,7 @@ ksl::epSetRepair()
     local eps
     local repair
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && repair="$1"
     [[ $# -eq 2 ]] && eps="$1" && repair="$2"
     ksl::arraySetValue "${eps:-ep1}" REPAIR "${repair}"
@@ -589,7 +605,7 @@ ksl::epHasError()
     local -n eps=${arg}
     
     ! ksl::arrayExists "$arg" &&
-        echo "epHasError() no such EPS:$1" && return 1
+        echo "epHasError() no such EPS:$1" >&2 && return 1
 
     [[ -z ${eps[DESC]}    ]] &&
     [[ -z ${eps[CODENUM]} ]] && return 1
@@ -646,76 +662,76 @@ ksl::epSet()
         case $1 in
         -d|--description)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             description="$2"
             shift;;
         -fi|--fileName)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             fileName="$2"
             shift;;
         -fu|--funcName)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             funcName="$2"
             shift;;
         -li|--lineNum)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             lineNum="$2"
             shift;;
         -sv|--severity)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             severity="$2"
             shift;;
         -en|--errorName)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             errorName="$2"
             shift;;
         -et|--errorType)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             errorType="$2"
             shift;;
         -cn|--codeNum)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             codeNum="$2"
             shift;;
         -ca|--cause)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             cause="$2"
             shift;;
         -rp|--repair)
             if [[ $# -lt 2 ]]; then
-                echo "epSet(): No argument specified along with \"$1\" option."
+                echo "epSet(): No argument specified along with \"$1\" option." >&2
                 return 1
             fi
             repair="$2"
             shift;;
         -*)
-            echo "epSet(): Invalid option \"$1\"".
+            echo "epSet(): Invalid option \"$1\"". >&2
             return 1;;
         "") ;;  # Ignore empty arg
         *) eps="$1" ;;

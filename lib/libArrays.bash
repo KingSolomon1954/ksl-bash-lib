@@ -1,17 +1,21 @@
 # -------------------------------------------------------
 #
+# @name libArrays
+# @brief Functions to support array processing
+#
+# @description
 # Functions to help with arrays.
 #
 # Contains the following:
 #
-#     ksl::arrayExists()
-#     ksl::arraySize()
-#     ksl::arrayHasKey()
-#     ksl::arrayGetValue()
-#     ksl::arraySetValue()
-#     ksl::arrayAppendValue()
-#     ksl::arrayPrependValue()
-#     ksl::arrayVisit()
+#     * ksl::arrayExists()
+#     * ksl::arraySize()
+#     * ksl::arrayHasKey()
+#     * ksl::arrayGetValue()
+#     * ksl::arraySetValue()
+#     * ksl::arrayAppendValue()
+#     * ksl::arrayPrependValue()
+#     * ksl::arrayVisit()
 #
 # -----------------------------------------------------------
 
@@ -71,9 +75,9 @@ ksl::arrayHasKey()
 #
 ksl::arraySetValue()
 {
-    [[ $# -ne 3 ]]        && echo "arraySetValue() missing args"          && return 1
+    [[ $# -ne 3 ]]        && echo "arraySetValue() missing args" >&2          && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1 && echo "arraySetValue() no such array: \"$1\"" && return 1
+    ! ksl::arrayExists $1 && echo "arraySetValue() no such array: \"$1\"" >&2 && return 1
 
     eval "$1[$2]=\$3"
 }
@@ -88,9 +92,9 @@ ksl::arraySetValue()
 ksl::arrayGetValue()
 {
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1 && echo "arrayGetValue() no such array: \"$1\"" && return 1
+    ! ksl::arrayExists $1 && echo "arrayGetValue() no such array: \"$1\"" >&2    && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayHasKey $1 "$2" && echo "arrayGetValue() no such key: \"$2\""   && return 1
+    ! ksl::arrayHasKey $1 "$2" && echo "arrayGetValue() no such key: \"$2\"" >&2 && return 1
     local -n ref=$1
     echo "${ref[$2]}"
 }
@@ -107,9 +111,9 @@ ksl::arrayAppend()
 {
     [[ $# -lt 2 ]] && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1 && echo "arrayAppend() no such array: \"$1\"" && return 1
+    ! ksl::arrayExists $1 && echo "arrayAppend() no such array: \"$1\"" >&2   && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayHasKey $1 "$2" && echo "arrayAppend() no such key: \"$2\""   && return 1
+    ! ksl::arrayHasKey $1 "$2" && echo "arrayAppend() no such key: \"$2\"" >&2 && return 1
 
     eval "$1[$2]=\${$1[$2]}\$3"
 }
@@ -126,9 +130,9 @@ ksl::arrayPrepend()
 {
     [[ $# -lt 2 ]] && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1      && echo "arrayPrepend() no such array: \"$1\"" && return 1
+    ! ksl::arrayExists $1      && echo "arrayPrepend() no such array: \"$1\"" >&2 && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayHasKey $1 "$2" && echo "arrayPrepend() no such key: \"$2\""   && return 1
+    ! ksl::arrayHasKey $1 "$2" && echo "arrayPrepend() no such key: \"$2\""   >&2 && return 1
 
     eval "$1[$2]=\$3\${$1[$2]}"
 }
