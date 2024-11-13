@@ -1,7 +1,3 @@
-
-.. |logo image|  image:: /images/pub/LogoBootstrap60x90.png
-   :align: middle
-
 ***********************
 |LibName| Documentation
 ***********************

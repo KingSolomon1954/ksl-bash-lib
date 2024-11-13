@@ -60,7 +60,7 @@ templates_path = [ "templates", "shared/templates"]
 #
 html_static_path = ["static"]
 
-html_logo = "images/pub/CampfireSmall.png"
+html_logo = "images/pub/blue-fire-icon-60x90.png"
 
 # ----------------------------------------------------------------
 #

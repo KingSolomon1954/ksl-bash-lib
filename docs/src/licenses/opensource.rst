@@ -1,29 +1,38 @@
 *********************
 Open Source Inventory
 *********************
-This page lists the open source packages used in this service.
+This page lists the open source packages used in this project.
 
-Poco
-====
-https://pocoproject.org/
+Sphinx
+======
+https://www.sphinx-doc.org/
 
-The Poco C++ Libraries are powerful cross-platform C++ libraries for
-building network- and Internet-based applications that run on desktop,
-server, mobile, IoT, and embedded systems.
+Sphinx makes it easy to create intelligent and beautiful
+documentation. Sphinx uses reStructuredText as its markup language, and
+many of its strengths come from the power and straightforwardness of
+reStructuredText and its parsing and translating suite, the Docutils.
 
-gRPC
-====
-https://grpc.io/
+Pandoc
+======
+https://pandoc.org
 
-gRPC is a modern, open source, high-performance remote procedure call
-(RPC) framework that can run anywhere. gRPC enables client and server
-applications to communicate transparently, and simplifies the building
-of connected systems.
+Pandoc is a universal document converter.
 
-doctest
-=======
-https://github.com/doctest/doctest
+bash_unit
+=========
+https://github.com/pgrange/bash_unit
 
-doctest is a C++ testing framework that claims to be fastest in both
-compile times (by orders of magnitude) and runtime compared to other
-feature-rich alternatives.
+bash_unit allows you to write unit tests (functions starting with test),
+run them and, in case of failure, displays the stack trace with source
+file and line number indications to locate the problem.
+
+ShellCheck
+==========
+https://github.com/koalaman/shellcheck
+
+A shell script static analysis tool.
+
+Blue Fire Icon
+==============
+
+Courtesy https://www.freeiconspng.com/img/2450"
