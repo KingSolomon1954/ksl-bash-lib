@@ -84,16 +84,10 @@ _create-sta_dirs:
 
 # ------------ Help Section ------------
 
-static-analysis-help: $(_STA_HELP_FILE)
-	@$(_STA_HELP_FILE) $(D_MAK)
-
-.PHONY: static-analysis-help
-
 HELP_TXT += "\n\
 <filepath>.sta,        Runs Bash static analysis on given file\n\
 static-analysis,       Runs Bash static analysis against repo\n\
 static-analysis-clean, Deletes Bash static analysis artifacts\n\
-static-analysis-help,  Displays help for Bash static analysis\n\
 "
 
 endif

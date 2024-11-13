@@ -16,7 +16,7 @@
 # passing structure (EPS) itself using `epHasError()`, and then
 # contributes to the error passing structure by appending, prepending,
 # and setting additional fields to provide improved context and
-# diagnostics to its caller. As the level in the program where the error
+# diagnostics to its caller. At the level in the program where the error
 # can be analyzed for severity, the EPS is usually printed or logged.
 #
 # Contains the following:
@@ -117,23 +117,22 @@ source "${KSL_BASH_LIB}"/libColors.bash
 # Overwrites any previous description. EPS must already exist.
 #
 # If two args are given, then $1 is EPS and $2 is the description.
-# If one arg is given, then $1 is the description and the default 
-# EPS of `ep1` is used.
-
+# If one arg is given, then $1 is the description and EPS `ep1` is used.
+#
 # @arg $1 array is either the EPS or the description depending on number of args as described above.
 # @arg $2 string is the description if two args are given.
 #
 # @exitcode 0 Success - description was set.
-# @exitcode 1 Failed - no description was set. Could be bad EPS or missing description arg.
+# @exitcode 1 Failed - bad EPS or missing args.
 #
 # @example
-#     epSetDescription "Broken channel"        # ep1 is used
-#     epSetDescription ep2 "Broken channel"    # ep2 is used
-#     epSetDescription ""                      # sets ep1 description to empty
-#     epSetDescription                         # error
+#     ksl::epSetDescription "Broken channel"        # ep1 is used
+#     ksl::epSetDescription ep2 "Broken channel"    # ep2 is used
+#     ksl::epSetDescription ""                      # sets ep1 description to empty
+#     ksl::epSetDescription                         # error
 #
 # @stderr arraySetValue() missing args
-# @stderr arraySetValue() no such array
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetDescription()
 {
@@ -148,10 +147,20 @@ ksl::epSetDescription()
 
 # -------------------------------------------------------
 #
-# Returns the description in the given EPS.
+# @description Retrieve the description.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epDescription               # ep1 is used
+#     echo ksl::epDescription ep2           # ep2 is used
+#     str=$(ksl::epDescription ep2)         # ep2 is used
+#
+# @stdout the description
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epDescription()
 {
@@ -160,27 +169,35 @@ ksl::epDescription()
 
 # -------------------------------------------------------
 #
-# Appends given string to the description in the given EPS.
+# @description Appends given string to the description in the given EPS.
 #
 # EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the string
-#  to append. If 1 arg is given, then $1 is the string to 
-# append and the default EPS of "ep1" is used. If 0 args, then
-# no action is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the string to
+# append. If one arg is given, then $1 is the string to append and EPS
+# `ep1` is used.
 #
-# Examples:
-#     epAppend "Broken channel"        # ep1 is used
-#     epAppend ep2 "Broken channel"
-#     epAppend ""                      # append empty string ep1
-#     epAppend                         # no action
+# @arg $1 array is either the EPS or the string to append depending on number of args as described above.
+# @arg $2 string is the string to append if two args are given.
+#
+# @exitcode 0 Success - string was appended.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epAppend "Broken channel"        # ep1 is used
+#     ksl::epAppend ep2 "Broken channel"    # ep2 is used
+#     ksl::epAppend ""                      # append empty string to ep1
+#     ksl::epAppend                         # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epAppend()
 {
     local eps
     local str
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && str="$1";
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
     ! ksl::arrayExists "${eps:=ep1}" && return 1
@@ -189,20 +206,28 @@ ksl::epAppend()
 
 # -------------------------------------------------------
 #
-# Prepends given string to the description in the given EPS.
+# @description Prepends given string to the description in the given EPS.
 #
 # EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the string to
-# prepend. If 1 arg is given, then $1 is the string to prepend 
-# and the default EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the string to
+# prepend. If one arg is given, then $1 is the string to prepend 
+# and EPS `ep1` is used.
 #
-# Examples:
-#     epPrepend "Broken channel"        # ep1 is used
-#     epPrepend ep2 "Broken channel"
-#     epPrepend ""                      # prepends empty string ep1
-#     epPrepend                         # no action
+# @arg $1 array is either the EPS or the string to prepend depending on number of args as described above.
+# @arg $2 string is the string to prepend if two args are given.
+#
+# @exitcode 0 Success - string was prepended.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epPrepend "Broken channel"        # ep1 is used
+#     ksl::epPrepend ep2 "Broken channel"    # ep2 is used
+#     ksl::epPrepend ""                      # prepend empty string to ep1
+#     ksl::epPrepend                         # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epPrepend()
 {
@@ -220,20 +245,27 @@ ksl::epPrepend()
 
 # -------------------------------------------------------
 #
-# Sets the error name in the given EPS.
+# @description Sets the error name in the given EPS.
 #
 # Overwrites any previous error name. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the error name.
-# If 1 arg is given, then $1 is the error name and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the error name.
+# If one arg is given, then $1 is the error name and EPS `ep1` is used.
+#
+# @arg $1 array is either the EPS or the error name depending on number of args as described above.
+# @arg $2 string is the error name if two args are given.
+#
+# @exitcode 0 Success - error name was set.
+# @exitcode 1 Failed - bad EPS or missing args.
 #
 # Examples:
-#     epSetErrorName "OverflowError"        # ep1 is used
-#     epSetErrorName ep2 "OverflowError"
-#     epSetErrorName  ""                    # sets ep1 error name to empty
-#     epSetErrorName                        # no action
+#     ksl::epSetErrorName "OverflowError"        # ep1 is used
+#     ksl::epSetErrorName ep2 "OverflowError"    # ep2 is used
+#     ksl::epSetErrorName  ""                    # sets ep1 error name to empty
+#     ksl::epSetErrorName                        # no error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetErrorName()
 {
@@ -248,10 +280,20 @@ ksl::epSetErrorName()
 
 # -------------------------------------------------------
 #
-# Returns the error name in the given EPS.
+# @description Returns the error name in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epErrorName               # ep1 is used
+#     echo ksl::epErrorName ep2           # ep2 is used
+#     str=$(ksl::epErrorName ep2)         # ep2 is used
+#
+# @stdout the error name
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epErrorName()
 {
@@ -260,20 +302,24 @@ ksl::epErrorName()
 
 # -------------------------------------------------------
 #
-# Sets the error type in the given EPS.
+# @description Sets the error type in the given EPS.
 #
-# Overwrites any previous error name. EPS must already exist.
+# Overwrites any previous error type. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the error type.
-# If 1 arg is given, then $1 is the error type and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# @arg $1 array is either the EPS or the error type depending on number of args as described above.
+# @arg $2 string is the error type if two args are given.
 #
-# Examples:
-#     epSetErrorType "ProcessingError"       # ep1 is used
-#     epSetErrorType ep2 "ProcessingError"
-#     epSetErrorType  ""                    # sets ep1 error type to empty
-#     epSetErrorType                        # no action
+# @exitcode 0 Success - description was set.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epSetErrorType "ProcessingError"      # ep1 is used
+#     ksl::epSetErrorType ep2 "ProcessingError"  # ep2 is used
+#     ksl::epSetErrorType  ""                    # sets ep1 error type to empty
+#     ksl::epSetErrorType                        # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetErrorType()
 {
@@ -288,10 +334,20 @@ ksl::epSetErrorType()
 
 # -------------------------------------------------------
 #
-# Returns the error type in the given EPS.
+# @description Returns the error type in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epErrorType               # ep1 is used
+#     echo ksl::epErrorType ep2           # ep2 is used
+#     str=$(ksl::epErrorType ep2)         # ep2 is used
+#
+# @stdout the error type
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epErrorType()
 {
@@ -300,20 +356,27 @@ ksl::epErrorType()
 
 # -------------------------------------------------------
 #
-# Sets the error severity in the given EPS.
+# @description Sets the error severity in the given EPS.
 #
 # Overwrites any previous severity. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the severity.
-# If 1 arg is given, then $1 is the severity and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the severity.
+# If one arg is given, then $1 is the severity and EPS `ep1` is used.
 #
-# Examples:
-#     epSetSeverity "Critical"        # ep1 is used
-#     epSetSeverity ep2 "Critical"
-#     epSetSeverity  ""               # sets ep1 severity to empty
-#     epSetSeverity                   # no action
+# @arg $1 array is either the EPS or the severity depending on number of args as described above.
+# @arg $2 string is the severity if two args are given.
+#
+# @exitcode 0 Success - severity was set.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epSetSeverity "Critical"        # ep1 is used
+#     ksl::epSetSeverity ep2 "Critical"    # ep2 is used
+#     ksl::epSetSeverity  ""               # sets ep1 severity to empty
+#     ksl::epSetSeverity                   # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetSeverity()
 {
@@ -328,10 +391,20 @@ ksl::epSetSeverity()
 
 # -------------------------------------------------------
 #
-# Returns the severity in the given EPS.
+# @description Returns the severity in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epSeverity               # ep1 is used
+#     echo ksl::epSeverity ep2           # ep2 is used
+#     str=$(ksl::epSeverity ep2)         # ep2 is used
+#
+# @stdout the severity
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSeverity()
 {
@@ -340,20 +413,27 @@ ksl::epSeverity()
 
 # -------------------------------------------------------
 #
-# Sets the function name in the given EPS.
+# @description Sets the function name in the given EPS.
 #
 # Overwrites any previous function name. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the function name.
-# If 1 arg is given, then $1 is the function name and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the function name.
+# If one arg is given, then $1 is the function name and EPS `ep1` is used.
 #
-# Examples:
-#     epSetFuncName "sort()"        # ep1 is used
-#     epSetFuncName ep2 "sort()"
-#     epSetFuncName  ""             # sets ep1 function name to empty
-#     epSetFuncName                 # no action
+# @arg $1 array is either the EPS or the function name depending on number of args as described above.
+# @arg $2 string is the function name if two args are given.
+#
+# @exitcode 0 Success - function name was set.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epSetFuncName "sort()"        # ep1 is used
+#     ksl::epSetFuncName ep2 "sort()"    # ep2 is used
+#     ksl::epSetFuncName  ""             # sets ep1 function name to empty
+#     ksl::epSetFuncName                 # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetFuncName()
 {
@@ -368,10 +448,20 @@ ksl::epSetFuncName()
 
 # -------------------------------------------------------
 #
-# Returns the funcition name in the given EPS.
+# @description Returns the function name in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epFuncName               # ep1 is used
+#     echo ksl::epFuncName ep2           # ep2 is used
+#     str=$(ksl::epFuncName ep2)         # ep2 is used
+#
+# @stdout the function name
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epFuncName()
 {
@@ -380,20 +470,27 @@ ksl::epFuncName()
 
 # -------------------------------------------------------
 #
-# Sets the file name in the given EPS.
+# @description Sets the file name in the given EPS.
 #
 # Overwrites any previous file name. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the file name.
-# If 1 arg is given, then $1 is the file name and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the file name.
+# If one arg is given, then $1 is the file name and EPS `ep1` is used.
 #
-# Examples:
-#     epSetFileName "sort()"        # ep1 is used
-#     epSetFileName ep2 "sort()"
-#     epSetFileName  ""             # sets ep1 file name to empty
-#     epSetFileName                 # no action
+# @arg $1 array is either the EPS or the file name on number of args as described above.
+# @arg $2 string is the file name if two args are given.
+#
+# @exitcode 0 Success - file name was set.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epSetFileName "sort()"        # ep1 is used
+#     ksl::epSetFileName ep2 "sort()"    # ep2 is used
+#     ksl::epSetFileName  ""             # sets ep1 file name to empty
+#     ksl::epSetFileName                 # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetFileName()
 {
@@ -408,10 +505,20 @@ ksl::epSetFileName()
 
 # -------------------------------------------------------
 #
-# Returns the file name in the given EPS.
+# @description Returns the file name in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epFileName               # ep1 is used
+#     echo ksl::epFileName ep2           # ep2 is used
+#     str=$(ksl::epFileName ep2)         # ep2 is used
+#
+# @stdout the file name
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epFileName()
 {
@@ -420,20 +527,27 @@ ksl::epFileName()
 
 # -------------------------------------------------------
 #
-# Sets the line number in the given EPS.
+# @description Sets the line number in the given EPS.
 #
 # Overwrites any previous line number. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the line number.
-# If 1 arg is given, then $1 is the line number and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the line number.
+# If one arg is given, then $1 is the line number and EPS `ep1` is used.
 #
-# Examples:
-#     epSetLineNum "sort()"        # ep1 is used
-#     epSetLineNum ep2 "sort()"
-#     epSetLineNum  ""             # sets ep1 line number to empty
-#     epSetLineNum                 # no action
+# @arg $1 array is either the EPS or the line number depending on number of args as described above.
+# @arg $2 string is the line number if two args are given.
+#
+# @exitcode 0 Success - line number was set.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epSetLineNum "sort()"        # ep1 is used
+#     ksl::epSetLineNum ep2 "sort()"    # ep2 is used
+#     ksl::epSetLineNum  ""             # sets ep1 line number to empty
+#     ksl::epSetLineNum                 # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetLineNum()
 {
@@ -448,10 +562,20 @@ ksl::epSetLineNum()
 
 # -------------------------------------------------------
 #
-# Returns the line number in the given EPS.
+# @description Returns the line number in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epLineNum               # ep1 is used
+#     echo ksl::epLineNum ep2           # ep2 is used
+#     str=$(ksl::epLineNum ep2)         # ep2 is used
+#
+# @stdout the line number
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epLineNum()
 {
@@ -460,27 +584,34 @@ ksl::epLineNum()
 
 # -------------------------------------------------------
 #
-# Sets a code number in the given EPS.
+# @description Sets a code number in the given EPS.
 #
 # Overwrites any previous code number. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the code number.
-# If 1 arg is given, then $1 is the code number and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the code number.
+# If one arg is given, then $1 is the code number and EPS `ep1` is used.
 #
-# Examples:
-#     epSetCodeNum "sort()"        # ep1 is used
-#     epSetCodeNum ep2 "sort()"
-#     epSetCodeNum  ""             # sets ep1 code number to empty
-#     epSetCodeNum                 # no action
+# @arg $1 array is either the EPS or the code number depending on number of args as described above.
+# @arg $2 string is the code number if two args are given.
+#
+# @exitcode 0 Success - code number was set.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epSetCodeNum "sort()"        # ep1 is used
+#     ksl::epSetCodeNum ep2 "sort()"    # ep2 is used
+#     ksl::epSetCodeNum  ""             # sets ep1 code number to empty
+#     ksl::epSetCodeNum                 # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetCodeNum()
 {
     local eps
     local codeNum
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && codeNum="$1"
     [[ $# -eq 2 ]] && eps="$1" && codeNum="$2"
     ksl::arraySetValue "${eps:-ep1}" CODENUM "${codeNum}"
@@ -488,10 +619,20 @@ ksl::epSetCodeNum()
 
 # -------------------------------------------------------
 #
-# Returns the code number in the given EPS.
+# @description Returns the code number in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epCodeNum               # ep1 is used
+#     echo ksl::epCodeNum ep2           # ep2 is used
+#     str=$(ksl::epCodeNum ep2)         # ep2 is used
+#
+# @stdout the code number
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epCodeNum()
 {
@@ -500,27 +641,34 @@ ksl::epCodeNum()
 
 # -------------------------------------------------------
 #
-# Sets a probably cause string in the given EPS.
+# @description Sets a probable cause string in the given EPS.
 #
 # Overwrites any previous cause. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the cause.
-# If 1 arg is given, then $1 is the cause and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the cause.
+# If one arg is given, then $1 is the cause and EPS `ep1` is used.
 #
-# Examples:
-#     epSetCause "sort()"        # ep1 is used
-#     epSetCause ep2 "sort()"
-#     epSetCause  ""             # sets ep1 cause to empty
-#     epSetCause                 # no action
+# @arg $1 array is either the EPS or the cause depending on number of args as described above.
+# @arg $2 string is the cause if two args are given.
+#
+# @exitcode 0 Success - cause was set.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epSetCause "sort()"        # ep1 is used
+#     ksl::epSetCause ep2 "sort()"    # ep2 is used
+#     ksl::epSetCause  ""             # sets ep1 cause to empty
+#     ksl::epSetCause                 # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetCause()
 {
     local eps
     local cause
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && cause="$1"
     [[ $# -eq 2 ]] && eps="$1" && cause="$2"
     ksl::arraySetValue "${eps:-ep1}" CAUSE "${cause}"
@@ -528,10 +676,20 @@ ksl::epSetCause()
 
 # -------------------------------------------------------
 #
-# Returns the probable cause in the given EPS.
+# @description Returns the probable cause in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epCause               # ep1 is used
+#     echo ksl::epCause ep2           # ep2 is used
+#     str=$(ksl::epCause ep2)         # ep2 is used
+#
+# @stdout the cause
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epCause()
 {
@@ -540,20 +698,27 @@ ksl::epCause()
 
 # -------------------------------------------------------
 #
-# Sets a probable repair string in the given EPS.
+# @description Sets a probable repair string in the given EPS.
 #
 # Overwrites any previous repair. EPS must already exist.
 #
-# If 2 args are given, then $1 is EPS and $2 is the repair.
-# If 1 arg is given, then $1 is the repair and the default 
-# EPS of "ep1" is used. If 0 args, then no action
-# is taken and not an error.
+# If two args are given, then $1 is EPS and $2 is the repair.
+# If one arg is given, then $1 is the repair and EPS `ep1` is used.
 #
-# Examples:
-#     epSetRepair "sort()"        # ep1 is used
-#     epSetRepair ep2 "sort()"
-#     epSetRepair  ""             # sets ep1 repair to empty
-#     epSetRepair                 # no action
+# @arg $1 array is either the EPS or the repair depending on number of args as described above.
+# @arg $2 string is the repair if two args are given.
+#
+# @exitcode 0 Success - repair was set.
+# @exitcode 1 Failed - bad EPS or missing args.
+#
+# @example
+#     ksl::epSetRepair "sort()"        # ep1 is used
+#     ksl::epSetRepair ep2 "sort()"    # ep2 is used
+#     ksl::epSetRepair  ""             # sets ep1 repair to empty
+#     ksl::epSetRepair                 # error
+#
+# @stderr arraySetValue() missing args
+# @stderr arraySetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epSetRepair()
 {
@@ -568,10 +733,20 @@ ksl::epSetRepair()
 
 # -------------------------------------------------------
 #
-# Returns the probable repair in the given EPS.
+# @description Returns the probable repair in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epRepair               # ep1 is used
+#     echo ksl::epRepair ep2           # ep2 is used
+#     str=$(ksl::epRepair ep2)         # ep2 is used
+#
+# @stdout the repair
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epRepair()
 {
@@ -580,11 +755,23 @@ ksl::epRepair()
 
 # -------------------------------------------------------
 #
-# Returns the timestamp in the given EPS. The value for
-# timestamp was established on the most recent call to epSet().
+# @description Returns the timestamp in the given EPS.
 #
-# $1 is the EPS and optional. If not supplied the default EPS
-# of "ep1" is used.
+# The value for timestamp was established on the most recent call to
+# epSet().
+#
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 Success
+# @exitcode 1 Failed - likely a bad EPS.
+#
+# @example
+#     echo ksl::epTimestamp               # ep1 is used
+#     echo ksl::epTimestamp ep2           # ep2 is used
+#     str=$(ksl::epTimestamp ep2)         # ep2 is used
+#
+# @stdout the timestamp
+# @stderr arrayGetValue() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epTimestamp()
 {
@@ -593,11 +780,23 @@ ksl::epTimestamp()
 
 # -------------------------------------------------------
 #
-# Returns true if EPS is carrying an error.
+# @description Returns true if EPS is carrying an error.
 #
 # The EPS is considered to be carrying an error if
 # either the description field or the code number
 # field is non-empty.
+#
+# @arg $1 array is the EPS. If no args, then EPS `ep1` is used.
+#
+# @exitcode 0 true - EPS is carrying an error.
+# @exitcode 1 false - EPS is not carrying an error.
+#
+# @example
+#     echo ksl::epHasError               # ep1 is used
+#     echo ksl::epHasError ep2           # ep2 is used
+#     str=$(ksl::epHasError ep2)         # ep2 is used
+#
+# @stderr epHasError() no such array <p><p>![](https://github.com/user-attachments/assets/d601fab9-634d-4c43-8305-3470bbcd1758)
 #
 ksl::epHasError()
 {
@@ -605,7 +804,7 @@ ksl::epHasError()
     local -n eps=${arg}
     
     ! ksl::arrayExists "$arg" &&
-        echo "epHasError() no such EPS:$1" >&2 && return 1
+        echo "epHasError() no such array $1" >&2 && return 1
 
     [[ -z ${eps[DESC]}    ]] &&
     [[ -z ${eps[CODENUM]} ]] && return 1
@@ -615,34 +814,42 @@ ksl::epHasError()
 
 # -------------------------------------------------------
 #
-# Set values in an error passing structure.
+# @description Initialize and set values in an error passing structure.
 #
-# epSet <error passing structure: default = ep1> [options...] 
+# epSet [eps] [options...] 
 #
-# OPTIONS
-#     -ca, --cause
-#     -cn, --codeNum
-#      -d, --description
-#     -en, --errorName
-#     -et, --errorType
-#     -fi, --fileName
-#     -fn, --funcName
-#     -li, --lineNum
-#     -rp, --repair
-#     -sv, --severity
+# **Options**
 #
-# With no args, epSet works on the default "ep1" error passing structure
-# (EPS). You can pass in ep1 explicitly or supply your own EPS. If the
+# *   -ca, --cause \<string\>
+# *   -cn, --codeNum \<number\>
+# *    -d, --description \<string\>
+# *   -en, --errorName \<string\>
+# *   -et, --errorType \<string\>
+# *   -fi, --fileName \<string\>
+# *   -fu, --funcName \<string\>
+# *   -li, --lineNum \<number\>
+# *   -rp, --repair \<string\>
+# *   -sv, --severity \<string\>
+#
+# With no args, epSet works on the default `ep1` error passing structure
+# (EPS). You can pass in `ep1` explicitly or supply your own EPS. If the
 # given EPS does not already exist in the environment, then it is
 # created.
 #
-# These two are equivalent: "epSet;" and "epSet ep1;"
-# Or supply your own: "epSet myEp;"
+# These two are equivalent: `epSet` and `epSet ep1`.
+# Or supply your own: `epSet myEp`.
 #
-# Each call to epSet() initalizes all fields to empty/default values
+# Each call to `epSet()` initalizes all fields to empty values
 # with the timestamp set to current time, followed by setting any
-# supplied options.
+# supplied options. Most options are strings so they will need to be
+# in double quotes if they have embedded spaces.
 #
+# @arg $1 array is the EPS. If not specified then EPS is `ep1`
+#
+# @example
+#     echo ksl::epSet                # ep1 is initalized
+#     echo ksl::epSet ep2            # ep2 is initalized
+#     echo ksl::epSet --fi /home/abc # ep1 is initalized and file name is set
 #
 ksl::epSet()
 {
