@@ -34,7 +34,9 @@ docs-sphinx-cmd:
 	    --jobs auto \
 	    /work/$(D_DOCS_BLD) /work/$(D_DOCS_SITE)
 
-
 .PHONY: docs-sphinx-cmd
+
+docs-examples-cmd:
+	cp etc/examples/example-error-pass.bash $(D_DOCS_SITE)/shdoc/
 
 endif

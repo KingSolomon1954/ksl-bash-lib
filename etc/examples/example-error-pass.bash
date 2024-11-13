@@ -61,7 +61,7 @@ fileExists()
 
 filesToProcess=/tmp/epTest1.$$
 filesToProcess+=:/tmp/epTest2.$$
-filesToProcess+=":/tmp/brian dani mike"
+filesToProcess+=":/tmp/black mountain peak"
 
 IFS=":"
 for f in $filesToProcess; do
@@ -70,7 +70,7 @@ done
     
 # echo $filesToProcess
 
-if ! initApp $filesToProcess /tmp/badfile.txt; then
+if ! initApp $filesToProcess /tmp/badfile.yml; then
     ksl::epPrint
 fi
 

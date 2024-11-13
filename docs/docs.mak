@@ -17,11 +17,13 @@ endif
 D_DOCS_BLD   := $(D_BLD)/docs/src
 D_DOCS_SITE  := $(D_BLD)/docs/site
 
-docs: docs-prep-out docs-shdoc docs-sphinx 
+docs: docs-prep-out docs-sphinx
 
-docs-sphinx: docs-shdoc-cmd docs-sphinx-cmd
+docs-sphinx: docs-shdoc docs-sphinx-cmd docs-examples
 
-docs-shdoc: docs-sphinx 
+docs-shdoc: docs-shdoc-cmd
+
+docs-examples: docs-examples-cmd
 
 docs-clean:
 	rm -rf $(D_DOCS_BLD) $(D_DOCS_SITE)
