@@ -128,12 +128,11 @@ ksl::envAppend()
 
 # -----------------------------------------------------------
 #
-# Add $2 <element>, in-place, to the front of $1 <path variable>, 
-# provided <element> is not already in the <path variable>. 
-# The <path variable> is the name of a path style variable, 
-# such as PATH, with ":" separating individual elements.
+# @description Prepends $2, in-place, to the front of the PATH-style
+# variable named in $1, provided $2 is not already in there (options are
+# available to control this).
 #
-# Takes exact same args and description as envAppend above.
+# Same args and description as [ksl::envAppend](#ksl-envappend). <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envPrepend()
 {
@@ -214,10 +213,19 @@ ksl::_envXxpend()
 
 # -----------------------------------------------------------
 #
-# Delete all occurrence of $1, in-place, from $2. $2 is the name of a
-# path style variable with ":" separating individual elements.
+# @description Deletes all occurrences of $2, in-place, from $1.
 #
-# Example: ksl::envDelete MANPATH "$HOME/man"
+# $1 is the name of a path style variable with ":" separating 
+# individual elements.
+#
+# @arg $1 string the name of a path style variable.
+# @arg $2 string the element to delete.
+#
+# @example
+#     ksl::envDelete MANPATH "$HOME/man"
+#
+# @exitcode 0 No error. Doesn't mean anything was deleted.
+# @exitcode 1 Missing or empty args  <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDelete()
 {
@@ -234,11 +242,18 @@ ksl::envDelete()
 
 # -----------------------------------------------------------
 #
-# Delete 1st element, in-place, from $1 where $1 is the name of
-# a path style variable with ":" separating individual elements.
+# @description Deletes 1st element, in-place, from $1 where $1 is the
+# name of a path style variable with ":" separating individual elements.
+#
 # Returns 1 on an error otherwise 0.
 #
-# Example: ksl::envDeleteFirst MANPATH
+# @arg $1 VariableName of a path style variable, such as `PATH`, with ":" separating individual elements.
+#
+# @example
+#     ksl::envDeleteFirst MANPATH
+#
+# @exitcode 0 No error. Doesn't mean anything was deleted.
+# @exitcode 1 Missing or empty args  <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDeleteFirst()
 {
@@ -257,23 +272,28 @@ ksl::envDeleteFirst()
 
 # -----------------------------------------------------------
 #
-# Delete last element, in-place, from $1, where $1 is the name of 
-# a path style variable with ":" separating individual elements.
-# Returns 1 on an error otherwise 0.
+# @description Deletes last element, in-place, from $1 where $1 is the
+# name of a path style variable with ":" separating individual elements.
 #
-# Example: ksl::envDeleteLast MANPATH
+# @arg $1 VariableName of a path style variable, such as `PATH`, with ":" separating individual elements.
+#
+# @example
+#     ksl::envDeleteLast MANPATH
+#
+# @exitcode 0 No error. Doesn't mean anything was deleted.
+# @exitcode 1 Missing or empty args  <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDeleteLast()
 {
     [[ -z "$1" ]] && return 1      # Missing args
     local -n ref=$1
     [[ -z "$ref" ]] && return 1    # Empty environment var
-    ref=${envSep}${ref}          # Add sentinel in case single frag
+    ref=${envSep}${ref}            # Add sentinel in case single frag
     
     # shellcheck disable=SC2295
-    ref=${ref%${envSep}*}        # Delete last including separator
+    ref=${ref%${envSep}*}          # Delete last including separator
     # shellcheck disable=SC2295
-    ref=${ref#${envSep}}         # Remove sentinel
+    ref=${ref#${envSep}}           # Remove sentinel
     return 0
 }
 
@@ -290,7 +310,19 @@ ksl::_envColonTrimPath ()
 }
 
 # -----------------------------------------------------------
-
+#
+# @description Use the given character as the separator
+# between elements in a PATH-style variable.
+#
+# Initialized to ":" at startup. Stays in effect until changed.
+#
+# @arg $1 character the separator.
+#
+# @example
+#     ksl::envSetSeparator ";"
+#
+# @exitcode 0 In all cases
+#
 ksl::envSetSeparator()
 {
     envSep=$1
