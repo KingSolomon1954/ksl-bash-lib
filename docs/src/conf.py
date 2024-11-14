@@ -25,6 +25,15 @@ root_doc = 'index'
 # ones.
 extensions = ["sphinx.ext.extlinks", "sphinx.ext.autosectionlabel"]
 
+# This has no effect.
+# needs_extensions = { 'sphinx.ext.autosectionlabel': '1.5' }
+
+# This has no effect.
+autosectionlabel_prefix_document = True
+
+# This has no effect.
+# autosectionlabel_maxdepth = 0
+ 
 # Only parse files with `.rst` extension.
 # Ensures that `.inc` files are not parsed, so they can be used with
 # `.. include::` without creating duplicate labels.
@@ -38,6 +47,7 @@ include_patterns = ['index.rst',
 
 # exclude_patterns = ['misc/abc.rst']
 
+show_warning_types = True
 suppress_warnings = ['autosectionlabel.*']
 
 # -- Options for HTML output -------------------------------------

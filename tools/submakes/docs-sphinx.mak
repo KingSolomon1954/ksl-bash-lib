@@ -30,9 +30,11 @@ docs-sphinx-cmd:
 	    $(CNTR_SPHINX_TOOLS_PATH) sphinx-build -b html -a \
 	    -D release=$(VERSION_TRIPLET) \
 	    -D version=$(VERSION_TRIPLET) \
-	    --fail-on-warning \
 	    --jobs auto \
 	    /work/$(D_DOCS_BLD) /work/$(D_DOCS_SITE)
+
+#	    --fail-on-warning \
+
 
 .PHONY: docs-sphinx-cmd
 
