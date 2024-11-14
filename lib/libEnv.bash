@@ -23,6 +23,34 @@
 #     * ksl::envDeleteLast()
 #     * ksl::envSetSeparator()
 #
+# The following is an example `PATH` setup using some of these 
+# functions. Note that no specific testing for OS is needed.
+# Just relies on whether the element exists on the file space.
+#
+# ``` bash
+# # Standard system path setup here
+#
+# ksl::envAppend -f PATH "/bin"
+# ksl::envAppend -f PATH "/usr/bin"
+# ksl::envAppend -f PATH "/usr/local/bin"
+# ksl::envAppend -f PATH "/sbin"
+# ksl::envAppend -f PATH "/usr/sbin"
+# ksl::envAppend -f PATH "/usr/local/sbin"
+# ksl::envAppend -f PATH "${HOME}/.local/bin"
+# ksl::envAppend -f PATH "${HOME}/bin"
+# ksl::envDelete    PATH "/usr/games"
+# ksl::envDelete    PATH "/usr/local/games"
+# 
+# # Some platform specific setup
+# 
+# ksl::envPrepend -f PATH "/usr/local/opt/m4/bin"
+# ksl::envPrepend -f PATH "/usr/local/opt/openssl/bin"
+# ksl::envPrepend -f PATH "/usr/local/opt/findutils/libexec/gnubin"
+# ksl::envPrepend -f PATH "/usr/local/opt/coreutils/libexec/gnubin"
+# ksl::envPrepend -f PATH "/usr/local/opt/grep/libexec/gnubin"
+# ksl::envPrepend -f PATH "/usr/local/opt/make/libexec/gnubin"
+# ```
+#
 # -----------------------------------------------------------
 
 # Avoid double inclusion, but optionally allow a forcing option
