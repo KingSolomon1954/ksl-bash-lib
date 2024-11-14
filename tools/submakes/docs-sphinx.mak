@@ -10,17 +10,18 @@ _INCLUDE_DOCS_SPHINX_MAK := 1
 ifndef D_MAK
     $(error Parent makefile must define 'D_MAK')
 endif
-ifndef D_DOCS_BLD
-    $(error Parent makefile must define 'D_DOCS_BLD')
+ifndef D_EXA
+    $(error Parent makefile must define 'D_EXA')
 endif
-ifndef D_DOCS_SITE
-    $(error Parent makefile must define 'D_DOCS_SITE')
+ifndef D_BLD_DOCS
+    $(error Parent makefile must define 'D_BLD_DOCS')
+endif
+ifndef D_BLD_SITE
+    $(error Parent makefile must define 'D_BLD_SITE')
 endif
 
 include $(D_MAK)/container-tech.mak
 include $(D_MAK)/container-names-sphinx.mak
-
-_DOCS_SRC := $(D_DOCS)/src
 
 docs-sphinx-cmd:
 	# Generating Sphinx docs
@@ -31,14 +32,13 @@ docs-sphinx-cmd:
 	    -D release=$(VERSION_TRIPLET) \
 	    -D version=$(VERSION_TRIPLET) \
 	    --jobs auto \
-	    /work/$(D_DOCS_BLD) /work/$(D_DOCS_SITE)
+	    /work/$(D_BLD_DOCS) /work/$(D_BLD_SITE)
 
 #	    --fail-on-warning \
-
 
 .PHONY: docs-sphinx-cmd
 
 docs-examples-cmd:
-	cp etc/examples/example-error-pass.bash $(D_DOCS_SITE)/shdoc/
+	cp $(D_EXA)/example-error-pass.bash $(D_BLD_SITE)/shdoc/
 
 endif

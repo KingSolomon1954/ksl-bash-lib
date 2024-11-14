@@ -13,9 +13,13 @@ endif
 ifndef D_MAK
     $(error Parent makefile must define 'D_MAK')
 endif
+ifndef D_DOCS
+    $(error Parent makefile must define 'D_DOCS')
+endif
 
-D_DOCS_BLD   := $(D_BLD)/docs/src
-D_DOCS_SITE  := $(D_BLD)/docs/site
+D_BLD_DOCS := $(D_BLD)/docs/src
+D_BLD_SITE := $(D_BLD)/docs/site
+D_PUB_SITE := $(D_DOCS)/site
 
 docs: docs-prep-out docs-sphinx
 
@@ -26,15 +30,15 @@ docs-shdoc: docs-shdoc-cmd
 docs-examples: docs-examples-cmd
 
 docs-clean:
-	rm -rf $(D_DOCS_BLD) $(D_DOCS_SITE)
+	rm -rf $(D_BLD_DOCS) $(D_BLD_SITE)
 
 # Always remove and then recreate docs tree
 # so to catch deleted files between runs.
 #
 docs-prep-out:
-	rm -rf   $(D_DOCS_BLD) $(D_DOCS_SITE)
-	mkdir -p $(D_DOCS_BLD)
-	cp -r $(D_DOCS)/src/* $(D_DOCS_BLD)
+	rm -rf   $(D_BLD_DOCS) $(D_BLD_SITE)
+	mkdir -p $(D_BLD_DOCS)
+	cp -r $(D_DOCS)/src/* $(D_BLD_DOCS)
 
 .PHONY: docs          docs-clean \
         docs-sphinx   docs-shdoc \
@@ -42,6 +46,7 @@ docs-prep-out:
 
 include $(D_MAK)/docs-sphinx.mak
 include $(D_MAK)/docs-shdoc.mak
+include $(D_MAK)/docs-publish.mak
 
 # ------------ Help Section ------------
 
