@@ -1,0 +1,19 @@
+KSL_BASH_LIB
+------------
+TODO: form a releaseable ksl shell library
+TODO: consider https://github.com/bats-core/bats-core for testing
+TODO: multi-layered config feature, yaml parsing
+TODO: Readme.md needs writing
+TODO: docs for libArrays
+TODO: docs for libColors
+TODO: docs for libFiles
+TODO: docs for libStdOut
+TODO: docs for libStrings
+
+Done: add shellcheck https://github.com/koalaman/shellcheck
+Done: automation using shdoc embedded comments https://github.com/reconquest/shdoc
+Done: consider doxygen-bash for documentation- nope - https://github.com/Anvil/bash-doxygen/blob/master/README.md
+Done: docs for libError
+Done: docs for libEnv
+Done: GitHub pages job to host docs
+Done: add publish docs target

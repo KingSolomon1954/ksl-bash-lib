@@ -77,7 +77,7 @@ source "${KSL_BASH_LIB}"/libColors.bash
 #
 # @description Initialize and set values in an error passing structure.
 #
-# epSet [eps] [options...] 
+# epSet [eps] [options...]
 #
 # **Options**
 #
@@ -124,7 +124,7 @@ ksl::epSet()
     local lineNum=""
     local repair=""
     local severity=""
-    
+
     while [[ $# -gt 0 ]]; do
         case $1 in
         -d|--description)
@@ -224,7 +224,7 @@ ksl::epSet()
 # -------------------------------------------------------
 #
 # @description Sets the description field in the given EPS.
-# 
+#
 # Overwrites any previous description. EPS must already exist.
 #
 # If two args are given, then $1 is EPS and $2 is the description.
@@ -322,7 +322,7 @@ ksl::epAppend()
 # EPS must already exist.
 #
 # If two args are given, then $1 is EPS and $2 is the string to
-# prepend. If one arg is given, then $1 is the string to prepend 
+# prepend. If one arg is given, then $1 is the string to prepend
 # and EPS `ep1` is used.
 #
 # @arg $1 array is either the EPS or the string to prepend depending on number of args as described above.
@@ -345,7 +345,7 @@ ksl::epPrepend()
     local eps
     local str
 
-    [[ $# -eq 0 ]] && return 0
+    [[ $# -eq 0 ]] && return 1
     [[ $# -eq 1 ]] && str="$1";
     # shellcheck disable=SC2034
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
@@ -961,13 +961,13 @@ ksl::epHasError()
 {
     local arg=${1:-ep1}
     local -n eps=${arg}
-    
+
     ! ksl::arrayExists "$arg" &&
         echo "epHasError() no such array $1" >&2 && return 1
 
     [[ -z ${eps[DESC]}    ]] &&
     [[ -z ${eps[CODENUM]} ]] && return 1
-    
+
     return 0
 }
 
@@ -994,7 +994,7 @@ ksl::epPrint()
 {
     local arg=${1:-ep1}
     local -n eps=${arg}
-    ! ksl::arrayExists "$arg" && 
+    ! ksl::arrayExists "$arg" &&
         echo "epPrint() no such array:$1" && return 1
 
     if ksl::useColor; then
