@@ -24,37 +24,77 @@ libFilesImported=true
 
 # -----------------------------------------------------------
 #
-# @description Returns the base name of the given file.
+# @description Strip leading directory components from filename.
+#
+# Does not touch any suffixes.
+#
+# @arg $1 string the filename
+#
+# @example
+#     ksl::baseName /music/beatles/yellow-submarine.flak
+#     Output: yellow-submarine.flak
+#
+# @exitcode 1 error, missing args
+# @exitcode 0 in all other cases
+#
+# @stdout the basename
+# @stderr "baseName(): missing operand"  <p><p>![](../images/pub/divider-line.png)
 #
 ksl::baseName ()
 {
+    [[ $# -eq 0 ]] && echo "baseName(): missing operand" 1>&2 && return 1
     local s="${1}"    
     s="${s%/}"
     echo -n "${s##*/}"
 }
 
 # -----------------------------------------------------------
-
+#
+# @description Strip last component from filename.
+#
+# @arg $1 string the filename
+#
+# @example
+#     ksl::dirName /music/beatles/yellow-submarine.flak
+#     Output: /music/beatles
+#
+# @exitcode 1 error, missing args
+# @exitcode 0 in all other cases
+#
+# @stdout the dirname
+# @stderr "dirName(): missing operand"  <p><p>![](../images/pub/divider-line.png)
+#
 ksl::dirName ()
 {
-    # Remove any trailing '/' that doesn't have anything following it (to
-    # parallel the behavior of "dirname").
-    #
-    local tmp1=${1%/}
+    [[ $# -eq 0 ]] && echo "dirName(): missing operand" 1>&2 && return 1
 
-    # remove last level in path
+    # Cleanup all multiple slashes if any "//"
+    local tmp1=$1
+    doubles="//"
+    while [[ "$tmp1" == *$doubles* ]]; do
+        tmp1=${tmp1/\/\//\/}
+    done
+
+    # Single slash special case
+    [[ $tmp1 == '/' ]] && echo '/' && return 0
+    
+    # Remove any trailing '/' that doesn't have anything following it.
+    tmp1=${tmp1%/}
+    
+    # if there are no slashes then current dir
+    [[ ! $tmp1 =~ / ]] && echo '.' && return 0
+
+    # OK now to remove last level in path
     local tmp2=${tmp1%/*}
 
-    # If there was nothing left after removing the last level in the path,
-    # the path must be to something in the root directory, so the result
-    # should just be the root directory. Otherwise, if there wasn't any last
-    # level, the path must be to something in the current dir, so the result
-    # should just be the current dir. Otherwise,
-    #
-    if [[ "${tmp2}" = "" ]]; then
-        tmp2=/
-    elif [[ "${tmp2}" = "${tmp1}" ]]; then
+    # If empty, we matched a leading / thus we must be root
+    [[ $tmp2 == '' ]] && echo '/' && return 0
+
+    # If nothing was removed then no slashes so must be current dir
+    if [[ "${tmp2}" = "${tmp1}" ]]; then
         tmp2=.
+    # else
+        # what remains is the parent dir
     fi
 
     echo -n "${tmp2}"

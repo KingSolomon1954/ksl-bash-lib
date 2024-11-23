@@ -6,22 +6,35 @@ source "${KSL_BASH_LIB}"/libFiles.bash
 
 test_baseName()
 {
+    assert_fails "ksl::baseName 2>/dev/null"
+    assert_equals ""        "$(ksl::baseName '')"
+    assert_equals ""        "$(ksl::baseName '////')"
+    assert_equals " "       "$(ksl::baseName ' ')"
     assert_equals "music"   "$(ksl::baseName 'music')"
     assert_equals "music"   "$(ksl::baseName 'music/')"
     assert_equals "music"   "$(ksl::baseName '/music/')"
     assert_equals "beatles" "$(ksl::baseName 'music/beatles/')"
+
 }
 
 # -----------------------------------------------------------
 
 test_dirName()
 {
-    assert_equals "."       "$(ksl::dirName 'music')"
-    assert_equals "."       "$(ksl::dirName 'music/')"
-    assert_equals "music"   "$(ksl::dirName 'music/beatles')"
-    assert_equals "music"   "$(ksl::dirName 'music/beatles/')"
-    assert_equals "/music"  "$(ksl::dirName '/music/beatles/')"
-    assert_equals "./music" "$(ksl::dirName './music/beatles/')"
+    assert_fails "ksl::dirName 2>/dev/null"
+    assert_equals "."              "$(ksl::dirName '')"
+    assert_equals "."              "$(ksl::dirName 'music')"
+    assert_equals "."              "$(ksl::dirName 'music/')"
+    assert_equals "."              "$(ksl::dirName 'music///')"
+    assert_equals "/"              "$(ksl::dirName '/')"
+    assert_equals "/"              "$(ksl::dirName '////')"
+    assert_equals "/"              "$(ksl::dirName '/music')"
+    assert_equals "/"              "$(ksl::dirName '/music///')"
+    assert_equals "music"          "$(ksl::dirName 'music/beatles')"
+    assert_equals "music"          "$(ksl::dirName 'music/beatles/')"
+    assert_equals "/music"         "$(ksl::dirName '/music/beatles/')"
+    assert_equals "./music"        "$(ksl::dirName './music/beatles/')"
+    assert_equals "/music/beatles" "$(ksl::dirName '/music/beatles/yellow-submarine.flak')"
 }
 
 # -----------------------------------------------------------
