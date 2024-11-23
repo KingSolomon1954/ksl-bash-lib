@@ -14,6 +14,8 @@ test_baseName()
     assert_equals "music"   "$(ksl::baseName 'music/')"
     assert_equals "music"   "$(ksl::baseName '/music/')"
     assert_equals "beatles" "$(ksl::baseName 'music/beatles/')"
+    assert_equals "beatles" "$(ksl::baseName 'music/beatles////')"
+    assert_equals "beatles" "$(ksl::baseName '///music////beatles////')"
 
 }
 
@@ -56,21 +58,6 @@ test_scriptName()
 
 test_suffix()
 {
-    # echo
-    # echo "1 barrier$(ksl::suffix 'music')barrier"
-    # echo "2 barrier$(ksl::suffix 'music.')barrier"
-    # echo "3 barrier$(ksl::suffix '.music')barrier"
-    # echo "4 barrier$(ksl::suffix '.music.')barrier"
-    # echo "5 barrier$(ksl::suffix '../music.')barrier"
-    # echo "6 barrier$(ksl::suffix '.')barrier"
-    # echo "7 barrier$(ksl::suffix '')barrier"
-    # echo "8 barrier$(ksl::suffix './')barrier"
-    # echo "9 barrier$(ksl::suffix './//')barrier"
-    # echo "10 barrier$(ksl::suffix './.')barrier"
-    # echo "11 barrier$(ksl::suffix './music/album.flac')barrier"
-    # echo "12 barrier$(ksl::suffix '/music.flac')barrier"
-    # echo "13 barrier$(ksl::suffix 'music.country/../beatles')barrier"
-
     assert_equals ""        "$(ksl::suffix 'music')"
     assert_equals "."       "$(ksl::suffix 'music.')"
     assert_equals ".music"  "$(ksl::suffix '.music')"
@@ -90,4 +77,22 @@ test_suffix()
 
 # -----------------------------------------------------------
 
+test_notSuffix()
+{
+    assert_equals "music"        "$(ksl::notSuffix 'music')"    
+    assert_equals "music"        "$(ksl::notSuffix '/home/media/music')"    
+    assert_equals "music"        "$(ksl::notSuffix '/.home/media/music')"    
+    assert_equals ""             "$(ksl::notSuffix '.flak')"
+    assert_equals ".music"       "$(ksl::notSuffix '.music.flak')"
+    assert_equals "music"        "$(ksl::notSuffix 'music.flak')"
+    assert_equals ".music"       "$(ksl::notSuffix '.music.flak')"
+    assert_equals "music"        "$(ksl::notSuffix '/home/media/music.flak')"
+    assert_equals "music"        "$(ksl::notSuffix '/home/.media/music.flak')"
+    assert_equals ".music"       "$(ksl::notSuffix '/home/.media/.music.flak')"
+    assert_equals "music"        "$(ksl::notSuffix 'music.flak/')"
+    assert_equals "music"        "$(ksl::notSuffix 'music.flak///')"
+    assert_equals "music"        "$(ksl::notSuffix '///home/media///music.flak///')"
+}
+
+# -----------------------------------------------------------
     

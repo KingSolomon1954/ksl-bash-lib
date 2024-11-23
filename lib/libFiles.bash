@@ -13,6 +13,7 @@
 #     * ksl::scriptName()
 #     * ksl::scriptDir()
 #     * ksl::suffix()
+#     * ksl::notSuffix()
 #
 # -----------------------------------------------------------
 
@@ -38,12 +39,23 @@ libFilesImported=true
 # @exitcode 0 in all other cases
 #
 # @stdout the basename
-# @stderr "baseName(): missing operand"  <p><p>![](../images/pub/divider-line.png)
+# @stderr "baseName(): missing operand" <p><p>![](../images/pub/divider-line.png)
 #
 ksl::baseName ()
 {
     [[ $# -eq 0 ]] && echo "baseName(): missing operand" 1>&2 && return 1
-    local s="${1}"    
+
+    # Cleanup all multiple slashes if any "//"
+    local tmp1=$1
+    doubles="//"
+    while [[ "$tmp1" == *$doubles* ]]; do
+        tmp1=${tmp1/\/\//\/}
+    done
+    
+    # Remove any trailing '/' that doesn't have anything following it.
+    tmp1=${tmp1%/}
+    
+    local s="$tmp1"    
     s="${s%/}"
     echo -n "${s##*/}"
 }
@@ -62,7 +74,7 @@ ksl::baseName ()
 # @exitcode 0 in all other cases
 #
 # @stdout the dirname
-# @stderr "dirName(): missing operand"  <p><p>![](../images/pub/divider-line.png)
+# @stderr "dirName(): missing operand" <p><p>![](../images/pub/divider-line.png)
 #
 ksl::dirName ()
 {
@@ -76,19 +88,19 @@ ksl::dirName ()
     done
 
     # Single slash special case
-    [[ $tmp1 == '/' ]] && echo '/' && return 0
+    [[ $tmp1 == '/' ]] && echo -n '/' && return 0
     
     # Remove any trailing '/' that doesn't have anything following it.
     tmp1=${tmp1%/}
     
     # if there are no slashes then current dir
-    [[ ! $tmp1 =~ / ]] && echo '.' && return 0
+    [[ ! $tmp1 =~ / ]] && echo -n '.' && return 0
 
     # OK now to remove last level in path
     local tmp2=${tmp1%/*}
 
     # If empty, we matched a leading / thus we must be root
-    [[ $tmp2 == '' ]] && echo '/' && return 0
+    [[ $tmp2 == '' ]] && echo -n '/' && return 0
 
     # If nothing was removed then no slashes so must be current dir
     if [[ "${tmp2}" = "${tmp1}" ]]; then
@@ -102,13 +114,18 @@ ksl::dirName ()
 
 # -----------------------------------------------------------
 #
-# Returns the absolute path to the script itself
+# @description Returns the absolute path to the script itself.
 #
 # Usage for this is primarily at script startup, for those
 # occasions when a script needs to know the location
-# of the script itself.
+# of the script itself. This is just the dirname of $0.
 #
-# Takes no args. Uses $0 from env
+# Takes no args. Uses $0 from env.
+#
+# @example
+#     echo $(ksl::scriptDir)
+#
+# @stdout the path <p><p>![](../images/pub/divider-line.png)
 #
 ksl::scriptDir()
 {
@@ -119,13 +136,18 @@ ksl::scriptDir()
 
 # -----------------------------------------------------------
 #
-# Returns the name of the script with suffix, if any.
+# @description Returns the name of the script with suffix.
 #
 # Usage for this is primarily at script startup, so that
 # a script doesn't need to hard code in its name.
+# This is just the basename of $0.
 #
-# $1 = supply $0 from outermost script context
-# caller: echo $(scriptFile $0)
+# Takes no args. Uses $0 from env.
+#
+# @example
+#     echo $(ksl::scriptName)
+#
+# @stdout the script name <p><p>![](../images/pub/divider-line.png)
 #
 ksl::scriptName()
 {
@@ -134,8 +156,18 @@ ksl::scriptName()
 
 # -----------------------------------------------------------
 #
-# Extract the file name suffix - the last '.' and following
-# characters. This conforms to the Makefile $(suffix ...) command.
+# @description Returns the file name suffix - the last '.' and
+#              following characters.
+#
+# This conforms to the Makefile $(suffix ...) command.
+#
+# @arg $1 string the filename
+#
+# @example
+#     ksl::suffix /home/elvis/bin/power.bash
+#     Output: .bash
+#
+# @stdout the suffix <p><p>![](../images/pub/divider-line.png)
 #
 ksl::suffix()
 {
@@ -153,19 +185,22 @@ ksl::suffix()
 }
 
 # -----------------------------------------------------------
+#
+# @description Returns the file name wiithout any suffix.
+#
+# @arg $1 string the filename
+#
+# @example
+#     ksl::suffix /home/elvis/bin/power.bash
+#     Output: power
+#
+# @stdout the filename <p><p>![](../images/pub/divider-line.png)
+#
+ksl::notSuffix()
+{
+    local path=${1}
+    path=$(ksl::baseName "${path}")
+    echo -n "${path%.*}"
+}
 
-
-# fileTrimLeft 1 
-# parent, ancestor, root, stem, name
-# 
-#  os.path.split(path)
-# 
-#     Split the pathname path into a pair, (head, tail) where tail is the
-#     last pathname component and head is everything leading up to
-#     that. The tail part will never contain a slash; if path ends in a
-#     slash, tail will be empty. If there is no slash in path, head will
-#     be empty. If path is empty, both head and tail are empty. Trailing
-#     slashes are stripped from head unless it is the root (one or more
-#     slashes only). In all cases, join(head, tail) returns a path to the
-#     same location as path (but the strings may differ). Also see the
-#     functions dirname() and basename().
+# -----------------------------------------------------------
