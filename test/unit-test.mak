@@ -15,6 +15,7 @@ bash_unit_exec := $(D_TOOLS)/bash-unit/bash_unit
 # https://github.com/pgrange/bash_unit
 
 UNIT_TESTS := \
+	test/libArraysTest.bash \
 	test/libColorsTest.bash \
 	test/libEnvTest.bash \
 	test/libErrorTest.bash \
