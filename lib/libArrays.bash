@@ -13,6 +13,7 @@
 #     * ksl::arrayHasKey()
 #     * ksl::arrayGetValue()
 #     * ksl::arraySetValue()
+#     * ksl::arrayDeleteElement()
 #     * ksl::arrayAppendValue()
 #     * ksl::arrayPrependValue()
 #     * ksl::arrayVisit()
@@ -37,11 +38,12 @@ libArraysImported=true
 # @example
 #     if ksl::arrayExists myArray; then echo "have it"; fi
 #
-# @stdout no output <p><p>![](../images/pub/divider-line.png)
+# @stdout no output
+# @stderr arrayExists() missing args <p><p>![](../images/pub/divider-line.png)
 #
 ksl::arrayExists()
 {
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "arrayExists() missing args" >&2 && return 1
     local -n ref=$1
     [[ ${ref@a} =~ A|a ]]
 }
@@ -60,13 +62,15 @@ ksl::arrayExists()
 # @example
 #     echo "There are $(ksl::arraySize myArray) elements"
 #
-# @stdout the size of the array <p><p>![](../images/pub/divider-line.png)
+# @stdout the size of the array
+# @stderr arraySize() missing args:
+# @stderr arraySize() no such array: <p><p>![](../images/pub/divider-line.png)
 #
 ksl::arraySize()
 {
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "arraySize() missing args" >&2 && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1 && return 1
+    ! ksl::arrayExists $1 && echo "arraySize() no such array: \"$1\"" >&2 && return 1
     local -n ref=$1
     echo ${#ref[@]}
 }
@@ -84,13 +88,15 @@ ksl::arraySize()
 # @example
 #     if ksl::arrayHasKey acronyms CRC; then echo "have it"; fi
 #
-# @stdout no output <p><p>![](../images/pub/divider-line.png)
+# @stdout no output
+# @stderr arrayHasKey() missing args
+# @stderr arrayHasKey() no such array:  <p><p>![](../images/pub/divider-line.png)
 #
 ksl::arrayHasKey()
 {
-    [[ $# -ne 2 ]] && return 1
+    [[ $# -ne 2 ]] && echo "arrayHasKey() missing args" >&2 && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1 && return 1
+    ! ksl::arrayExists $1 && echo "arrayHasKey() no such array: \"$1\"" >&2 && return 1
     local -n ref=$1
     [[ ${ref["$2"]+_} == _ ]]
 }
@@ -113,11 +119,12 @@ ksl::arrayHasKey()
 #     ksl::arraySetValue acronyms CRC "Cyclic Redundancy Check"
 #
 # @stdout no output
+# @stderr arraySetValue() missing args
 # @stderr arraySetValue() no such array: <p><p>![](../images/pub/divider-line.png)
 #
 ksl::arraySetValue()
 {
-    [[ $# -ne 3 ]]        && echo "arraySetValue() missing args" >&2          && return 1
+    [[ $# -ne 3 ]] && echo "arraySetValue() missing args" >&2 && return 1
     # shellcheck disable=SC2086
     ! ksl::arrayExists $1 && echo "arraySetValue() no such array: \"$1\"" >&2 && return 1
 
@@ -126,7 +133,7 @@ ksl::arraySetValue()
 
 # -----------------------------------------------------------
 #
-# @description Get a value in an array.
+# @description Get a value from an array.
 #
 # @arg $1 array the name of the array 
 # @arg $2 string the name of the key
@@ -138,12 +145,15 @@ ksl::arraySetValue()
 #     val=$(ksl::arrayGetValue acronyms CRC)
 #
 # @stdout the value
-# @stderr arraySetValue() no such key: <p><p>![](../images/pub/divider-line.png)
+# @stderr arrayGetValue() missing args
+# @stderr arrayGetValue() no such array:
+# @stderr arrayGetValue() no such key: <p><p>![](../images/pub/divider-line.png)
 #
 ksl::arrayGetValue()
 {
+    [[ $# -ne 2 ]] && echo "arrayGetValue() missing args" >&2 && return 1  
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1 && echo "arrayGetValue() no such array: \"$1\"" >&2    && return 1
+    ! ksl::arrayExists $1 && echo "arrayGetValue() no such array: \"$1\"" >&2 && return 1
     # shellcheck disable=SC2086
     ! ksl::arrayHasKey $1 "$2" && echo "arrayGetValue() no such key: \"$2\"" >&2 && return 1
     local -n ref=$1
@@ -167,15 +177,17 @@ ksl::arrayGetValue()
 #     ksl::arrayAppend errpass DESC " on channel 12"
 #
 # @stdout no output
-# @stderr arrayAppend() no such key: <p><p>![](../images/pub/divider-line.png)
+# @stderr arrayAppendValue() missing args
+# @stderr arrayAppendValue() no such array:
+# @stderr arrayAppendValue() no such key: <p><p>![](../images/pub/divider-line.png)
 #
-ksl::arrayAppend()
+ksl::arrayAppendValue()
 {
-    [[ $# -lt 2 ]] && return 1
+    [[ $# -lt 2 ]] && echo "arrayAppendValue() missing args" >&2 && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1 && echo "arrayAppend() no such array: \"$1\"" >&2   && return 1
+    ! ksl::arrayExists $1 && echo "arrayAppendValue() no such array: \"$1\"" >&2   && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayHasKey $1 "$2" && echo "arrayAppend() no such key: \"$2\"" >&2 && return 1
+    ! ksl::arrayHasKey $1 "$2" && echo "arrayAppendValue() no such key: \"$2\"" >&2 && return 1
 
     eval "$1[$2]=\${$1[$2]}\$3"
 }
@@ -197,17 +209,45 @@ ksl::arrayAppend()
 #     ksl::arrayPrepend errpass DESC "Fatal error: "
 #
 # @stdout no output
-# @stderr arrayPrepend() no such key: <p><p>![](../images/pub/divider-line.png)
+# @stderr arrayPrependValue() missing args
+# @stderr arrayPrependValue() no such array:
+# @stderr arrayPrependValue() no such key: <p><p>![](../images/pub/divider-line.png)
 #
-ksl::arrayPrepend()
+ksl::arrayPrependValue()
 {
-    [[ $# -lt 2 ]] && return 1
+    [[ $# -lt 2 ]] && echo "arrayPrependValue() missing args" >&2 && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayExists $1      && echo "arrayPrepend() no such array: \"$1\"" >&2 && return 1
+    ! ksl::arrayExists $1      && echo "arrayPrependValue() no such array: \"$1\"" >&2 && return 1
     # shellcheck disable=SC2086
-    ! ksl::arrayHasKey $1 "$2" && echo "arrayPrepend() no such key: \"$2\""   >&2 && return 1
+    ! ksl::arrayHasKey $1 "$2" && echo "arrayPrependValue() no such key: \"$2\""   >&2 && return 1
 
     eval "$1[$2]=\$3\${$1[$2]}"
+}
+
+# -----------------------------------------------------------
+#
+# @description Deletes an array element.
+#
+# It is not an error if the element doesn't exist.
+#
+# @arg $1 array - the name of the array
+# @arg $2 string - the name of the key
+#
+# @exitcode 1 not an array, no such key, or missing args
+# @exitcode 0 success
+#
+# @example
+#     ksl::arrayDeleteElement dogs SHEPPARD
+#
+# @stdout no output
+# @stderr arrayDeleteElement() missing args
+# @stderr arrayDeleteElement() no such array: <p><p>![](../images/pub/divider-line.png)
+#
+ksl::arrayDeleteElement()
+{
+    [[ $# -lt 2 ]] && echo "arrayDeleteElement() missing args" >&2 && return 1
+    ! ksl::arrayExists $1 && echo "arrayDeleteElement() no such array: \"$1\"" >&2 && return 1
+    unset $1[$2]
 }
 
 # -----------------------------------------------------------
@@ -258,11 +298,12 @@ ksl::arrayPrepend()
 #    }
 #
 # @stdout no output
+# @stderr arrayVisit() missing args
 # @stderr arrayVisit() no such array: <p><p>![](../images/pub/divider-line.png)
 #
 ksl::arrayVisit()
 {
-    [[ $# -lt 2 ]] && return 1
+    [[ $# -lt 2 ]] && echo "arrayVisit() missing args" >&2 && return 1
     ! ksl::arrayExists $1 && echo "arrayVisit() no such array: \"$1\"" >&2 && return 1
     local arrayName=$1
     local func=$2;

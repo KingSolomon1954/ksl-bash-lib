@@ -119,7 +119,7 @@ test_epSetDescription()
     local -i ret
 
     # call no args
-    ksl::epSetDescription
+    ksl::epSetDescription 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with non-existant EPS
@@ -190,7 +190,7 @@ test_epAppend()
     local desc
 
     # call no args
-    ksl::epAppend
+    ksl::epAppend 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with bad EPS
@@ -221,7 +221,7 @@ test_epPrepend()
     local desc
 
     # call no args
-    ksl::epPrepend
+    ksl::epPrepend 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with bad EPS
@@ -252,7 +252,7 @@ test_epSetErrorName()
     local diag
 
     # call no args
-    ksl::epSetErrorName
+    ksl::epSetErrorName 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with non-existant EPS
@@ -322,7 +322,7 @@ test_epSetErrorType()
     local -i ret
 
     # call no args
-    ksl::epSetErrorType
+    ksl::epSetErrorType 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with non-existant EPS
@@ -392,7 +392,7 @@ test_epSetSeverity()
     local -i ret
 
     # call no args
-    ksl::epSetSeverity
+    ksl::epSetSeverity 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with non-existant EPS
@@ -462,7 +462,7 @@ test_epSetFuncName()
     local -i ret
 
     # call no args
-    ksl::epSetFuncName
+    ksl::epSetFuncName 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with non-existant EPS
@@ -532,7 +532,7 @@ test_epSetFileName()
     local -i ret
 
     # call no args
-    ksl::epSetFileName
+    ksl::epSetFileName 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with non-existant EPS
@@ -602,7 +602,7 @@ test_epSetLineNum()
     local -i ret
 
     # call no args
-    ksl::epSetLineNum
+    ksl::epSetLineNum 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with non-existant EPS
@@ -671,6 +671,10 @@ test_epSetCodeNum()
 {
     local -i ret
 
+    # call no args
+    ksl::epSetCodeNum 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+    
     # call with non-existant EPS
     unset ep1
     ksl::epSetCodeNum "100" 2>/dev/null
@@ -744,6 +748,10 @@ test_epSetCause()
 {
     local -i ret
 
+    # call no args
+    ksl::epSetCause 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+    
     # call with non-existant EPS
     unset ep1
     ksl::epSetCause "hardware fault" 2>/dev/null
@@ -818,7 +826,7 @@ test_epSetRepair()
     local -i ret
 
     # call no args
-    ksl::epSetRepair
+    ksl::epSetRepair 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with non-existant EPS

@@ -9,7 +9,7 @@ test_arrayExists()
     local -i ret
 
     # Missing args
-    ksl::arrayExists
+    ksl::arrayExists 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Bad array, doesn't exist
@@ -28,23 +28,25 @@ test_arrayExists()
     ret=$?; assert '[[ $ret -eq 0 ]]'
 }
 
+# -----------------------------------------------------------
+
 test_arraySize()
 {
     local -i ret
     local val
 
     # Missing args
-    val=$(ksl::arraySize)
+    ksl::arraySize 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Bad array, doesn't exist
     unset dogs
-    val=$(ksl::arraySize dogs)
+    ksl::arraySize dogs 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Good array, no elements
     local -A dogs
-    val=$(ksl::arraySize dogs)
+    val=$(ksl::arraySize dogs) 
     ret=$?; assert '[[ $ret -eq 0 ]]'
     assert_equals "0" "$val"
 
@@ -64,16 +66,16 @@ test_arrayHasKey()
     local -i ret
 
     # Missing args
-    ksl::arrayHasKey
+    ksl::arrayHasKey 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Missing args
-    ksl::arrayHasKey oneArg
+    ksl::arrayHasKey oneArg 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Bad array, doesn't exist
     unset dogs
-    ksl::arrayHasKey dogs SPOT
+    ksl::arrayHasKey dogs SPOT 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Good array - associative, but missing key
@@ -184,33 +186,33 @@ test_arrayAppendValue()
     local -i ret
 
     # Missing all args
-    ksl::arrayAppend 2>/dev/null
+    ksl::arrayAppendValue 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Missing 1 arg
-    ksl::arrayAppend dogs 2>/dev/null
+    ksl::arrayAppendValue dogs 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Bad array, doesn't exist
-    ksl::arrayAppend dogs ROVER "I rove around" 2>/dev/null
+    ksl::arrayAppendValue dogs ROVER "I rove around" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     local -A dogs
     dogs[SPOT]="spot"
 
     # Good array, bad key
-    ksl::arrayAppend dogs ROVER "I rove around" 2>/dev/null
+    ksl::arrayAppendValue dogs ROVER "I rove around" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Good array, good key, append success
     dogs[ROVER]="Roving: "
-    ksl::arrayAppend dogs ROVER "I rove around"
+    ksl::arrayAppendValue dogs ROVER "I rove around"
     ret=$?; assert '[[ $ret -eq 0 ]]'
     assert_equals "Roving: I rove around" "${dogs[ROVER]}"
 
     # Good key and value with embedded spaces
     dogs["GREAT DANE"]="I am a great dane"
-    ksl::arrayAppend dogs "GREAT DANE" " the greatest"
+    ksl::arrayAppendValue dogs "GREAT DANE" " the greatest"
     ret=$?; assert '[[ $ret -eq 0 ]]'
     assert_equals "I am a great dane the greatest" "${dogs[GREAT DANE]}"
 }
@@ -222,36 +224,65 @@ test_arrayPrependValue()
     local -i ret
 
     # Missing all args
-    ksl::arrayPrepend
+    ksl::arrayPrependValue 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Missing 1 arg
-    ksl::arrayPrepend dogs
+    ksl::arrayPrependValue dogs 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Bad array, doesn't exist
-    ksl::arrayPrepend dogs ROVER "I rove around" 2>/dev/null
+    ksl::arrayPrependValue dogs ROVER "I rove around" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     local -A dogs
     dogs[SPOT]="spot"
 
     # Good array, bad key
-    ksl::arrayPrepend dogs ROVER "I rove around" 2>/dev/null
+    ksl::arrayPrependValue dogs ROVER "I rove around" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Good array, good key, prepend success
     dogs[ROVER]="Roving: "
-    ksl::arrayPrepend dogs ROVER "I rove around "
+    ksl::arrayPrependValue dogs ROVER "I rove around "
     ret=$?; assert '[[ $ret -eq 0 ]]'
     assert_equals "I rove around Roving: " "${dogs[ROVER]}"
 
     # Good key and value with embedded spaces
     dogs["GREAT DANE"]="I am a great dane"
-    ksl::arrayPrepend dogs "GREAT DANE" " the greatest"
+    ksl::arrayPrependValue dogs "GREAT DANE" " the greatest"
     ret=$?; assert '[[ $ret -eq 0 ]]'
     assert_equals " the greatestI am a great dane" "${dogs[GREAT DANE]}"
 }
+
+# -----------------------------------------------------------
+
+test_arrayDeleteElement()
+{
+    local -i ret
+
+    # Missing all args
+    ksl::arrayDeleteElement 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # Missing 1 arg
+    ksl::arrayDeleteElement dogs 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # Bad array, doesn't exist
+    ksl::arrayDeleteElement dogs ROVER 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    local -A dogs
+    dogs[SHEPPARD]="brutus"
+    dogs[DANE]="great"
+    assert_equals "2" "$(ksl::arraySize dogs)"
+
+    ksl::arrayDeleteElement dogs SHEPPARD
+    ret=$?; assert '[[ $ret -eq 0 ]]'
+    assert_equals "1" "$(ksl::arraySize dogs)"
+}
+
 
 # -----------------------------------------------------------
 
@@ -286,11 +317,11 @@ test_arrayVisit()
     local val
 
     # Missing all args
-    ksl::arrayVisit
+    ksl::arrayVisit 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Missing 1 arg
-    ksl::arrayVisit dogs
+    ksl::arrayVisit dogs 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # Bad array, doesn't exist

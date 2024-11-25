@@ -242,7 +242,7 @@ ksl::epSet()
 #     ksl::epSetDescription ""                    # sets ep1 description to empty
 #     ksl::epSetDescription                       # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetDescription() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetDescription()
@@ -250,7 +250,7 @@ ksl::epSetDescription()
     local eps
     local description
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetDescription() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && description="$1"
     [[ $# -eq 2 ]] && eps="$1" && description="$2"
     ksl::arraySetValue "${eps:-ep1}" DESC "${description}"
@@ -300,7 +300,7 @@ ksl::epDescription()
 #     ksl::epAppend ""                      # append empty string to ep1
 #     ksl::epAppend                         # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epAppend() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epAppend()
@@ -308,7 +308,7 @@ ksl::epAppend()
     local eps
     local str
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epAppend() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && str="$1";
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
     ! ksl::arrayExists "${eps:=ep1}" && return 1
@@ -337,7 +337,7 @@ ksl::epAppend()
 #     ksl::epPrepend ""                      # prepend empty string to ep1
 #     ksl::epPrepend                         # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epPrepend() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epPrepend()
@@ -345,7 +345,7 @@ ksl::epPrepend()
     local eps
     local str
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epPrepend() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && str="$1";
     # shellcheck disable=SC2034
     [[ $# -eq 2 ]] && eps="$1" && str="$2"
@@ -401,7 +401,7 @@ ksl::epPrepend()
 #     ksl::epSetErrorName  ""                  # sets ep1 error name to empty
 #     ksl::epSetErrorName                      # no error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetErrorName() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetErrorName()
@@ -409,7 +409,7 @@ ksl::epSetErrorName()
     local eps
     local errName
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetErrorName() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && errName="$1"
     [[ $# -eq 2 ]] && eps="$1" && errName="$2"
     ksl::arraySetValue "${eps:-ep1}" ERRNAME "${errName}"
@@ -468,7 +468,7 @@ ksl::epErrorName()
 #     ksl::epSetErrorType  ""                    # sets ep1 error type to empty
 #     ksl::epSetErrorType                        # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetErrorType() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetErrorType()
@@ -476,7 +476,7 @@ ksl::epSetErrorType()
     local eps
     local errType
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetErrorType() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && errType="$1"
     [[ $# -eq 2 ]] && eps="$1" && errType="$2"
     ksl::arraySetValue "${eps:-ep1}" ERRTYPE "${errType}"
@@ -534,7 +534,7 @@ ksl::epErrorType()
 #     ksl::epSetSeverity  ""               # sets ep1 severity to empty
 #     ksl::epSetSeverity                   # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetSeverity() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetSeverity()
@@ -542,7 +542,7 @@ ksl::epSetSeverity()
     local eps
     local severity
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetSeverity() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && severity="$1"
     [[ $# -eq 2 ]] && eps="$1" && severity="$2"
     ksl::arraySetValue "${eps:-ep1}" SEVERITY "${severity}"
@@ -592,7 +592,7 @@ ksl::epSeverity()
 #     ksl::epSetFuncName  ""               # sets ep1 function name to empty
 #     ksl::epSetFuncName                   # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetFuncName() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetFuncName()
@@ -600,7 +600,7 @@ ksl::epSetFuncName()
     local eps
     local funcName
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetFuncName() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && funcName="$1"
     [[ $# -eq 2 ]] && eps="$1" && funcName="$2"
     ksl::arraySetValue "${eps:-ep1}" FUNC "${funcName}"
@@ -649,7 +649,7 @@ ksl::epFuncName()
 #     ksl::epSetFileName  ""              # sets ep1 file name to empty
 #     ksl::epSetFileName                  # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetFileName() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetFileName()
@@ -657,7 +657,7 @@ ksl::epSetFileName()
     local eps
     local fileName
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetFileName() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && fileName="$1"
     [[ $# -eq 2 ]] && eps="$1" && fileName="$2"
     ksl::arraySetValue "${eps:-ep1}" FILE "${fileName}"
@@ -706,7 +706,7 @@ ksl::epFileName()
 #     ksl::epSetLineNum  ""         # sets ep1 line number to empty
 #     ksl::epSetLineNum             # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetLineNum() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetLineNum()
@@ -714,7 +714,7 @@ ksl::epSetLineNum()
     local eps
     local lineNum
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetLineNum() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && lineNum="$1"
     [[ $# -eq 2 ]] && eps="$1" && lineNum="$2"
     ksl::arraySetValue "${eps:-ep1}" LINENUM "${lineNum}"
@@ -763,7 +763,7 @@ ksl::epLineNum()
 #     ksl::epSetCodeNum  ""          # sets ep1 code number to empty
 #     ksl::epSetCodeNum              # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetCodeNum() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetCodeNum()
@@ -771,7 +771,7 @@ ksl::epSetCodeNum()
     local eps
     local codeNum
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetCodeNum() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && codeNum="$1"
     [[ $# -eq 2 ]] && eps="$1" && codeNum="$2"
     ksl::arraySetValue "${eps:-ep1}" CODENUM "${codeNum}"
@@ -820,7 +820,7 @@ ksl::epCodeNum()
 #     ksl::epSetCause  ""             # sets ep1 cause to empty
 #     ksl::epSetCause                 # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetCause() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetCause()
@@ -828,7 +828,7 @@ ksl::epSetCause()
     local eps
     local cause
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetCause() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && cause="$1"
     [[ $# -eq 2 ]] && eps="$1" && cause="$2"
     ksl::arraySetValue "${eps:-ep1}" CAUSE "${cause}"
@@ -877,7 +877,7 @@ ksl::epCause()
 #     ksl::epSetRepair  ""               # sets ep1 repair to empty
 #     ksl::epSetRepair                   # error
 #
-# @stderr arraySetValue() missing args
+# @stderr epSetRepair() missing args
 # @stderr arraySetValue() no such array <p><p>![](../images/pub/divider-line.png)
 #
 ksl::epSetRepair()
@@ -885,7 +885,7 @@ ksl::epSetRepair()
     local eps
     local repair
 
-    [[ $# -eq 0 ]] && return 1
+    [[ $# -eq 0 ]] && echo "epSetRepair() missing args" >&2 && return 1
     [[ $# -eq 1 ]] && repair="$1"
     [[ $# -eq 2 ]] && eps="$1" && repair="$2"
     ksl::arraySetValue "${eps:-ep1}" REPAIR "${repair}"
