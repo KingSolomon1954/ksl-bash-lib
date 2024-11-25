@@ -78,11 +78,14 @@ envSep=":"
 #     fi
 #
 # @exitcode 0 Success - was found
-# @exitcode 1 not found, or missing args  <p><p>![](../images/pub/divider-line.png)
+# @exitcode 1 not found, or missing args
+#
+# @stdout no output
+# @stderr envContains() missing args <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envContains()
 {
-    [[ $# -lt 2 ]] && return 1      # Need two args
+    [[ $# -lt 2 ]] && echo "envContains() missing args" >&2 && return 1
     [[ -z "$1" ]] && return 1       # Empty arg
     [[ "$1" =~ "\W" ]] && return 1  # Name of env var must be a word
     
@@ -147,7 +150,11 @@ ksl::envContains()
 #     ksl::envAppend -r -f MANPATH $HOME/man # MANPATH is updated if $HOME/man exists
 #
 # @exitcode 0 Success if element was appended
-# @exitcode 1 Failed element was not appended  <p><p>![](../images/pub/divider-line.png)
+# @exitcode 1 Failed element was not appended
+#
+# @stderr ksl::_envXxpend(): missing args
+# @stderr ksl::_envXxpend(): requires two arguments got only...
+# @stderr ksl::_envXxpend(): invalid option... <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envAppend()
 {
@@ -189,7 +196,7 @@ ksl::_envXxpend()
             --append)             append=true;;
             --prepend)            append=false;;
             '') ;;
-            -*) echo "Invalid option \"$1\" for envAppend() or envPrepend()" 1>&2
+            -*) echo "_envXxpend() invalid option \"$1\"" >&2
                 return 1;;
             *) local val=${1//${envSep}/}  # strip any leading/trailing ":"
                 if [[ -n "${args}" ]]; then
@@ -203,8 +210,8 @@ ksl::_envXxpend()
 
     # Must have the two required args (PATH_VARIABLE and ELEMENT)
     if [[ ${argCount} -lt 2 ]]; then
-        echo -n "ksl::envXxpend(): requires two arguments, " 1>&2
-        echo    "got only ${argCount}: \"${args}\"" 1>&2
+        echo -n "ksl::_envXxpend(): requires two arguments, " >&2
+        echo    "got only ${argCount}: \"${args}\"" >&2
         return 1
     fi
     
@@ -217,7 +224,7 @@ ksl::_envXxpend()
     # echo "  varName: ${varName}"
     # echo "  element: ${element}"
     
-    [[ -z "${varName}" ]] || [[ -z "${element}" ]] && return 1 # missing args
+    [[ -z "${varName}" ]] || [[ -z "${element}" ]] && echo "ksl::_envXxpend() missing args" >&2 && return 1 # missing args
 
     if ! ${allowDups}; then
         if ksl::envContains "${varName}" "${element}"; then
@@ -252,12 +259,16 @@ ksl::_envXxpend()
 # @example
 #     ksl::envDelete MANPATH "$HOME/man"
 #
-# @exitcode 0 No error. Doesn't mean anything was deleted.
-# @exitcode 1 Missing or empty args  <p><p>![](../images/pub/divider-line.png)
+# @exitcode 0 No error. Doesn't mean something was deleted.
+# @exitcode 1 Missing or empty args
+#
+# @stdout no output
+# @stderr envDelete() missing args <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDelete()
 {
-    [[ -z "$1" ]] || [[ -z "$2" ]] && return 1 # no args, nothing appended
+    [[ $# -lt 2 ]] && echo "envDelete() missing args" >&2 && return 1
+    [[ -z "$1" ]] || [[ -z "$2" ]] && return 1 # no args, nothing deleted
     local -n ref=$1
 
     local match="$2"            # If $2 has colons, it screws up the sub
@@ -281,14 +292,18 @@ ksl::envDelete()
 #     ksl::envDeleteFirst MANPATH
 #
 # @exitcode 0 No error. Doesn't mean anything was deleted.
-# @exitcode 1 Missing or empty args  <p><p>![](../images/pub/divider-line.png)
+# @exitcode 1 Missing or empty args
+#
+# @stdout no output
+# @stderr envDeleteFirst() missing args
+# @stderr envDeleteFirst() empty arg <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDeleteFirst()
 {
-    [[ -z "$1" ]] && return 1    # Missing args
-    local -n ref="$1"
-    [[ -z "$ref" ]] && return 1  # Empty environment var
+    [[ $# -lt 1 ]] && echo "envDeleteFirst() missing args" >&2 && return 1
+    [[ -z "$1"  ]] && echo "envDeleteFirst() empty arg"    >&2 && return 1
 
+    local -n ref="$1"
     ref=${ref}${envSep}          # Add sentinel in case single frag
 
     # shellcheck disable=SC2295
@@ -309,13 +324,18 @@ ksl::envDeleteFirst()
 #     ksl::envDeleteLast MANPATH
 #
 # @exitcode 0 No error. Doesn't mean anything was deleted.
-# @exitcode 1 Missing or empty args  <p><p>![](../images/pub/divider-line.png)
+# @exitcode 1 Missing or empty args
+#
+# @stdout no output
+# @stderr envDeleteLast() missing args
+# @stderr envDeleteLast() empty arg <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDeleteLast()
 {
-    [[ -z "$1" ]] && return 1      # Missing args
+    [[ $# -lt 1 ]] && echo "envDeleteLast() missing args" >&2 && return 1
+    [[ -z "$1"  ]] && echo "envDeleteLast() empty arg"    >&2 && return 1
+
     local -n ref=$1
-    [[ -z "$ref" ]] && return 1    # Empty environment var
     ref=${envSep}${ref}            # Add sentinel in case single frag
     
     # shellcheck disable=SC2295
