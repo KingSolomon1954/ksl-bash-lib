@@ -20,6 +20,7 @@ UNIT_TESTS := \
 	test/libEnvTest.bash \
 	test/libErrorTest.bash \
 	test/libFilesTest.bash \
+	test/libStdOutTest.bash \
 	test/libStringsTest.bash
 
 unit-tests \
