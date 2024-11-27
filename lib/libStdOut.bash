@@ -43,8 +43,7 @@
 # * `COLOR_FATAL_TEXT=${FG_RED}`
 #
 # An application can modify these colors as desired. See
-# [libColors](libColors.html) for color setup and variable
-# `KSL_USE_COLOR`.
+# [libColors](libColors.html) for color setup.
 #
 # -----------------------------------------------------------
 
@@ -116,9 +115,9 @@ ksl::stdErr()
 #
 # @description Output message to standard out prefaced by `[TRACE]`.
 #
-# If `KSL_USE_COLOR` is true then colors are applied.
+# If [ksl::useColor](libColor.html#kslusecolor) is true then
+# colors are applied.
 #
-# @set KSL_USE_COLOR boolean if true then colors are applied
 # @set COLOR_TRACE_INTRO string the color to use for the introducer
 # @set COLOR_TRACE_TEXT string the color to use for the text following the introducer
 #
@@ -135,7 +134,7 @@ ksl::stdErr()
 ksl::stdTrace()
 {
     local beforeIntro="" beforeText="" after=""
-    if ${KSL_USE_COLOR}; then
+    if ksl::useColor; then
         beforeIntro="${COLOR_TRACE_INTRO}"
         beforeText="${COLOR_TRACE_TEXT}"
         after="${CLEAR}"
@@ -148,9 +147,9 @@ ksl::stdTrace()
 #
 # @description Output message to standard out prefaced by `[DEBUG]`.
 #
-# If `KSL_USE_COLOR` is true then colors are applied.
+# If [ksl::useColor](libColor.html#kslusecolor) is true then
+# colors are applied.
 #
-# @set KSL_USE_COLOR boolean if true then colors are applied
 # @set COLOR_DEBUG_INTRO string the color to use for the introducer
 # @set COLOR_DEBUG_TEXT string the color to use for the text following the introducer
 #
@@ -167,7 +166,7 @@ ksl::stdTrace()
 ksl::stdDebug()
 {
     local beforeIntro="" beforeText="" after=""
-    if ${KSL_USE_COLOR}; then
+    if ksl::useColor; then
         beforeIntro="${COLOR_DEBUG_INTRO}"
         beforeText="${COLOR_DEBUG_TEXT}"
         after="${CLEAR}"
@@ -179,9 +178,9 @@ ksl::stdDebug()
 #
 # @description Output message to standard out prefaced by `[INFO]`.
 #
-# If `KSL_USE_COLOR` is true then colors are applied.
+# If [ksl::useColor](libColor.html#kslusecolor) is true then
+# colors are applied.
 #
-# @set KSL_USE_COLOR boolean if true then colors are applied
 # @set COLOR_INFO_INTRO string the color to use for the introducer
 # @set COLOR_INFO_TEXT string the color to use for the text following the introducer
 #
@@ -198,7 +197,7 @@ ksl::stdDebug()
 ksl::stdInfo()
 {
     local beforeIntro="" beforeText="" after=""
-    if ${KSL_USE_COLOR}; then
+    if ksl::useColor; then
         beforeIntro="${COLOR_INFO_INTRO}"
         beforeText="${COLOR_INFO_TEXT}"
         after="${CLEAR}"
@@ -210,9 +209,9 @@ ksl::stdInfo()
 #
 # @description Output message to standard out prefaced by `[WARN]`.
 #
-# If `KSL_USE_COLOR` is true then colors are applied.
+# If [ksl::useColor](libColor.html#kslusecolor) is true then
+# colors are applied.
 #
-# @set KSL_USE_COLOR boolean if true then colors are applied
 # @set COLOR_WARN_INTRO string the color to use for the introducer
 # @set COLOR_WARN_TEXT string the color to use for the text following the introducer
 #
@@ -229,7 +228,7 @@ ksl::stdInfo()
 ksl::stdWarn()
 {
     local beforeIntro="" beforeText="" after=""
-    if ${KSL_USE_COLOR}; then
+    if ksl::useColor; then
         beforeIntro="${COLOR_WARN_INTRO}"
         beforeText="${COLOR_WARN_TEXT}"
         after="${CLEAR}"
@@ -241,9 +240,9 @@ ksl::stdWarn()
 #
 # @description Output message to standard error prefaced by `[ERROR]`.
 #
-# If `KSL_USE_COLOR` is true then colors are applied.
+# If [ksl::useColor](libColor.html#kslusecolor) is true then
+# colors are applied.
 #
-# @set KSL_USE_COLOR boolean if true then colors are applied
 # @set COLOR_ERROR_INTRO string the color to use for the introducer
 # @set COLOR_ERROR_TEXT string the color to use for the text following the introducer
 #
@@ -260,7 +259,7 @@ ksl::stdWarn()
 ksl::stdError()
 {
     local beforeIntro="" beforeText="" after=""
-    if ${KSL_USE_COLOR}; then
+    if ksl::useColor; then
         beforeIntro="${COLOR_ERROR_INTRO}"
         beforeText="${COLOR_ERROR_TEXT}"
         after="${CLEAR}"
@@ -272,9 +271,9 @@ ksl::stdError()
 #
 # @description Output message to standard error prefaced by `[FATAL]`.
 #
-# If `KSL_USE_COLOR` is true then colors are applied.
+# If [ksl::useColor](libColor.html#kslusecolor) is true then
+# colors are applied.
 #
-# @set KSL_USE_COLOR boolean if true then colors are applied
 # @set COLOR_FATAL_INTRO string the color to use for the introducer
 # @set COLOR_FATAL_TEXT string the color to use for the text following the introducer
 #
@@ -291,7 +290,7 @@ ksl::stdError()
 ksl::stdFatal()
 {
     local beforeIntro="" beforeText="" after=""
-    if ${KSL_USE_COLOR}; then
+    if ksl::useColor; then
         beforeIntro="${COLOR_FATAL_INTRO}"
         beforeText="${COLOR_FATAL_TEXT}"
         after="${CLEAR}"
