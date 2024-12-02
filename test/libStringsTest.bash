@@ -20,6 +20,8 @@ test_strlen()
     assert_equals "0" "$(ksl::strlenR "")"           # test zero length string
 }
 
+# -----------------------------------------------------------
+
 test_isEmpty()
 {
     assert "ksl::isEmpty ''"
@@ -36,6 +38,8 @@ test_isEmpty()
     assert "ksl::isEmptyR 'DINO' "
 }
 
+# -----------------------------------------------------------
+
 test_startsWith()
 {
     assert "ksl::startsWith 'rolling thunder' 'rolling'"
@@ -45,6 +49,8 @@ test_startsWith()
     assert_fails "ksl::startsWith '' ''"
     assert_fails "ksl::startsWith"
 }
+
+# -----------------------------------------------------------
 
 test_endsWith()
 {
@@ -56,12 +62,16 @@ test_endsWith()
     assert_fails "ksl::endsWith"
 }
 
+# -----------------------------------------------------------
+
 test_toLower()
 {
     assert_equals "rolling thunder" "$(ksl::toLower 'ROLLING Thunder')"
     assert_equals "rolling thunder" "$(ksl::toLower 'rolling thunder')"
     assert_equals "" "$(ksl::toLower '')"
 }
+
+# -----------------------------------------------------------
 
 test_toUpper()
 {
@@ -70,12 +80,16 @@ test_toUpper()
     assert_equals "" "$(ksl::toUpper '')"
 }
 
+# -----------------------------------------------------------
+
 test_capitalize()
 {
     assert_equals "Rolling Thunder" "$(ksl::capitalize 'rolling Thunder')"
     assert_equals "Rolling thunder" "$(ksl::capitalize 'Rolling thunder')"
     assert_equals "" "$(ksl::capitalize '')"
 }
+
+# -----------------------------------------------------------
 
 test_trimLeft()
 {
@@ -84,12 +98,16 @@ test_trimLeft()
     assert_equals "Rolling Thunder"  "$(ksl::trimLeft 'Rolling Thunder' 'no-match')"
 }
 
+# -----------------------------------------------------------
+
 test_trimRight()
 {
     assert_equals "Rolling Thunder " "$(ksl::trimRight 'Rolling Thunder aabbcc' 'aabbcc')"
     assert_equals "Rolling Thunder"  "$(ksl::trimRight 'Rolling Thunder      ')"
     assert_equals "Rolling thunder"  "$(ksl::trimRight 'Rolling thunder' 'no-match')"
 }
+
+# -----------------------------------------------------------
 
 test_trimWhitespace()
 {
@@ -98,6 +116,8 @@ test_trimWhitespace()
     assert_equals "Rolling Thunder" "$(ksl::trimWhitespace 'Rolling Thunder          ')"
     assert_equals "Rolling Thunder" "$(ksl::trimWhitespace 'Rolling Thunder')"
 }
+
+# -----------------------------------------------------------
 
 test_contains()
 {
@@ -112,6 +132,8 @@ test_contains()
     assert_fails "ksl::contains '' '' "
 }
 
+# -----------------------------------------------------------
+
 test_isAlphNum()
 {
     assert "ksl::isAlphNum '12345' "
@@ -121,6 +143,8 @@ test_isAlphNum()
     assert_fails "ksl::isAlphNum '#%@' "
     assert_fails "ksl::isAlphNum 'I am Spartacus' "
 }
+
+# -----------------------------------------------------------
 
 test_isAlpha()
 {
@@ -132,6 +156,8 @@ test_isAlpha()
     assert_fails "ksl::isAlpha 'I am Spartacus'"
 }
 
+# -----------------------------------------------------------
+
 test_isAscii()
 {
     # assert "isAscii '\20'"
@@ -141,6 +167,8 @@ test_isAscii()
     assert_fails "ksl::isAscii '#%@'"
     assert_fails "ksl::isAscii 'I am Spartacus'"
 }
+
+# -----------------------------------------------------------
 
 test_isBlank()
 {
@@ -153,6 +181,8 @@ test_isBlank()
     assert_fails "ksl::isBlank 'I am Spartacus'"
 }
 
+# -----------------------------------------------------------
+
 test_isCntrl()
 {
     local x=$'\e\a\t\r\n'
@@ -163,6 +193,8 @@ test_isCntrl()
     assert_fails "ksl::isCntrl '#%@'"
     assert_fails "ksl::isCntrl 'I am Spartacus'"
 }
+
+# -----------------------------------------------------------
 
 test_isDigit()
 {
@@ -175,6 +207,8 @@ test_isDigit()
     assert_fails "ksl::isDigit 'I am Spartacus'"
 }
 
+# -----------------------------------------------------------
+
 test_isGraph()
 {
     assert "ksl::isGraph '12345'"
@@ -186,6 +220,8 @@ test_isGraph()
     assert_fails "ksl::isGraph '\t   '"
     assert_fails "ksl::isGraph 'I am Spartacus'"
 }
+
+# -----------------------------------------------------------
 
 test_isInteger()
 {
@@ -209,6 +245,8 @@ test_isInteger()
     assert_fails "ksl::isInteger '#%@'"
     assert_fails "ksl::isInteger 'I am Spartacus'"
 }
+
+# -----------------------------------------------------------
 
 test_isNumber()
 {
@@ -244,6 +282,8 @@ test_isNumber()
     assert_fails "ksl::isNumber 'I am Spartacus' "
 }
 
+# -----------------------------------------------------------
+
 test_isLower()
 {
     assert "ksl::isLower 'iamspartacus'"
@@ -254,6 +294,8 @@ test_isLower()
     assert_fails "ksl::isLower '#%@'"
     assert_fails "ksl::isLower"
 }
+
+# -----------------------------------------------------------
 
 test_isPrint()
 {
@@ -268,6 +310,8 @@ test_isPrint()
     assert_fails 'isPrint "$x"'
 }
 
+# -----------------------------------------------------------
+
 test_isPunct()
 {
     assert "ksl::isPunct '!,.;:'"
@@ -279,6 +323,8 @@ test_isPunct()
     assert_fails "ksl::isPunct '\t   '"
     assert_fails "ksl::isPunct 'I am Spartacus'"
 }
+
+# -----------------------------------------------------------
 
 test_isSpace()
 {
@@ -292,6 +338,8 @@ test_isSpace()
     assert_fails "ksl::isSpace 'I am Spartacus'"
 }
 
+# -----------------------------------------------------------
+
 test_isUpper()
 {
     assert "ksl::isUpper 'IAMSPARTACUS'"
@@ -302,6 +350,8 @@ test_isUpper()
     assert_fails "ksl::isUpper '#%@'"
     assert_fails "ksl::isUpper"
 }
+
+# -----------------------------------------------------------
 
 # Commented out until isWord is debugged.
 #
@@ -317,6 +367,8 @@ test_isUpper()
 #     assert_fails "isWord "
 #     assert_fails "isWord 'I-am-Spartacus' "
 # }
+
+# -----------------------------------------------------------
 
 test_isXdigit()
 {

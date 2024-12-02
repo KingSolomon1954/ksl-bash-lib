@@ -1,37 +1,41 @@
 # -----------------------------------------------------------
 #
-# Functions to manipulate shell strings.
+# @name libStrings
+# @brief Functions to process shell strings.
+#
+# @description
+# Functions to process and manipulate shell strings.
 #
 # Contains the following:
 #
-#     ksl::strlen()
-#     ksl::strlenR()
-#     ksl::isEmpty()
-#     ksl::isEmptyR()
-#     ksl::startsWith()
-#     ksl::endsWith()
-#     ksl::trimRight()
-#     ksl::trimLeft()
-#     ksl::trimWhitespace()
-#     ksl::contains()
-#     ksl::toLower()
-#     ksl::toUpper()
-#     ksl::capitalize()
-#     ksl::isAlphNum()
-#     ksl::isAlpha()
-#     ksl::# isAscii()
-#     ksl::isBlank()
-#     ksl::isCntrl()
-#     ksl::isDigit()
-#     ksl::isGraph()
-#     ksl::isLower()
-#     ksl::isInteger()
-#     ksl::isPrint()
-#     ksl::isPunct()
-#     ksl::isSpace()
-#     ksl::isUpper()
-#     ksl::# isWord()
-#     ksl::isXdigit()
+#     * ksl::strlen()
+#     * ksl::strlenR()
+#     * ksl::isEmpty()
+#     * ksl::isEmptyR()
+#     * ksl::startsWith()
+#     * ksl::endsWith()
+#     * ksl::trimRight()
+#     * ksl::trimLeft()
+#     * ksl::trimWhitespace()
+#     * ksl::contains()
+#     * ksl::toLower()
+#     * ksl::toUpper()
+#     * ksl::capitalize()
+#     * ksl::isAlphNum()
+#     * ksl::isAlpha()
+#     * ksl::# isAscii()
+#     * ksl::isBlank()
+#     * ksl::isCntrl()
+#     * ksl::isDigit()
+#     * ksl::isGraph()
+#     * ksl::isLower()
+#     * ksl::isInteger()
+#     * ksl::isPrint()
+#     * ksl::isPunct()
+#     * ksl::isSpace()
+#     * ksl::isUpper()
+#     * ksl::# isWord()
+#     * ksl::isXdigit()
 #
 # -----------------------------------------------------------
 
@@ -41,11 +45,18 @@ libStringImported=true
 
 # -----------------------------------------------------------
 #
-# Returns the number of characters in string.
-# Pass string by value. See also strLenR() next.
+# @description Returns the number of characters in string.
 #
-# Example:
-#     x=$(strlen "dinosaur")
+# Passes string by value. See also strlenR() next.
+#
+# @arg $1 ... the string of interest
+#
+# @exitcode 0 in all cases
+#
+# @example
+#     x=$(ksl::strlen "dinosaur")
+#
+# @stdout the string length <p><p>![](../images/pub/divider-line.png)
 #
 ksl::strlen ()
 {
@@ -54,13 +65,19 @@ ksl::strlen ()
 
 # -----------------------------------------------------------
 #
-# Returns the number of characters held by the named variable.
-# Pass string by reference.
+# @description Returns the number of characters held in string variable.
 #
-# Example:
+# Passes string by reference. See also strlen() previous.
+#
+# @arg $1 ... the variable name holding a string
+#
+# @exitcode 0 in all cases
+#
+# @example
 #     ANIMAL=dinosaur
-#     x=$(strlenR ANIMAL)
-#     results in x = 8
+#     x=$(ksl::strlenR ANIMAL)
+#
+# @stdout the string length <p><p>![](../images/pub/divider-line.png)
 #
 ksl::strlenR ()
 {
@@ -71,11 +88,18 @@ ksl::strlenR ()
 
 # -----------------------------------------------------------
 #
-# Returns true if string is empty, otherwise false
-# Pass string by value. See also isEmptyR() below.
+# @description Returns true if string is empty, otherwise false.
 #
-# Example:
-#     if isEmpty s1; then
+# Passes string by value. See also isEmptyR() next.
+#
+# @arg $1 ... the string of interest
+#
+# @exitcode 0 if string is empty (true)
+# @exitcode 1 if string is non-empty (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL=dinosaur
+#     if ksl::isEmpty $ANIMAL; then echo "yes"; fi
 #
 ksl::isEmpty ()
 {
@@ -84,12 +108,18 @@ ksl::isEmpty ()
 
 # -----------------------------------------------------------
 #
-# Returns true if string is empty, otherwise false
-# Pass string by reference. See also isEmpty() above.
+# @description Returns true if string variable holds a non-zero string.
 #
-# Example:
-#     if isEmpty HOME; then
+# Passes string by reference. See also isEmpty() previous.
 #
+# @arg $1 ... the variable name holding a string
+#
+# @exitcode 0 if string variable is empty (true)
+# @exitcode 1 if string variable is non-empty (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL=dinosaur
+#     if ksl::isEmptyR ANIMAL; then echo "yes"; fi
 #
 ksl::isEmptyR ()
 {
@@ -100,8 +130,17 @@ ksl::isEmptyR ()
 
 # -----------------------------------------------------------
 #
-# Return true if $1 string starts with $2 string
-# digits.
+# @description Returns true if $1 string starts with $2 string.
+#
+# @arg $1 ... the major string to test
+# @arg $2 ... the minor string to look for
+#
+# @exitcode 0 the major string starts with the minor string (true)
+# @exitcode 1 the major string does not start with the minor string (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="old dinosaur"
+#     if ksl::startsWith $ANIMAL "old"; then echo "yes"; fi
 #
 ksl::startsWith()
 {
@@ -111,8 +150,17 @@ ksl::startsWith()
 
 # -----------------------------------------------------------
 #
-# Return true if $1 string ends with $2 string
-# digits.
+# @description Returns true if $1 string ends with $2 string.
+#
+# @arg $1 ... the major string to test
+# @arg $2 ... the minor string to look for
+#
+# @exitcode 0 the major string ends with the minor string (true)
+# @exitcode 1 the major string does not end with the minor string (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="old dinosaur"
+#     if ksl::endsWith $ANIMAL "dinosaur"; then echo "yes"; fi
 #
 ksl::endsWith()
 {
@@ -122,9 +170,43 @@ ksl::endsWith()
 
 # -----------------------------------------------------------
 #
-# Return copy of $1 with the matching string in $2 removed
-# from the front of $1. If $2 is not given then defaults to
-# removing whitespace. $2 argument is a prefix.
+# @description Returns true if $1 string contains the string in $2.
+#
+# @arg $1 ... the major string to test
+# @arg $2 ... the minor string to look for
+#
+# @exitcode 0 the major string contains the minor string (true)
+# @exitcode 1 the major string does not contain the minor string (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="old dinosaur"
+#     if ksl::contains $ANIMAL "dinosaur"; then echo "yes"; fi
+#
+ksl::contains()
+{
+    [[ -z "$2" ]] && return 1
+    [[ "$1" == *$2* ]]
+}
+
+# -----------------------------------------------------------
+#
+# @description Returns a copy of $1 with the matching string in $2
+# removed from the front of $1.
+#
+# If $2 is not given then defaults to removing whitespace. $2 argument
+# is a prefix.
+#
+# @arg $1 ... the major string to operate on
+# @arg $2 ... the minor string to look for
+#
+# @exitcode 0 in all cases
+#
+# @example
+#     ANIMAL="old dinosaur"
+#     echo ksl::trimLeft $ANIMAL "old "
+#     outputs: "dinosaur"
+#
+# @stdout the resulting string <p><p>![](../images/pub/divider-line.png)
 #
 ksl::trimLeft()
 {
@@ -138,9 +220,23 @@ ksl::trimLeft()
 
 # -----------------------------------------------------------
 #
-# Return copy of $1 with the matching string in $2 removed
-# from the end of $1. If $2 is not given then defaults to
-# removing whitespace. $2 argument is a prefix.
+# @description Returns a copy of $1 with the matching string in $2
+# removed from the end of $1.
+#
+# If $2 is not given then defaults to removing whitespace. $2 argument
+# is a prefix.
+#
+# @arg $1 ... the major string to operate on
+# @arg $2 ... the minor string to look for
+#
+# @exitcode 0 in all cases
+#
+# @example
+#     ANIMAL="old dinosaur"
+#     echo ksl::trimRight $ANIMAL "dinosaur"
+#     outputs: "old "
+#
+# @stdout the resulting string <p><p>![](../images/pub/divider-line.png)
 #
 ksl::trimRight()
 {
@@ -154,9 +250,19 @@ ksl::trimRight()
 
 # -----------------------------------------------------------
 #
-# Return copy of $1 with the matching string in $2 removed
-# from the end of $1. If $2 is not given then defaults to
-# removing whitespace. $2 argument is a prefix.
+# @description Returns a copy of $1 with the whitspace
+# removed from both the start and end of $1.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 in all cases
+#
+# @example
+#     ANIMAL="  old dinosaur\t"
+#     echo ksl::trimWhitespace $ANIMAL
+#     outputs: "old dinosaur"
+#
+# @stdout the resulting string <p><p>![](../images/pub/divider-line.png)
 #
 ksl::trimWhitespace()
 {
@@ -167,17 +273,18 @@ ksl::trimWhitespace()
 
 # -----------------------------------------------------------
 #
-# Returns true if $1 string contains the string in $2.
+# @description Returns a copy of $1 string converted to lower case.
 #
-ksl::contains()
-{
-    [[ -z "$2" ]] && return 1
-    [[ "$1" == *$2* ]]
-}
-
-# -----------------------------------------------------------
+# @arg $1 ... the string to operate on
 #
-# Return copy of $1 string converted to lower case.
+# @exitcode 0 in all cases
+#
+# @example
+#     ANIMAL="Old Dinosaur"
+#     echo ksl::toLower $ANIMAL
+#     outputs: "old dinosaur"
+#
+# @stdout the resulting string <p><p>![](../images/pub/divider-line.png)
 #
 ksl::toLower()
 {
@@ -186,7 +293,18 @@ ksl::toLower()
 
 # -----------------------------------------------------------
 #
-# Return copy of $1 string converted to upper case
+# @description Returns a copy of $1 string converted to upper case.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 in all cases
+#
+# @example
+#     ANIMAL="Old Dinosaur"
+#     echo ksl::toUpper $ANIMAL
+#     outputs: "OLD DINOSAUR"
+#
+# @stdout the resulting string <p><p>![](../images/pub/divider-line.png)
 #
 ksl::toUpper()
 {
@@ -195,8 +313,19 @@ ksl::toUpper()
 
 # -----------------------------------------------------------
 #
-# Return copy of $1 string with first character capitalized and
-# the rest left alone.
+# @description Returns a copy of $1 string with first character
+# capitalized and the rest left alone.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 in all cases
+#
+# @example
+#     ANIMAL="old dinosaur"
+#     echo ksl::capitalize $ANIMAL
+#     outputs: "Old dinosaur"
+#
+# @stdout the resulting string <p><p>![](../images/pub/divider-line.png)
 #
 ksl::capitalize()
 {
@@ -205,8 +334,17 @@ ksl::capitalize()
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are alphanumeric as
-# defined by POSIX standard.
+# @description Returns true if all characters in $1 are
+# alphanumeric as defined by the POSIX standard.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only alpha numeric characters (true)
+# @exitcode 1 the string contains more than just alpha numeric characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isAlphaNum $ANIMAL; then echo "yes"; fi
 #
 ksl::isAlphNum()
 {
@@ -215,9 +353,18 @@ ksl::isAlphNum()
 }
 
 # -----------------------------------------------------------
-    #
-# Return true if all characters in the string are alpha as defined by
-# POSIX standard.
+#
+# @description Returns true if all characters in $1 are
+# alpha as defined by the POSIX standard.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only alpha characters (true)
+# @exitcode 1 the string contains more than just alpha characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isAlpha $ANIMAL; then echo "yes"; fi
 #
 ksl::isAlpha()
 {
@@ -227,10 +374,19 @@ ksl::isAlpha()
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are ASCII chars as defined
-# by POSIX standard.
+# @description Returns true if all characters in $1 are
+# ASCII characters as defined by the POSIX standard.
 #
 # ASCII is not currently working. Need to investigate.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only ASCII characters (true)
+# @exitcode 1 the string contains more than just ASCII characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isAscii $ANIMAL; then echo "yes"; fi
 #
 ksl::isAscii()
 {
@@ -240,8 +396,17 @@ ksl::isAscii()
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are blank as
-# defined by POSIX standard.
+# @description Returns true if all characters in $1 are blank as
+# defined by the POSIX standard.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only blank characters (true)
+# @exitcode 1 the string contains more than just blank characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isBlank $ANIMAL; then echo "yes"; fi
 #
 ksl::isBlank()
 {
@@ -251,8 +416,17 @@ ksl::isBlank()
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are control characters as
-# defined by POSIX standard.
+# @description Returns true if all characters in $1 are control
+# characters as defined by the POSIX standard.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only control characters (true)
+# @exitcode 1 the string contains more than just control characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isCntrl $ANIMAL; then echo "yes"; fi
 #
 ksl::isCntrl()
 {
@@ -262,70 +436,17 @@ ksl::isCntrl()
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are digits as defined by
-# POSIX standard. Note that "+" "-" "." are not digits.
+# @description Returns true if $1 contains only characters that
+# are printable as defined by POSIX standard.
 #
-ksl::isDigit()
-{
-    local pat='^[[:digit:]]+$'
-    [[ ${1} =~ ${pat} ]]
-}
-
-# -----------------------------------------------------------
+# @arg $1 ... the string to operate on
 #
-# Return true if all characters in the string are in the graph class
-# (displayable on a screen) as defined by POSIX standard.
+# @exitcode 0 the string contains only printable characters (true)
+# @exitcode 1 the string contains more than just printable characters (false) <p><p>![](../images/pub/divider-line.png)
 #
-ksl::isGraph()
-{
-    local pat='^[[:graph:]]+$'
-    [[ ${1} =~ ${pat} ]]
-}
-
-# -----------------------------------------------------------
-#
-# Return true if all characters in the string are lowercase as
-# defined by POSIX standard.
-#
-ksl::isLower()
-{
-    local pat='^[[:lower:]]+$'
-    [[ ${1} =~ ${pat} ]]
-}
-
-# -----------------------------------------------------------
-#
-# Return true if the string forms a valid integer meaning all digits
-# with an optional preceding +/-. Does not check for length.
-#
-ksl::isInteger()
-{
-    local pat='^[+-]?[[:digit:]]+$'
-    [[ ${1} =~ ${pat} ]]
-}
-
-# -----------------------------------------------------------
-#
-# Return true if the string forms a valid number
-#
-ksl::isNumber()
-{
-    ksl::isInteger "$1" || ksl::isFloat "$1"
-}
-
-# -----------------------------------------------------------
-#
-# Return true if the string forms a valid number
-#
-ksl::isFloat()
-{
-    [[ ${1:-} =~ ^[+-]?[0-9]*\.?[0-9]+$ ]]
-}
-
-# -----------------------------------------------------------
-#
-# Return true if all characters in the string are printable as
-# defined by POSIX standard.
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isPrint $ANIMAL; then echo "yes"; fi
 #
 ksl::isPrint()
 {
@@ -335,30 +456,57 @@ ksl::isPrint()
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are punctuations as
-# defined by POSIX standard.
+# @description Returns true if all characters in $1 are in the graph
+# class (displayable on a screen) as defined by the POSIX standard.
 #
-ksl::isPunct()
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only digit characters (true)
+# @exitcode 1 the string contains more than just digit characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isGraph $ANIMAL; then echo "yes"; fi
+#
+ksl::isGraph()
 {
-    local pat='^[[:punct:]]+$'
+    local pat='^[[:graph:]]+$'
     [[ ${1} =~ ${pat} ]]
 }
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are spaces as
-# defined by POSIX standard.
+# @description Returns true if all characters in $1 are
+# lower case as defined by the POSIX standard.
 #
-ksl::isSpace()
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only lowercase characters (true)
+# @exitcode 1 the string contains more than just lowercase characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isLower $ANIMAL; then echo "yes"; fi
+#
+ksl::isLower()
 {
-    local pat='^[[:space:]]+$'
+    local pat='^[[:lower:]]+$'
     [[ ${1} =~ ${pat} ]]
 }
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are uppercase as
-# defined by POSIX standard.
+# @description Returns true if all characters in $1 are
+# upper case as defined by the POSIX standard.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only upper case characters (true)
+# @exitcode 1 the string contains more than just upper case characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isUpper $ANIMAL; then echo "yes"; fi
 #
 ksl::isUpper()
 {
@@ -368,10 +516,59 @@ ksl::isUpper()
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are considered a
+# @description Returns true if $1 contains only characters that
+# are punctuations as defined by the POSIX standard.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only punctuation characters (true)
+# @exitcode 1 the string contains more than just punctuation characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isPunct $ANIMAL; then echo "yes"; fi
+#
+ksl::isPunct()
+{
+    local pat='^[[:punct:]]+$'
+    [[ ${1} =~ ${pat} ]]
+}
+
+# -----------------------------------------------------------
+#
+# @description Returns true if $1 contains only characters that
+# are spaces as defined by the POSIX standard.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only space characters (true)
+# @exitcode 1 the string contains more than just space characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isSpace $ANIMAL; then echo "yes"; fi
+#
+ksl::isSpace()
+{
+    local pat='^[[:space:]]+$'
+    [[ ${1} =~ ${pat} ]]
+}
+
+# -----------------------------------------------------------
+#
+# @description Returns true if all characters in $1 are considered a
 # word - containing only letters, digits, and the character _.
 #
 # isWord is not currently working. Need to investigate.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains a valid word (true)
+# @exitcode 1 the string contains more than a word (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isWord $ANIMAL; then echo "yes"; fi
 #
 ksl::isWord()
 {
@@ -381,8 +578,97 @@ ksl::isWord()
 
 # -----------------------------------------------------------
 #
-# Return true if all characters in the string are valid hexadecimal
-# digits.
+# @description Returns true if all characters in $1 are digits
+# as defined by the POSIX standard.
+#
+# Note that "+" "-" "." are not digits.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only digit characters (true)
+# @exitcode 1 the string contains more than just digit characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isDigit $ANIMAL; then echo "yes"; fi
+#
+ksl::isDigit()
+{
+    local pat='^[[:digit:]]+$'
+    [[ ${1} =~ ${pat} ]]
+}
+
+# -----------------------------------------------------------
+#
+# @description Returns true if $1 forms a valid integer meaning
+# all digits with an optional preceding +/-.
+#
+# Does not check for length.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains a valid integer (true)
+# @exitcode 1 the string contains more than just an integer (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isInteger $ANIMAL; then echo "yes"; fi
+#
+ksl::isInteger()
+{
+    local pat='^[+-]?[[:digit:]]+$'
+    [[ ${1} =~ ${pat} ]]
+}
+
+# -----------------------------------------------------------
+#
+# @description Returns true if $1 forms a valid number.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains a valid number (true)
+# @exitcode 1 the string contains more than just a number (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isNumber $ANIMAL; then echo "yes"; fi
+#
+ksl::isNumber()
+{
+    ksl::isInteger "$1" || ksl::isFloat "$1"
+}
+
+# -----------------------------------------------------------
+#
+# @description Returns true if $1 forms a valid floating point number.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains a valid floating point number (true)
+# @exitcode 1 the string contains more than just a floating point number (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isFloat $ANIMAL; then echo "yes"; fi
+#
+ksl::isFloat()
+{
+    [[ ${1:-} =~ ^[+-]?[0-9]*\.?[0-9]+$ ]]
+}
+
+# -----------------------------------------------------------
+#
+# @description Returns true if all characters in $1 are
+# valid hexadecimal digits.
+#
+# @arg $1 ... the string to operate on
+#
+# @exitcode 0 the string contains only hexadecimal characters (true)
+# @exitcode 1 the string contains more than just hexadecimal characters (false) <p><p>![](../images/pub/divider-line.png)
+#
+# @example
+#     ANIMAL="dinosaur"
+#     if ksl::isXdigit $ANIMAL; then echo "yes"; fi
 #
 ksl::isXdigit()
 {
@@ -391,104 +677,3 @@ ksl::isXdigit()
 }
 
 # -----------------------------------------------------------
-
-#  -- Method: str.find (sub[, start[, end]])
-
-#  -- Method: str.find (sub[, start[, end]])
-#
-#      Return the lowest index in the string where substring `sub' is
-#      found within the slice ‘s[start:end]’.  Optional arguments `start'
-#      and `end' are interpreted as in slice notation.  Return ‘-1’ if
-#      `sub' is not found.
-#
-#  -- Method: str.rfind (sub[, start[, end]])
-#
-#      Return the highest index in the string where substring `sub' is
-#      found, such that `sub' is contained within ‘s[start:end]’.
-#      Optional arguments `start' and `end' are interpreted as in slice
-#      notation.  Return ‘-1’ on failure.
-#
-#
-#  -- Method: str.replace (old, new[, count])
-#
-#      Return a copy of the string with all occurrences of substring `old'
-#      replaced by `new'.  If the optional argument `count' is given, only
-#      the first `count' occurrences are replaced.
-#
-# :docstring strtrunc:
-# # Usage: strtrunc $n $s1 {$s2} {$...}
-# #
-# # Used by many functions like strncmp to truncate arguments for comparison.
-# # Echoes the first n characters of each string s1 s2 ... on stdout.
-# #:end docstring:
-#
-# ###;;;autoload
-# function strtrunc ()
-# {
-#     n=$1 ; shift
-#     for z; do
-#         echo "${z:0:$n}"
-#     done
-# }
-#
-#
-#  -- Method: str.partition (sep)
-#
-#      Split the string at the first occurrence of `sep', and return a
-#      3-tuple containing the part before the separator, the separator
-#      itself, and the part after the separator.  If the separator is not
-#      found, return a 3-tuple containing the string itself, followed by
-#      two empty strings.
-#
-#  -- Method: str.split (sep=None, maxsplit=-1)
-#
-#      Return a list of the words in the string, using `sep' as the
-#      delimiter string.  If `maxsplit' is given, at most `maxsplit'
-#      splits are done (thus, the list will have at most ‘maxsplit+1’
-#      elements).  If `maxsplit' is not specified or ‘-1’, then there is
-#      no limit on the number of splits (all possible splits are made).
-#
-# #:docstring strstr:
-# # Usage: strstr s1 s2
-# #
-# # Strstr echoes a substring starting at the first occurrence of string s2 in
-# # string s1, or nothing if s2 does not occur in the string.  If s2 points to
-# # a string of zero length, strstr echoes s1.
-# #:end docstring:
-#
-# ###;;;autoload
-# function strstr ()
-# {
-#     # if s2 points to a string of zero length, strstr echoes s1
-#     [ ${#2} -eq 0 ] && { echo "$1" ; return 0; }
-#
-#     # strstr echoes nothing if s2 does not occur in s1
-#     case "$1" in
-#     *$2*) ;;
-#     *) return 1;;
-#     esac
-#
-#     # use the pattern matching code to strip off the match and everything
-#     # following it
-#     first=${1/$2*/}
-#
-#     # then strip off the first unmatched portion of the string
-#     echo "${1##$first}"
-# }
-#
-#  -- Method: str.zfill (width)
-#
-#      Return a copy of the string left filled with ASCII ‘'0'’ digits to
-#      make a string of length `width'.  A leading sign prefix
-#      (‘'+'’/‘'-'’) is handled by inserting the padding `after' the sign
-#      character rather than before.  The original string is returned if
-#      `width' is less than or equal to ‘len(s)’.
-#
-#      For example:
-#
-#           >>> "42".zfill(5)
-#           '00042'
-#           >>> "-42".zfill(5)
-#           '-0042'
-#
-#

@@ -1,22 +1,55 @@
 # -------------------------------------------------------
 #
-# Functions to manipulate shell environment PATH like variables
-# with entries separated by ":" such as MANPATH and PATH itself.
+# @name libEnv
+# @brief Functions to manipulate environment PATH-like variables
+#
+# @description
+#
+# Functions to manipulate shell environment PATH like variables with
+# entries normally separated by ":" such as `MANPATH` and `PATH` itself.
 #
 # Often these variables contain directory paths but they don't have to,
-# for example HISTCONTROL. Between each path element is a separator
+# for example `HISTCONTROL`. Between each path element is a separator
 # character, normally a colon ":" but this can be changed by setting
-# evpSep.
+# `evpSep`.
 #
 # Contains the following:
 #
-#     ksl::envContains()
-#     ksl::envAppend()
-#     ksl::envPrepend()
-#     ksl::envDelete()
-#     ksl::envDeleteFirst()
-#     ksl::envDeleteLast()
-#     ksl::envSetSeparator()
+#     * ksl::envContains()
+#     * ksl::envAppend()
+#     * ksl::envPrepend()
+#     * ksl::envDelete()
+#     * ksl::envDeleteFirst()
+#     * ksl::envDeleteLast()
+#     * ksl::envSetSeparator()
+#
+# The following is an example `PATH` setup using some of these 
+# functions. Note that no specific testing for OS is needed.
+# Just relies on whether the element exists on the file space.
+#
+# ``` bash
+# # Standard system path setup here
+#
+# ksl::envAppend -f PATH "/bin"
+# ksl::envAppend -f PATH "/usr/bin"
+# ksl::envAppend -f PATH "/usr/local/bin"
+# ksl::envAppend -f PATH "/sbin"
+# ksl::envAppend -f PATH "/usr/sbin"
+# ksl::envAppend -f PATH "/usr/local/sbin"
+# ksl::envAppend -f PATH "${HOME}/.local/bin"
+# ksl::envAppend -f PATH "${HOME}/bin"
+# ksl::envDelete    PATH "/usr/games"
+# ksl::envDelete    PATH "/usr/local/games"
+# 
+# # Some platform specific setup
+# 
+# ksl::envPrepend -f PATH "/usr/local/opt/m4/bin"
+# ksl::envPrepend -f PATH "/usr/local/opt/openssl/bin"
+# ksl::envPrepend -f PATH "/usr/local/opt/findutils/libexec/gnubin"
+# ksl::envPrepend -f PATH "/usr/local/opt/coreutils/libexec/gnubin"
+# ksl::envPrepend -f PATH "/usr/local/opt/grep/libexec/gnubin"
+# ksl::envPrepend -f PATH "/usr/local/opt/make/libexec/gnubin"
+# ```
 #
 # -----------------------------------------------------------
 
@@ -30,25 +63,29 @@ envSep=":"
 
 # -----------------------------------------------------------
 #
-# True if path style variable $1 contains the string in $2.
+# @description True if path style variable $1 contains the string in $2.
 #
 # This is slightly different than just looking for a contained
-# string as with ksl:contains(). Here the string to look for
+# string as with `ksl:contains()`. Here the string to look for
 # must exactly match between the surrounding ":" markers.
 #
-# Returns 0 (success) if found otherwise 1 (not found).
-# $1 is the name of a path style variable and passed by value.
-# $2 is the element to look for.
+# @arg $1 string the name of a path style variable.
+# @arg $2 string the element to look for.
 #
-# Example:
+# @example
 #     if ksl::envContains PATH "/usr/bin"; then
 #         echo "Yes in PATH"
 #     fi
 #
+# @exitcode 0 Success - was found
+# @exitcode 1 not found, or missing args
+#
+# @stdout no output
+# @stderr envContains() missing args <p><p>![](../images/pub/divider-line.png)
+#
 ksl::envContains()
 {
-    [[ $# -lt 2 ]] && return 1      # Need two args
-
+    [[ $# -lt 2 ]] && echo "envContains() missing args" >&2 && return 1
     [[ -z "$1" ]] && return 1       # Empty arg
     [[ "$1" =~ "\W" ]] && return 1  # Name of env var must be a word
     
@@ -73,41 +110,52 @@ ksl::envContains()
 
 # -----------------------------------------------------------
 #
-# Add $2 <element>, in-place, to the end of $1 <path variable>, 
-# provided <element> is not already in the <path variable>. 
-# The <path variable> is the name of a path style variable, 
-# such as PATH, with ":" separating individual elements.
+# @description Appends an element to a PATH-style variable.
 #
-#     Example: ksl::envAppend MANPATH $HOME/man
-#     Example: ksl::envAppend -r -f MANPATH $HOME/man
+# Appends $2, in-place, to the end of the PATH-style variable 
+# named in $1, provided $2 is not already in there (options are 
+# available to control this).
+# 
+# ksl::envAppend [options...] PATH_VARIABLE ELEMENT
 #
-# SYNOPSIS
-#     ksl::envAppend [options] PATH_VARIABLE ELEMENT
+# **Options**
 #
-# OPTIONS
-#     -a|-allow-dups
-#     -r|-reject-dups (default)
-#     -s|-add-as-string (default)
-#     -f|-file-must-exist
+# *   -a | --allow-dups
+# *   -r | --reject-dups (default)
+# *   -s | --add-as-string (default)
+# *   -f | --file-must-exist
 #
-# OPTIONS DESCRIPTION
-#    -a | -allow-dups: Add to PATH_VARIABLE even if
-#        ELEMENT is already in there. 
-#    -r | -reject-dups: (default) Don't add to
-#        PATH_VARIABLE if ELEMENT is already in there.
-#    -s | -add-as-string: (default) Add ELEMENT to the
-#        PATH_VARIABLE as a string, subject to duplicates setting.
-#    -f | -file-must-exist: Add ELEMENT, treated as a file/directory,
-#        to the PATH_VARIABLE, but only if ELEMENT already exists
-#        on the file space, subject to the duplicates setting.
+# **Option Descriptions**
 #
-#       If both -s and -f are given, last one wins.
-#       If both -a and -r are given, last one wins.
+# *   -a | --allow-dups: Adds to PATH_VARIABLE even if ELEMENT is already in there.
+# *   -r | --reject-dups: (default) Don't add to PATH_VARIABLE if ELEMENT is already in there.
+# *   -s | --add-as-string: (default) Adds ELEMENT to the
+#          PATH_VARIABLE as a string - meaning do not check
+#          whether ELEMENT exists as a file.
+# *   -f | --file-must-exist: Adds ELEMENT, treated as a file/directory,
+#          to the PATH_VARIABLE, but only if ELEMENT exists on the
+#          file space.
 #
-# Returns true if element was appended, otherwise false.
+# * If both -s and -f are given, last one wins.
+# * If both -a and -r are given, last one wins.
 #
-# -----------------------------------------------------------
-
+# @arg $1 VariableName of a path style variable, such as `PATH`, with ":" separating individual elements.
+# @arg $2 Element a string or directory or file name to append
+#
+# @example
+#     # Update MANPATH only if $HOME/man is not already in there
+#     ksl::envAppend MANPATH $HOME/man
+#     #
+#     # Update MANPATH only if $HOME/man is not in there and it exists on file space
+#     ksl::envAppend -r -f MANPATH $HOME/man # MANPATH is updated if $HOME/man exists
+#
+# @exitcode 0 Success if element was appended
+# @exitcode 1 Failed element was not appended
+#
+# @stderr ksl::_envXxpend(): missing args
+# @stderr ksl::_envXxpend(): requires two arguments got only...
+# @stderr ksl::_envXxpend(): invalid option... <p><p>![](../images/pub/divider-line.png)
+#
 ksl::envAppend()
 {
     ksl::_envXxpend --append "$@"
@@ -115,12 +163,11 @@ ksl::envAppend()
 
 # -----------------------------------------------------------
 #
-# Add $2 <element>, in-place, to the front of $1 <path variable>, 
-# provided <element> is not already in the <path variable>. 
-# The <path variable> is the name of a path style variable, 
-# such as PATH, with ":" separating individual elements.
+# @description Prepends $2, in-place, to the front of the PATH-style
+# variable named in $1, provided $2 is not already in there (options are
+# available to control this).
 #
-# Takes exact same args and description as envAppend above.
+# Same args and description as [ksl::envAppend](#ksl-envappend). <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envPrepend()
 {
@@ -149,7 +196,7 @@ ksl::_envXxpend()
             --append)             append=true;;
             --prepend)            append=false;;
             '') ;;
-            -*) echo "Invalid option \"$1\" for envAppend() or envPrepend()" 1>&2
+            -*) echo "_envXxpend() invalid option \"$1\"" >&2
                 return 1;;
             *) local val=${1//${envSep}/}  # strip any leading/trailing ":"
                 if [[ -n "${args}" ]]; then
@@ -163,8 +210,8 @@ ksl::_envXxpend()
 
     # Must have the two required args (PATH_VARIABLE and ELEMENT)
     if [[ ${argCount} -lt 2 ]]; then
-        echo -n "ksl::envXxpend(): requires two arguments, " 1>&2
-        echo    "got only ${argCount}: \"${args}\"" 1>&2
+        echo -n "ksl::_envXxpend(): requires two arguments, " >&2
+        echo    "got only ${argCount}: \"${args}\"" >&2
         return 1
     fi
     
@@ -177,7 +224,7 @@ ksl::_envXxpend()
     # echo "  varName: ${varName}"
     # echo "  element: ${element}"
     
-    [[ -z "${varName}" ]] || [[ -z "${element}" ]] && return 1 # missing args
+    [[ -z "${varName}" ]] || [[ -z "${element}" ]] && echo "ksl::_envXxpend() missing args" >&2 && return 1 # missing args
 
     if ! ${allowDups}; then
         if ksl::envContains "${varName}" "${element}"; then
@@ -201,14 +248,27 @@ ksl::_envXxpend()
 
 # -----------------------------------------------------------
 #
-# Delete all occurrence of $1, in-place, from $2. $2 is the name of a
-# path style variable with ":" separating individual elements.
+# @description Deletes all occurrences of $2, in-place, from $1.
 #
-# Example: ksl::envDelete MANPATH "$HOME/man"
+# $1 is the name of a path style variable with ":" separating 
+# individual elements.
+#
+# @arg $1 string the name of a path style variable.
+# @arg $2 string the element to delete.
+#
+# @example
+#     ksl::envDelete MANPATH "$HOME/man"
+#
+# @exitcode 0 No error. Doesn't mean something was deleted.
+# @exitcode 1 Missing or empty args
+#
+# @stdout no output
+# @stderr envDelete() missing args <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDelete()
 {
-    [[ -z "$1" ]] || [[ -z "$2" ]] && return 1 # no args, nothing appended
+    [[ $# -lt 2 ]] && echo "envDelete() missing args" >&2 && return 1
+    [[ -z "$1" ]] || [[ -z "$2" ]] && return 1 # no args, nothing deleted
     local -n ref=$1
 
     local match="$2"            # If $2 has colons, it screws up the sub
@@ -221,18 +281,29 @@ ksl::envDelete()
 
 # -----------------------------------------------------------
 #
-# Delete 1st element, in-place, from $1 where $1 is the name of
-# a path style variable with ":" separating individual elements.
+# @description Deletes 1st element, in-place, from $1 where $1 is the
+# name of a path style variable with ":" separating individual elements.
+#
 # Returns 1 on an error otherwise 0.
 #
-# Example: ksl::envDeleteFirst MANPATH
+# @arg $1 VariableName of a path style variable, such as `PATH`, with ":" separating individual elements.
+#
+# @example
+#     ksl::envDeleteFirst MANPATH
+#
+# @exitcode 0 No error. Doesn't mean anything was deleted.
+# @exitcode 1 Missing or empty args
+#
+# @stdout no output
+# @stderr envDeleteFirst() missing args
+# @stderr envDeleteFirst() empty arg <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDeleteFirst()
 {
-    [[ -z "$1" ]] && return 1    # Missing args
-    local -n ref="$1"
-    [[ -z "$ref" ]] && return 1  # Empty environment var
+    [[ $# -lt 1 ]] && echo "envDeleteFirst() missing args" >&2 && return 1
+    [[ -z "$1"  ]] && echo "envDeleteFirst() empty arg"    >&2 && return 1
 
+    local -n ref="$1"
     ref=${ref}${envSep}          # Add sentinel in case single frag
 
     # shellcheck disable=SC2295
@@ -244,23 +315,33 @@ ksl::envDeleteFirst()
 
 # -----------------------------------------------------------
 #
-# Delete last element, in-place, from $1, where $1 is the name of 
-# a path style variable with ":" separating individual elements.
-# Returns 1 on an error otherwise 0.
+# @description Deletes last element, in-place, from $1 where $1 is the
+# name of a path style variable with ":" separating individual elements.
 #
-# Example: ksl::envDeleteLast MANPATH
+# @arg $1 VariableName of a path style variable, such as `PATH`, with ":" separating individual elements.
+#
+# @example
+#     ksl::envDeleteLast MANPATH
+#
+# @exitcode 0 No error. Doesn't mean anything was deleted.
+# @exitcode 1 Missing or empty args
+#
+# @stdout no output
+# @stderr envDeleteLast() missing args
+# @stderr envDeleteLast() empty arg <p><p>![](../images/pub/divider-line.png)
 #
 ksl::envDeleteLast()
 {
-    [[ -z "$1" ]] && return 1      # Missing args
+    [[ $# -lt 1 ]] && echo "envDeleteLast() missing args" >&2 && return 1
+    [[ -z "$1"  ]] && echo "envDeleteLast() empty arg"    >&2 && return 1
+
     local -n ref=$1
-    [[ -z "$ref" ]] && return 1    # Empty environment var
-    ref=${envSep}${ref}          # Add sentinel in case single frag
+    ref=${envSep}${ref}            # Add sentinel in case single frag
     
     # shellcheck disable=SC2295
-    ref=${ref%${envSep}*}        # Delete last including separator
+    ref=${ref%${envSep}*}          # Delete last including separator
     # shellcheck disable=SC2295
-    ref=${ref#${envSep}}         # Remove sentinel
+    ref=${ref#${envSep}}           # Remove sentinel
     return 0
 }
 
@@ -277,7 +358,19 @@ ksl::_envColonTrimPath ()
 }
 
 # -----------------------------------------------------------
-
+#
+# @description Use the given character as the separator
+# between elements in a PATH-style variable.
+#
+# Initialized to ":" at startup. Stays in effect until changed.
+#
+# @arg $1 character the separator.
+#
+# @example
+#     ksl::envSetSeparator ";"
+#
+# @exitcode 0 In all cases
+#
 ksl::envSetSeparator()
 {
     envSep=$1

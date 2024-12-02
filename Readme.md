@@ -5,12 +5,11 @@ Comments here if needed.
 <h1 align="center">KSL Bash Library</h1>
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/92fe4271-e308-45e4-9afc-b049fa4c3e0f" alt="">
+<a href="https://www.freeiconspng.com/img/2450" title="Image from freeiconspng.com"><img src="https://www.freeiconspng.com/uploads/blue-fire-17.png" width="40" alt="Blue Fire" /></a>
 </p>
 
 <p align="center">
-Provides a pre-canned Bash layout along with automation,
-containerized tools and fill-in-the-blanks documentation.
+A collection of useful bash functions that simplify writing scripts.
 </p>
 
 ---

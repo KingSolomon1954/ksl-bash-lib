@@ -44,6 +44,8 @@ test_fgColors()
     printIt "${FG_ORANGE}"  "This message is in foreground orange"
 }
 
+# -----------------------------------------------------------
+
 test_bgColors()
 {
     echo

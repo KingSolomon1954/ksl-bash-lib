@@ -7,9 +7,9 @@ source "${KSL_BASH_LIB}"/libError.bash
 # Note:
 #
 # Stay away from running commands inside bash_unit assert()'s. Got
-# opposite results if same assert is run just two lines later. 
+# opposite results if same assert is run just two lines later.
 # Therefore don't do this:
-# 
+#
 #     assert 'ksl::epCreate ep1"'
 #
 # Additionally, in the above function with epCreate, ep1 seems to be
@@ -39,12 +39,10 @@ source "${KSL_BASH_LIB}"/libError.bash
 #
 # -----------------------------------------------------------
 
-# -----------------------------------------------------------
-
 test_epSet()
 {
     local -i ret
-    
+
     # no args, should create ep1
     unset ep1
     ksl::epSet
@@ -56,20 +54,20 @@ test_epSet()
     ret=$?; assert '[[ $ret -eq 0 ]]'
     ksl::arrayExists ep1
     ret=$?; assert '[[ $ret -eq 0 ]]'
-    
+
     # two epSets in row
     unset ep1
     ksl::epSet ep1
     ksl::epSet ep1
     ksl::arrayExists ep1
     ret=$?; assert '[[ $ret -eq 0 ]]'
-    
+
     # explicity specify other than ep1
     unset ep1
     ksl::epSet ep2
     ksl::arrayExists ep2
     ret=$?; assert '[[ $ret -eq 0 ]]'
-    
+
     unset ep1
     unset ep2
 
@@ -96,7 +94,7 @@ test_epSet()
     assert '[[ "${ep1[REPAIR]}" == "turn power on" ]]'
     assert '[[ "${ep1[SEVERITY]}" == "Major" ]]'
     assert '[[ "${ep1[TIMESTAMP]}" != "" ]]'
-    
+
     # call it again on same EPS with no args, all fields should be empty
     ksl::epSet ep1
     assert '[[ "${ep1[CAUSE]}" == "" ]]'
@@ -110,7 +108,7 @@ test_epSet()
     assert '[[ "${ep1[REPAIR]}" == "" ]]'
     assert '[[ "${ep1[SEVERITY]}" == "" ]]'
     assert '[[ "${ep1[TIMESTAMP]}" != "" ]]'
-    
+
     unset ep1
 }
 
@@ -119,28 +117,20 @@ test_epSet()
 test_epSetDescription()
 {
     local -i ret
-    local diag
-    
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
+
     # call no args
-    ksl::epSetDescription
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-   
-    # call with bad EPS
+    ksl::epSetDescription 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetDescription "I/O error")
+    ksl::epSetDescription ep1 "I/O error" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    # call with bad EPS
-    diag=$(ksl::epSetDescription ep7 "I/O error")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[DESC]}" == "" ]]'
-    
+
     # put value in description using default ep1
     ksl::epSetDescription "I/O error"
     assert '[[ "${ep1[DESC]}" == "I/O error" ]]'
@@ -149,16 +139,12 @@ test_epSetDescription()
     ksl::epSetDescription ep1 "Configuration bad value"
     assert '[[ "${ep1[DESC]}" == "Configuration bad value" ]]'
 
-    # put value for non-existent EPS
-    diag=$(ksl::epSetDescription ep2 "Configuration bad value")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
     # put value into different existing EPS
     ksl::epSet ep2
     ksl::epSetDescription ep2 "missing parameter"
     assert '[[ "${ep2[DESC]}" == "missing parameter" ]]'
     assert '[[ "${ep1[DESC]}" == "Configuration bad value" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -167,12 +153,15 @@ test_epSetDescription()
 
 test_epDescription()
 {
-    # call with non-existant EPS
     local desc
+    local -i ret
+
+    # call with non-existant EPS
     unset ep1
-    desc=$(ksl::epDescription)
-    assert '[[ "${desc}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+
+    ksl::epDescription 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     desc=$(ksl::epDescription)
@@ -200,19 +189,19 @@ test_epAppend()
 {
     local -i ret
     local desc
-    
+
     # call no args
-    ksl::epAppend
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-   
+    ksl::epAppend 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with bad EPS
     unset ep1
     ksl::epAppend "I/O error"
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     ksl::epAppend "I/O error"
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create valid ep1 with a description
     unset ep1
     ksl::epSet -d "bad CRC"
@@ -221,7 +210,7 @@ test_epAppend()
     ksl::epAppend ": on input channel 6."
     desc=$(ksl::epDescription)
     assert '[[ "${desc}" == "bad CRC: on input channel 6." ]]'
-    
+
     unset ep1
 }
 
@@ -231,19 +220,19 @@ test_epPrepend()
 {
     local -i ret
     local desc
-    
+
     # call no args
-    ksl::epPrepend
-    ret=$?; assert '[[ $ret -eq 0 ]]'
-   
+    ksl::epPrepend 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with bad EPS
     unset ep1
     ksl::epPrepend "I/O error"
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     ksl::epPrepend "I/O error"
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create valid ep1 with a description
     unset ep1
     ksl::epSet -d "bad CRC"
@@ -252,7 +241,7 @@ test_epPrepend()
     ksl::epPrepend "I/O error: "
     desc=$(ksl::epDescription)
     assert '[[ "${desc}" == "I/O error: bad CRC" ]]'
-    
+
     unset ep1
 }
 
@@ -262,22 +251,20 @@ test_epSetErrorName()
 {
     local -i ret
     local diag
-    
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+
+    # call no args
+    ksl::epSetErrorName 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetErrorName "OverflowError")
+    ksl::epSetErrorName ep1 "OverflowError" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetErrorName ep7 "OverflowError")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[ERRNAME]}" == "" ]]'
-    
+
     # put value in error name using default ep1
     ksl::epSetErrorName "OverflowError"
     assert '[[ "${ep1[ERRNAME]}" == "OverflowError" ]]'
@@ -286,16 +273,12 @@ test_epSetErrorName()
     ksl::epSetErrorName ep1 "UnderflowError"
     assert '[[ "${ep1[ERRNAME]}" == "UnderflowError" ]]'
 
-    # put value for non-existent EPS
-    diag=$(ksl::epSetErrorName ep2 "TimeoutError")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
     # put value into different existing EPS
     ksl::epSet ep2
     ksl::epSetErrorName ep2 "TimeoutError"
     assert '[[ "${ep2[ERRNAME]}" == "TimeoutError" ]]'
     assert '[[ "${ep1[ERRNAME]}" == "UnderflowError" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -304,13 +287,14 @@ test_epSetErrorName()
 
 test_epErrorName()
 {
-    # call with non-existant EPS
     local errorName
+    local -i ret
+
+    # call with non-existant EPS
     unset ep1
-    
-    errorName=$(ksl::epErrorName)
-    assert '[[ "${errorName}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+    ksl::epErrorName 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     errorName=$(ksl::epErrorName)
@@ -337,23 +321,20 @@ test_epErrorName()
 test_epSetErrorType()
 {
     local -i ret
-    local diag
-    
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+
+    # call no args
+    ksl::epSetErrorType 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetErrorType "ProcessingError")
+    ksl::epSetErrorType "ProcessingError" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetErrorType ep7 "ProcessingError")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[ERRTYPE]}" == "" ]]'
-    
+
     # put value in error type using default ep1
     ksl::epSetErrorType "ProcessingError"
     assert '[[ "${ep1[ERRTYPE]}" == "ProcessingError" ]]'
@@ -362,16 +343,12 @@ test_epSetErrorType()
     ksl::epSetErrorType ep1 "EquipmentError"
     assert '[[ "${ep1[ERRTYPE]}" == "EquipmentError" ]]'
 
-    # put value for non-existent EPS
-    diag=$(ksl::epSetErrorType ep2 "TimeoutError")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
     # put value into different existing EPS
     ksl::epSet ep2
     ksl::epSetErrorType ep2 "TimeoutError"
     assert '[[ "${ep2[ERRTYPE]}" == "TimeoutError" ]]'
     assert '[[ "${ep1[ERRTYPE]}" == "EquipmentError" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -380,13 +357,14 @@ test_epSetErrorType()
 
 test_epErrorType()
 {
-    # call with non-existant EPS
     local errorType
+    local -i ret
+
+    # call with non-existant EPS
     unset ep1
-    
-    errorType=$(ksl::epErrorType)
-    assert '[[ "${errorType}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+    ksl::epErrorType 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     errorType=$(ksl::epErrorType)
@@ -413,23 +391,20 @@ test_epErrorType()
 test_epSetSeverity()
 {
     local -i ret
-    local diag
-    
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+
+    # call no args
+    ksl::epSetSeverity 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetSeverity "Critical")
+    ksl::epSetSeverity ep1 "Critical" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetSeverity ep7 "Critical")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[SEVERITY]}" == "" ]]'
-    
+
     # put value in severity using default ep1
     ksl::epSetSeverity "Critical"
     assert '[[ "${ep1[SEVERITY]}" == "Critical" ]]'
@@ -438,16 +413,12 @@ test_epSetSeverity()
     ksl::epSetSeverity ep1 "Major"
     assert '[[ "${ep1[SEVERITY]}" == "Major" ]]'
 
-    # put value for non-existent EPS
-    diag=$(ksl::epSetSeverity ep2 "Major")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
     # put value into different existing EPS
     ksl::epSet ep2
     ksl::epSetSeverity ep2 "Warn"
     assert '[[ "${ep2[SEVERITY]}" == "Warn" ]]'
     assert '[[ "${ep1[SEVERITY]}" == "Major" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -456,19 +427,20 @@ test_epSetSeverity()
 
 test_epSeverity()
 {
-    # call with non-existant EPS
     local severity
+    local -i ret
+
+    # call with non-existant EPS
     unset ep1
-    
-    severity=$(ksl::epSeverity)
-    assert '[[ "${severity}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+    ksl::epSeverity 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     severity=$(ksl::epSeverity)
     assert '[[ "${severity}" == "" ]]'
 
-    # put something readable in error type
+    # put something readable in severity
     ksl::epSetSeverity "Critical"
     severity=$(ksl::epSeverity)
     assert '[[ "${severity}" == "Critical" ]]'
@@ -489,23 +461,20 @@ test_epSeverity()
 test_epSetFuncName()
 {
     local -i ret
-    local diag
-    
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+
+    # call no args
+    ksl::epSetFuncName 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetFuncName "parse()")
+    ksl::epSetFuncName ep1 "parse()" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetFuncName ep7 "parse()")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[FUNC]}" == "" ]]'
-    
+
     # put value in description using default ep1
     ksl::epSetFuncName "parse()"
     assert '[[ "${ep1[FUNC]}" == "parse()" ]]'
@@ -514,16 +483,12 @@ test_epSetFuncName()
     ksl::epSetFuncName ep1 "sort()"
     assert '[[ "${ep1[FUNC]}" == "sort()" ]]'
 
-    # put value for non-existent EPS
-    diag=$(ksl::epSetFuncName ep2 "invert()")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
     # put value into different existing EPS
     ksl::epSet ep2
     ksl::epSetFuncName ep2 "invert()"
     assert '[[ "${ep2[FUNC]}" == "invert()" ]]'
     assert '[[ "${ep1[FUNC]}" == "sort()" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -532,13 +497,14 @@ test_epSetFuncName()
 
 test_epFuncName()
 {
-    # call with non-existant EPS
     local funcName
+    local -i ret
+
+    # call with non-existant EPS
     unset ep1
-    
-    funcName=$(ksl::epFuncName)
-    assert '[[ "${funcName}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+    ksl::epFuncName 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     funcName=$(ksl::epFuncName)
@@ -565,23 +531,20 @@ test_epFuncName()
 test_epSetFileName()
 {
     local -i ret
-    local diag
-    
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+
+    # call no args
+    ksl::epSetFileName 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetFileName "commands.bash")
+    ksl::epSetFileName "commands.bash" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetFileName ep7 "command.bash")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[FILE]}" == "" ]]'
-    
+
     # put value in description using default ep1
     ksl::epSetFileName "commands.bash"
     assert '[[ "${ep1[FILE]}" == "commands.bash" ]]'
@@ -590,16 +553,12 @@ test_epSetFileName()
     ksl::epSetFileName ep1 "constants.bash"
     assert '[[ "${ep1[FILE]}" == "constants.bash" ]]'
 
-    # put value for non-existent EPS
-    diag=$(ksl::epSetFileName ep2 "sort.bash")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
     # put value into different existing EPS
     ksl::epSet ep2
     ksl::epSetFileName ep2 "sort.bash"
     assert '[[ "${ep2[FILE]}" == "sort.bash" ]]'
     assert '[[ "${ep1[FILE]}" == "constants.bash" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -608,13 +567,14 @@ test_epSetFileName()
 
 test_epFileName()
 {
-    # call with non-existant EPS
     local fileName
+    local -i ret
+
+    # call with non-existant EPS
     unset ep1
-    
-    fileName=$(ksl::epFileName)
-    assert '[[ "${fileName}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+    ksl::epFileName 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     fileName=$(ksl::epFileName)
@@ -641,23 +601,20 @@ test_epFileName()
 test_epSetLineNum()
 {
     local -i ret
-    local diag
-    
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+
+    # call no args
+    ksl::epSetLineNum 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetLineNum "100")
+    ksl::epSetLineNum ep1 "100" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetLineNum ep7 "100")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[LINENUM]}" == "" ]]'
-    
+
     # put value in description using default ep1
     ksl::epSetLineNum "100"
     assert '[[ "${ep1[LINENUM]}" == "100" ]]'
@@ -666,16 +623,12 @@ test_epSetLineNum()
     ksl::epSetLineNum ep1 "200"
     assert '[[ "${ep1[LINENUM]}" == "200" ]]'
 
-    # put value for non-existent EPS
-    diag=$(ksl::epSetLineNum ep2 "300")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
     # put value into different existing EPS
     ksl::epSet ep2
     ksl::epSetLineNum ep2 "300"
     assert '[[ "${ep2[LINENUM]}" == "300" ]]'
     assert '[[ "${ep1[LINENUM]}" == "200" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -684,13 +637,14 @@ test_epSetLineNum()
 
 test_epLineNum()
 {
-    # call with non-existant EPS
     local lineNum
+    local -i ret
+
+    # call with non-existant EPS
     unset ep1
-    
-    lineNum=$(ksl::epLineNum)
-    assert '[[ "${lineNum}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+    ksl::epLineNum 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     lineNum=$(ksl::epLineNum)
@@ -717,23 +671,23 @@ test_epLineNum()
 test_epSetCodeNum()
 {
     local -i ret
-    local diag
+
+    # call no args
+    ksl::epSetCodeNum 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
     
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetCodeNum "100")
+    ksl::epSetCodeNum "100" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetCodeNum ep7 "100")
+
+    ksl::epSetCodeNum ep7 "100" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[CODENUM]}" == "" ]]'
-    
+
     # put value in description using default ep1
     ksl::epSetCodeNum "100"
     assert '[[ "${ep1[CODENUM]}" == "100" ]]'
@@ -743,7 +697,7 @@ test_epSetCodeNum()
     assert '[[ "${ep1[CODENUM]}" == "200" ]]'
 
     # put value for non-existent EPS
-    diag=$(ksl::epSetCodeNum ep2 "300")
+    ksl::epSetCodeNum ep2 "300" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
@@ -751,7 +705,7 @@ test_epSetCodeNum()
     ksl::epSetCodeNum ep2 "300"
     assert '[[ "${ep2[CODENUM]}" == "300" ]]'
     assert '[[ "${ep1[CODENUM]}" == "200" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -760,13 +714,14 @@ test_epSetCodeNum()
 
 test_epCodeNum()
 {
-    # call with non-existant EPS
     local codeNum
+    local -i ret
     unset ep1
-    
-    codeNum=$(ksl::epCodeNum)
-    assert '[[ "${codeNum}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+
+    # call with non-existant EPS
+    ksl::epCodeNum 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     codeNum=$(ksl::epCodeNum)
@@ -793,23 +748,23 @@ test_epCodeNum()
 test_epSetCause()
 {
     local -i ret
-    local diag
+
+    # call no args
+    ksl::epSetCause 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
     
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetCause "hardware fault")
+    ksl::epSetCause "hardware fault" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetCause ep7 "hardware fault")
+
+    ksl::epSetCause ep7 "hardware fault" 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[CAUSE]}" == "" ]]'
-    
+
     # put value in description using default ep1
     ksl::epSetCause "hardware fault"
     assert '[[ "${ep1[CAUSE]}" == "hardware fault" ]]'
@@ -819,7 +774,7 @@ test_epSetCause()
     assert '[[ "${ep1[CAUSE]}" == "overheating" ]]'
 
     # put value for non-existent EPS
-    diag=$(ksl::epSetCause ep2 "operator error")
+    ksl::epSetCause ep2 "operator error" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # put value into different existing EPS
@@ -827,7 +782,7 @@ test_epSetCause()
     ksl::epSetCause ep2 "power outage"
     assert '[[ "${ep2[CAUSE]}" == "power outage" ]]'
     assert '[[ "${ep1[CAUSE]}" == "overheating" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -836,13 +791,14 @@ test_epSetCause()
 
 test_epCause()
 {
-    # call with non-existant EPS
     local cause
+    local -i ret
     unset ep1
-    
-    cause=$(ksl::epCause)
-    assert '[[ "${cause}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+
+    # call with non-existant EPS
+    ksl::epCause 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     cause=$(ksl::epCause)
@@ -869,23 +825,20 @@ test_epCause()
 test_epSetRepair()
 {
     local -i ret
-    local diag
-    
-    # Consume known error diags by assigning to diag 
-    # variable so as to ignore them.
-    
-    # call with bad EPS
+
+    # call no args
+    ksl::epSetRepair 2> /dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
+    # call with non-existant EPS
     unset ep1
-    diag=$(ksl::epSetRepair "turn power on")
+    ksl::epSetRepair ep1 "turn power on" 2> /dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
-    
-    diag=$(ksl::epSetRepair ep7 "turn power on")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-    
+
     # create ep1
     ksl::epSet ep1
     assert '[[ "${ep1[REPAIR]}" == "" ]]'
-    
+
     # put value in description using default ep1
     ksl::epSetRepair "turn power on"
     assert '[[ "${ep1[REPAIR]}" == "turn power on" ]]'
@@ -894,16 +847,12 @@ test_epSetRepair()
     ksl::epSetRepair ep1 "recycle power"
     assert '[[ "${ep1[REPAIR]}" == "recycle power" ]]'
 
-    # put value for non-existent EPS
-    diag=$(ksl::epSetRepair ep2 "replace temperature gauge")
-    ret=$?; assert '[[ $ret -eq 1 ]]'
-
     # put value into different existing EPS
     ksl::epSet ep2
     ksl::epSetRepair ep2 "replace sensor"
     assert '[[ "${ep2[REPAIR]}" == "replace sensor" ]]'
     assert '[[ "${ep1[REPAIR]}" == "recycle power" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -912,13 +861,14 @@ test_epSetRepair()
 
 test_epRepair()
 {
-    # call with non-existant EPS
     local repair
+    local -i ret
     unset ep1
-    
-    repair=$(ksl::epRepair)
-    assert '[[ "${repair}" == "arrayGetValue() no such array: \"ep1\"" ]]'
-    
+
+    # call with non-existant EPS
+    ksl::epRepair 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
+
     # call with existing EPS
     ksl::epSet ep1
     repair=$(ksl::epRepair)
@@ -945,25 +895,26 @@ test_epRepair()
 test_epTimestamp()
 {
     local ts1 ts2
-    
+    local -i ret
+
     # call with non-existant EPS, fail
     unset ep1
-    ts1=$(ksl::epTimestamp ep1)
-    assert '[[ "${ts1}" == "arrayGetValue() no such array: \"ep1\"" ]]'
+    ksl::epTimestamp ep1 2>/dev/null
+    ret=$?; assert '[[ $ret -eq 1 ]]'
 
-    # create ep1 empty, cause no args, but timestamp is set
+    # ep1 is valid and empty, cause no args, and timestamp is set
     ksl::epSet ep1
     ts1=$(ksl::epTimestamp ep1)
     assert '[[ "${ts1}" != "" ]]'
-    
+
     sleep 0.01
-    
+
     # call with different EPS
     ksl::epSet ep2
     ts2=$(ksl::epTimestamp ep2)
     assert '[[ "${ts2}" != "" ]]'
     assert '[[ "${ts1}" != "${ts2}" ]]'
-    
+
     unset ep1
     unset ep2
 }
@@ -973,11 +924,10 @@ test_epTimestamp()
 test_epHasError()
 {
     local -i ret
-    local diag
-    
+
     # call with non-existant EPS, fail
     unset ep1
-    diag=$(ksl::epHasError)
+    ksl::epHasError 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
     # call with valid EPS, expect no hasError
@@ -990,7 +940,7 @@ test_epHasError()
     ksl::epHasError ep1
     ret=$?; assert '[[ $ret -eq 0 ]]'
 
-    # unset description field, hasError is false
+    # empty description field, hasError is false
     ksl::epSetDescription ""
     ksl::epHasError
     ret=$?; assert '[[ $ret -eq 1 ]]'
@@ -1008,5 +958,3 @@ test_epHasError()
 }
 
 # -----------------------------------------------------------
-
-
