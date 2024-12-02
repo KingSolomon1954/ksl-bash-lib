@@ -256,7 +256,10 @@ ksl::arrayDeleteElement()
 #
 # Your function is called with three args, plus any additional args you provide:
 #
-#     \<value\>, \<key|index\>, \<array name\> and [args...]
+# * \<value\> - $1 the value from the array
+# * \<key|index\> - $2 the array's key or index where this value is found
+# * \<array name\> - $3 the array name
+# * [additonal args...] - user provided args, if any
 #
 # If your function returns 10 or 11, then visit() will
 # stop visiting remaining elements. Typically use 10 to exit
@@ -266,10 +269,10 @@ ksl::arrayDeleteElement()
 #
 # Returns
 #
-# * 0 success if all elements have been visited
-# * 1 fail missing or bad args
-# * 10 success if your function stopped visiting with a 10
-# * 11 error if your function stopped visiting with an 11
+# * 0 - success if all elements have been visited
+# * 1 - fail missing or bad args
+# * 10 - success if your function stopped visiting with a 10
+# * 11 - error if your function stopped visiting with an 11
 #
 # @arg $1 array the name of array (required)
 # @arg $2 function the function to call on each element (required)

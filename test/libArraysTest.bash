@@ -283,7 +283,6 @@ test_arrayDeleteElement()
     assert_equals "1" "$(ksl::arraySize dogs)"
 }
 
-
 # -----------------------------------------------------------
 
 # $1 = value from array

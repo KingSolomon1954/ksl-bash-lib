@@ -158,6 +158,7 @@ test_epDescription()
 
     # call with non-existant EPS
     unset ep1
+
     ksl::epDescription 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
@@ -791,8 +792,8 @@ test_epSetCause()
 test_epCause()
 {
     local cause
-    unset ep1
     local -i ret
+    unset ep1
 
     # call with non-existant EPS
     ksl::epCause 2>/dev/null
@@ -862,9 +863,9 @@ test_epRepair()
 {
     local repair
     local -i ret
+    unset ep1
 
     # call with non-existant EPS
-    unset ep1
     ksl::epRepair 2>/dev/null
     ret=$?; assert '[[ $ret -eq 1 ]]'
 
