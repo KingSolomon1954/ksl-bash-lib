@@ -20,7 +20,7 @@
 # applications can call `ksl::useColor()` if they need to test for
 # color.
 #
-# Also provides the following shell variables that 
+# Also provides the following shell variables that
 # help with colors.
 #
 # * ESC
@@ -103,7 +103,7 @@ export HIDDEN="${ESC}[8m"
 #
 # @noargs
 #
-# @exitcode 0 terminal is capable of color 
+# @exitcode 0 terminal is capable of color
 # @exitcode 1 terminal is not capable of color <p><p>![](../images/pub/divider-line.png)
 #
 # @example

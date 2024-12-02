@@ -8,14 +8,14 @@
 #
 # Contains the following:
 #
-#     * ksl::stdOut() 
+#     * ksl::stdOut()
 #     * ksl::stdErr()
-#     * ksl::stdTrace() - prepends [TRACE] 
-#     * ksl::stdDebug() - prepends [DEBUG] 
-#     * ksl::stdInfo()  - prepends [INFO] 
-#     * ksl::stdWarn()  - prepends [WARN] 
-#     * ksl::stdError() - prepends [ERROR] 
-#     * ksl::stdFatal() - prepends [FATAL] 
+#     * ksl::stdTrace() - prepends [TRACE] to the message
+#     * ksl::stdDebug() - prepends [DEBUG] to the message
+#     * ksl::stdInfo()  - prepends [INFO] to the message
+#     * ksl::stdWarn()  - prepends [WARN] to the message
+#     * ksl::stdError() - prepends [ERROR] to the message
+#     * ksl::stdFatal() - prepends [FATAL] to the message
 #
 # ![](../images/pub/stdout-example.png)
 #
@@ -27,7 +27,7 @@
 # message would be displayed in the `COLOR_TRACE_TEXT` color. If
 # `KSL_USE_COLOR` is true, then the following colors are applied to
 # introducers and text.
-# 
+#
 # * `COLOR_TRACE_INTRO=${FG_MAGENTA}`
 # * `COLOR_DEBUG_INTRO=${FG_MAGENTA}`
 # * `COLOR_INFO_INTRO=${FG_GREEN}`
@@ -139,7 +139,7 @@ ksl::stdTrace()
         beforeText="${COLOR_TRACE_TEXT}"
         after="${CLEAR}"
     fi
-    
+
     ksl::stdOut "${beforeIntro}[TRACE]${after} ${beforeText}$*${after}"
 }
 
@@ -285,7 +285,7 @@ ksl::stdError()
 #     ksl::stdFatal "Entered: showConfig()"
 #     outputs: [FATAL] Entered: showConfig()
 #
-# @stderr [FATAL] followed by all the args  <p><p>![](../images/pub/divider-line.png)
+# @stderr [FATAL] followed by all the args <p><p>![](../images/pub/divider-line.png)
 #
 ksl::stdFatal()
 {
