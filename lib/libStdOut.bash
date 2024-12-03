@@ -25,7 +25,7 @@
 # the text of the message itself. So for example, `[TRACE]` would be
 # displayed in the `COLOR_TRACE_INTRO` color and the text of the trace
 # message would be displayed in the `COLOR_TRACE_TEXT` color. If
-# `KSL_USE_COLOR` is true, then the following colors are applied to
+# ksl::useColor()` is true, then the following colors are applied to
 # introducers and text.
 #
 # * `COLOR_TRACE_INTRO=${FG_MAGENTA}`
@@ -38,7 +38,7 @@
 # * `COLOR_TRACE_TEXT=`  # default is terminal color
 # * `COLOR_DEBUG_TEXT=`  # default is terminal color
 # * `COLOR_INFO_TEXT=`   # default is terminal color
-# * `COLOR_WARN_TEXT=`   # default is terminal color
+# * `COLOR_WARN_TEXT=${FG_YELLOW}`
 # * `COLOR_ERROR_TEXT=${FG_RED}`
 # * `COLOR_FATAL_TEXT=${FG_RED}`
 #
@@ -67,7 +67,7 @@ COLOR_FATAL_INTRO=${BOLD}${FG_RED}
 COLOR_TRACE_TEXT=
 COLOR_DEBUG_TEXT=
 COLOR_INFO_TEXT=
-COLOR_WARN_TEXT=
+COLOR_WARN_TEXT=${FG_YELLOW}
 COLOR_ERROR_TEXT=${FG_RED}
 COLOR_FATAL_TEXT=${FG_RED}
 

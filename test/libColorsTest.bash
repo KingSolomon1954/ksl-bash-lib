@@ -7,9 +7,10 @@ source "${KSL_BASH_LIB}"/libColors.bash
 test_isColorCapable()
 {
     local -i ret
+
     ksl::isColorCapable
     ret=$?
-    assert "[[ $? -eq 0 || $? -gt 0 ]]"
+    assert "[[ $ret -eq 0 || $ret -gt 0 ]]"
 }
 
 # -----------------------------------------------------------
@@ -17,7 +18,7 @@ test_isColorCapable()
 test_enableColor()
 {
     if ksl::enableColor; then
-        assert "[ -n "${KSL_USE_COLOR}" ]"
+        assert "[[ -n "${KSL_USE_COLOR}" ]]"
         assert "[[ "${KSL_USE_COLOR}" == "true" || "${KSL_USE_COLOR}" == "false" ]]"
     fi
 }
