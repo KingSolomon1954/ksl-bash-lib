@@ -8,10 +8,6 @@ test_isColorCapable()
 {
     local -i ret
 
-tput colors
-ret=$?
-echo "return from tput: $ret"
-
     ksl::isColorCapable
     ret=$?
     assert "[[ $ret -eq 0 || $ret -gt 0 ]]"
