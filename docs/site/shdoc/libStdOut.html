@@ -125,7 +125,7 @@
 the text of the message itself. So for example, <code class="docutils literal notranslate"><span class="pre">[TRACE]</span></code> would be
 displayed in the <code class="docutils literal notranslate"><span class="pre">COLOR_TRACE_INTRO</span></code> color and the text of the trace
 message would be displayed in the <code class="docutils literal notranslate"><span class="pre">COLOR_TRACE_TEXT</span></code> color. If
-<code class="docutils literal notranslate"><span class="pre">KSL_USE_COLOR</span></code> is true, then the following colors are applied to
+ksl::useColor()` is true, then the following colors are applied to
 introducers and text.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">COLOR_TRACE_INTRO=${FG_MAGENTA}</span></code></p></li>
@@ -137,7 +137,7 @@ introducers and text.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">COLOR_TRACE_TEXT=</span></code> # default is terminal color</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">COLOR_DEBUG_TEXT=</span></code> # default is terminal color</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">COLOR_INFO_TEXT=</span></code> # default is terminal color</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_WARN_TEXT=</span></code> # default is terminal color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_WARN_TEXT=${FG_YELLOW}</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">COLOR_ERROR_TEXT=${FG_RED}</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">COLOR_FATAL_TEXT=${FG_RED}</span></code></p></li>
 </ul>
@@ -241,8 +241,8 @@ outputs:<span class="w"> </span><span class="o">[</span>TRACE<span class="o">]</
 <h4>Variables set<a class="headerlink" href="#variables-set" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>COLOR_TRACE_INTRO</strong> (string): the color to use for the introducer</p></li>
-<li><p><strong>COLOR_TRACE_TEXT</strong> (string): the color to use for the text
-following the introducer</p></li>
+<li><p><strong>COLOR_TRACE_TEXT</strong> (string): the color to use for the text following
+the introducer</p></li>
 </ul>
 </section>
 <section id="exit-codes-2">
@@ -282,8 +282,8 @@ outputs:<span class="w"> </span><span class="o">[</span>DEBUG<span class="o">]</
 <span id="id10"></span><h4>Variables set<a class="headerlink" href="#variables-set-1" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>COLOR_DEBUG_INTRO</strong> (string): the color to use for the introducer</p></li>
-<li><p><strong>COLOR_DEBUG_TEXT</strong> (string): the color to use for the text
-following the introducer</p></li>
+<li><p><strong>COLOR_DEBUG_TEXT</strong> (string): the color to use for the text following
+the introducer</p></li>
 </ul>
 </section>
 <section id="exit-codes-3">
@@ -405,8 +405,8 @@ outputs:<span class="w"> </span><span class="o">[</span>ERROR<span class="o">]</
 <span id="id25"></span><h4>Variables set<a class="headerlink" href="#variables-set-4" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>COLOR_ERROR_INTRO</strong> (string): the color to use for the introducer</p></li>
-<li><p><strong>COLOR_ERROR_TEXT</strong> (string): the color to use for the text
-following the introducer</p></li>
+<li><p><strong>COLOR_ERROR_TEXT</strong> (string): the color to use for the text following
+the introducer</p></li>
 </ul>
 </section>
 <section id="exit-codes-6">
@@ -446,8 +446,8 @@ outputs:<span class="w"> </span><span class="o">[</span>FATAL<span class="o">]</
 <span id="id30"></span><h4>Variables set<a class="headerlink" href="#variables-set-5" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>COLOR_FATAL_INTRO</strong> (string): the color to use for the introducer</p></li>
-<li><p><strong>COLOR_FATAL_TEXT</strong> (string): the color to use for the text
-following the introducer</p></li>
+<li><p><strong>COLOR_FATAL_TEXT</strong> (string): the color to use for the text following
+the introducer</p></li>
 </ul>
 </section>
 <section id="exit-codes-7">

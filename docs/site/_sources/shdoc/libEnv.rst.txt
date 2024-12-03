@@ -17,13 +17,13 @@ character, normally a colon “:” but this can be changed by setting
 
 Contains the following:
 
--  ksl::envContains()
--  ksl::envAppend()
--  ksl::envPrepend()
--  ksl::envDelete()
--  ksl::envDeleteFirst()
--  ksl::envDeleteLast()
--  ksl::envSetSeparator()
+- ksl::envContains()
+- ksl::envAppend()
+- ksl::envPrepend()
+- ksl::envDelete()
+- ksl::envDeleteFirst()
+- ksl::envDeleteLast()
+- ksl::envSetSeparator()
 
 The following is an example ``PATH`` setup using some of these
 functions. Note that no specific testing for OS is needed. Just relies
@@ -58,13 +58,13 @@ on whether the element exists on the file space.
 Index
 -----
 
--  `ksl::envContains <#kslenvcontains>`__
--  `ksl::envAppend <#kslenvappend>`__
--  `ksl::envPrepend <#kslenvprepend>`__
--  `ksl::envDelete <#kslenvdelete>`__
--  `ksl::envDeleteFirst <#kslenvdeletefirst>`__
--  `ksl::envDeleteLast <#kslenvdeletelast>`__
--  `ksl::envSetSeparator <#kslenvsetseparator>`__
+- `ksl::envContains <#kslenvcontains>`__
+- `ksl::envAppend <#kslenvappend>`__
+- `ksl::envPrepend <#kslenvprepend>`__
+- `ksl::envDelete <#kslenvdelete>`__
+- `ksl::envDeleteFirst <#kslenvdeletefirst>`__
+- `ksl::envDeleteLast <#kslenvdeletelast>`__
+- `ksl::envSetSeparator <#kslenvsetseparator>`__
 
 ksl::envContains
 ~~~~~~~~~~~~~~~~
@@ -87,34 +87,34 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (string): the name of a path style variable.
--  **$2** (string): the element to look for.
+- **$1** (string): the name of a path style variable.
+- **$2** (string): the element to look for.
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - was found
--  **1**: not found, or missing args
+- **0**: Success - was found
+- **1**: not found, or missing args
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  no output
+- no output
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  envContains() missing args
+- envContains() missing args
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image1|
+  |image1|
 
 ksl::envAppend
 ~~~~~~~~~~~~~~
@@ -129,28 +129,28 @@ ksl::envAppend [options…] PATH_VARIABLE ELEMENT
 
 **Options**
 
--  -a \| –allow-dups
--  -r \| –reject-dups (default)
--  -s \| –add-as-string (default)
--  -f \| –file-must-exist
+- -a \| –allow-dups
+- -r \| –reject-dups (default)
+- -s \| –add-as-string (default)
+- -f \| –file-must-exist
 
 **Option Descriptions**
 
--  -a \| –allow-dups: Adds to PATH_VARIABLE even if ELEMENT is already
-   in there.
+- -a \| –allow-dups: Adds to PATH_VARIABLE even if ELEMENT is already in
+  there.
 
--  -r \| –reject-dups: (default) Don’t add to PATH_VARIABLE if ELEMENT
-   is already in there.
+- -r \| –reject-dups: (default) Don’t add to PATH_VARIABLE if ELEMENT is
+  already in there.
 
--  -s \| –add-as-string: (default) Adds ELEMENT to the PATH_VARIABLE as
-   a string - meaning do not check whether ELEMENT exists as a file.
+- -s \| –add-as-string: (default) Adds ELEMENT to the PATH_VARIABLE as a
+  string - meaning do not check whether ELEMENT exists as a file.
 
--  -f \| –file-must-exist: Adds ELEMENT, treated as a file/directory, to
-   the PATH_VARIABLE, but only if ELEMENT exists on the file space.
+- -f \| –file-must-exist: Adds ELEMENT, treated as a file/directory, to
+  the PATH_VARIABLE, but only if ELEMENT exists on the file space.
 
--  If both -s and -f are given, last one wins.
+- If both -s and -f are given, last one wins.
 
--  If both -a and -r are given, last one wins.
+- If both -a and -r are given, last one wins.
 
 .. _example-1:
 
@@ -170,36 +170,36 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (VariableName): of a path style variable, such as ``PATH``,
-   with “:” separating individual elements.
--  **$2** (Element): a string or directory or file name to append
+- **$1** (VariableName): of a path style variable, such as ``PATH``,
+  with “:” separating individual elements.
+- **$2** (Element): a string or directory or file name to append
 
 .. _exit-codes-1:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success if element was appended
--  **1**: Failed element was not appended
+- **0**: Success if element was appended
+- **1**: Failed element was not appended
 
 .. _output-on-stderr-1:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  ksl::\_envXxpend(): missing args
--  ksl::\_envXxpend(): requires two arguments got only…
--  ksl::\_envXxpend(): invalid option…
+- ksl::\_envXxpend(): missing args
+- ksl::\_envXxpend(): requires two arguments got only…
+- ksl::\_envXxpend(): invalid option…
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image2|
+  |image2|
 
 ksl::envPrepend
 ~~~~~~~~~~~~~~~
@@ -242,40 +242,40 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (string): the name of a path style variable.
--  **$2** (string): the element to delete.
+- **$1** (string): the name of a path style variable.
+- **$2** (string): the element to delete.
 
 .. _exit-codes-2:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: No error. Doesn’t mean something was deleted.
--  **1**: Missing or empty args
+- **0**: No error. Doesn’t mean something was deleted.
+- **1**: Missing or empty args
 
 .. _output-on-stdout-1:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  no output
+- no output
 
 .. _output-on-stderr-2:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  envDelete() missing args
+- envDelete() missing args
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image4|
+  |image4|
 
 ksl::envDeleteFirst
 ~~~~~~~~~~~~~~~~~~~
@@ -299,41 +299,41 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (VariableName): of a path style variable, such as ``PATH``,
-   with “:” separating individual elements.
+- **$1** (VariableName): of a path style variable, such as ``PATH``,
+  with “:” separating individual elements.
 
 .. _exit-codes-3:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: No error. Doesn’t mean anything was deleted.
--  **1**: Missing or empty args
+- **0**: No error. Doesn’t mean anything was deleted.
+- **1**: Missing or empty args
 
 .. _output-on-stdout-2:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  no output
+- no output
 
 .. _output-on-stderr-3:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  envDeleteFirst() missing args
--  envDeleteFirst() empty arg
+- envDeleteFirst() missing args
+- envDeleteFirst() empty arg
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image5|
+  |image5|
 
 ksl::envDeleteLast
 ~~~~~~~~~~~~~~~~~~
@@ -355,41 +355,41 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (VariableName): of a path style variable, such as ``PATH``,
-   with “:” separating individual elements.
+- **$1** (VariableName): of a path style variable, such as ``PATH``,
+  with “:” separating individual elements.
 
 .. _exit-codes-4:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: No error. Doesn’t mean anything was deleted.
--  **1**: Missing or empty args
+- **0**: No error. Doesn’t mean anything was deleted.
+- **1**: Missing or empty args
 
 .. _output-on-stdout-3:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  no output
+- no output
 
 .. _output-on-stderr-4:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  envDeleteLast() missing args
--  envDeleteLast() empty arg
+- envDeleteLast() missing args
+- envDeleteLast() empty arg
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image6|
+  |image6|
 
 ksl::envSetSeparator
 ~~~~~~~~~~~~~~~~~~~~
@@ -413,14 +413,14 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (character): the separator.
+- **$1** (character): the separator.
 
 .. _exit-codes-5:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: In all cases
+- **0**: In all cases
 
 .. |image1| image:: ../images/pub/divider-line.png
 .. |image2| image:: ../images/pub/divider-line.png

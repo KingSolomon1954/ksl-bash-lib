@@ -30,71 +30,71 @@ Contains the following:
 
 **Lifecycle**
 
--  epSet()
+- epSet()
 
 **Modifiers**
 
--  epPrepend()
--  epAppend()
--  epSetErrorName()
--  epSetErrorType()
--  epSetDescription()
--  epSetSeverity()
--  epSetProbableCause()
--  epSetProposedRepair()
--  epSetFileName()
--  epSetFuncName()
--  epSetLineNum()
--  epSetCodeNum()
+- epPrepend()
+- epAppend()
+- epSetErrorName()
+- epSetErrorType()
+- epSetDescription()
+- epSetSeverity()
+- epSetProbableCause()
+- epSetProposedRepair()
+- epSetFileName()
+- epSetFuncName()
+- epSetLineNum()
+- epSetCodeNum()
 
 **Observers**
 
--  epErrorName()
--  epErrorType()
--  epSeverity()
--  epFileName()
--  epFuncName()
--  epLineNum()
--  epCodeNum()
--  epFullDesc()
--  epDescription()
--  epProbableCause()
--  epProposedRepair()
--  epTimestamp()
--  epHasError()
+- epErrorName()
+- epErrorType()
+- epSeverity()
+- epFileName()
+- epFuncName()
+- epLineNum()
+- epCodeNum()
+- epFullDesc()
+- epDescription()
+- epProbableCause()
+- epProposedRepair()
+- epTimestamp()
+- epHasError()
 
 --------------
 
 Index
 -----
 
--  `ksl::epDescription <#kslepdescription>`__
--  `ksl::epSet <#kslepset>`__
--  `ksl::epSetDescription <#kslepsetdescription>`__
--  `ksl::epDescription <#kslepdescription>`__
--  `ksl::epAppend <#kslepappend>`__
--  `ksl::epPrepend <#kslepprepend>`__
--  `ksl::epSetErrorName <#kslepseterrorname>`__
--  `ksl::epErrorName <#ksleperrorname>`__
--  `ksl::epSetErrorType <#kslepseterrortype>`__
--  `ksl::epErrorType <#ksleperrortype>`__
--  `ksl::epSetSeverity <#kslepsetseverity>`__
--  `ksl::epSeverity <#kslepseverity>`__
--  `ksl::epSetFuncName <#kslepsetfuncname>`__
--  `ksl::epFuncName <#kslepfuncname>`__
--  `ksl::epSetFileName <#kslepsetfilename>`__
--  `ksl::epFileName <#kslepfilename>`__
--  `ksl::epSetLineNum <#kslepsetlinenum>`__
--  `ksl::epLineNum <#ksleplinenum>`__
--  `ksl::epSetCodeNum <#kslepsetcodenum>`__
--  `ksl::epCodeNum <#kslepcodenum>`__
--  `ksl::epSetCause <#kslepsetcause>`__
--  `ksl::epCause <#kslepcause>`__
--  `ksl::epSetRepair <#kslepsetrepair>`__
--  `ksl::epRepair <#ksleprepair>`__
--  `ksl::epTimestamp <#ksleptimestamp>`__
--  `ksl::epHasError <#kslephaserror>`__
--  `ksl::epPrint <#kslepprint>`__
+- `ksl::epDescription <#kslepdescription>`__
+- `ksl::epSet <#kslepset>`__
+- `ksl::epSetDescription <#kslepsetdescription>`__
+- `ksl::epDescription <#kslepdescription>`__
+- `ksl::epAppend <#kslepappend>`__
+- `ksl::epPrepend <#kslepprepend>`__
+- `ksl::epSetErrorName <#kslepseterrorname>`__
+- `ksl::epErrorName <#ksleperrorname>`__
+- `ksl::epSetErrorType <#kslepseterrortype>`__
+- `ksl::epErrorType <#ksleperrortype>`__
+- `ksl::epSetSeverity <#kslepsetseverity>`__
+- `ksl::epSeverity <#kslepseverity>`__
+- `ksl::epSetFuncName <#kslepsetfuncname>`__
+- `ksl::epFuncName <#kslepfuncname>`__
+- `ksl::epSetFileName <#kslepsetfilename>`__
+- `ksl::epFileName <#kslepfilename>`__
+- `ksl::epSetLineNum <#kslepsetlinenum>`__
+- `ksl::epLineNum <#ksleplinenum>`__
+- `ksl::epSetCodeNum <#kslepsetcodenum>`__
+- `ksl::epCodeNum <#kslepcodenum>`__
+- `ksl::epSetCause <#kslepsetcause>`__
+- `ksl::epCause <#kslepcause>`__
+- `ksl::epSetRepair <#kslepsetrepair>`__
+- `ksl::epRepair <#ksleprepair>`__
+- `ksl::epTimestamp <#ksleptimestamp>`__
+- `ksl::epHasError <#kslephaserror>`__
+- `ksl::epPrint <#kslepprint>`__
 
 ksl::epDescription
 ~~~~~~~~~~~~~~~~~~
@@ -105,16 +105,16 @@ epSet [eps] [options…]
 
 **Options**
 
--  -ca, –cause <string>
--  -cn, –codeNum <number>
--  -d, –description <string>
--  -en, –errorName <string>
--  -et, –errorType <string>
--  -fi, –fileName <string>
--  -fu, –funcName <string>
--  -li, –lineNum <number>
--  -rp, –repair <string>
--  -sv, –severity <string>
+- -ca, –cause <string>
+- -cn, –codeNum <number>
+- -d, –description <string>
+- -en, –errorName <string>
+- -et, –errorType <string>
+- -fi, –fileName <string>
+- -fu, –funcName <string>
+- -li, –lineNum <number>
+- -rp, –repair <string>
+- -sv, –severity <string>
 
 With no args, epSet works on the default ``ep1`` **error passing
 structure (EPS)**. You can pass in ``ep1`` explicitly or create your own
@@ -141,17 +141,17 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If not specified then EPS is ``ep1``
+- **$1** (array): is the EPS. If not specified then EPS is ``ep1``
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image2|
+  |image2|
 
 ksl::epSetDescription
 ~~~~~~~~~~~~~~~~~~~~~
@@ -180,31 +180,31 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the description depending on
-   number of args as described above.
--  **$2** (string): is the description if two args are given.
+- **$1** (array): is either the EPS or the description depending on
+  number of args as described above.
+- **$2** (string): is the description if two args are given.
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - description was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - description was set.
+- **1**: Failed - bad EPS or missing args.
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetDescription() missing args
--  arraySetValue() no such array
+- epSetDescription() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image3|
+  |image3|
 
 .. _kslepdescription-1:
 
@@ -229,37 +229,37 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-1:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the description
+- the description
 
 .. _output-on-stderr-1:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image4|
+  |image4|
 
 ksl::epAppend
 ~~~~~~~~~~~~~
@@ -289,35 +289,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the string to append depending
-   on number of args as described above.
--  **$2** (string): is the string to append if two args are given.
+- **$1** (array): is either the EPS or the string to append depending on
+  number of args as described above.
+- **$2** (string): is the string to append if two args are given.
 
 .. _exit-codes-2:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - string was appended.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - string was appended.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-2:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epAppend() missing args
--  arraySetValue() no such array
+- epAppend() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image5|
+  |image5|
 
 ksl::epPrepend
 ~~~~~~~~~~~~~~
@@ -347,35 +347,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the string to prepend depending
-   on number of args as described above.
--  **$2** (string): is the string to prepend if two args are given.
+- **$1** (array): is either the EPS or the string to prepend depending
+  on number of args as described above.
+- **$2** (string): is the string to prepend if two args are given.
 
 .. _exit-codes-3:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - string was prepended.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - string was prepended.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-3:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epPrepend() missing args
--  arraySetValue() no such array
+- epPrepend() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image6|
+  |image6|
 
 ksl::epSetErrorName
 ~~~~~~~~~~~~~~~~~~~
@@ -389,64 +389,64 @@ arg is given, then $1 is the error name and EPS ``ep1`` is used.
 
 **Choices for ErrorName**
 
--  CaughtException
--  ConfigurationError
--  DataFormatError
--  AlreadyExistsError
--  IllegalStateError
--  InputOutputError
--  InvalidAccessError
--  InvalidArgumentError
--  LengthError
--  LogicError
--  NetworkError
--  NoPermissionError
--  NotFoundError
--  NotImplementedError
--  NullPointerError
--  NullValueError
--  OperationNotPossibleError
--  OverflowError
--  RangeError
--  SignalError
--  SystemCallError
--  TimeoutError
--  UnderflowError
+- CaughtException
+- ConfigurationError
+- DataFormatError
+- AlreadyExistsError
+- IllegalStateError
+- InputOutputError
+- InvalidAccessError
+- InvalidArgumentError
+- LengthError
+- LogicError
+- NetworkError
+- NoPermissionError
+- NotFoundError
+- NotImplementedError
+- NullPointerError
+- NullValueError
+- OperationNotPossibleError
+- OverflowError
+- RangeError
+- SignalError
+- SystemCallError
+- TimeoutError
+- UnderflowError
 
 .. _arguments-5:
 
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the error name depending on
-   number of args as described above.
--  **$2** (string): is the error name if two args are given.
+- **$1** (array): is either the EPS or the error name depending on
+  number of args as described above.
+- **$2** (string): is the error name if two args are given.
 
 .. _exit-codes-4:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - error name was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - error name was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-4:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetErrorName() missing args
--  arraySetValue() no such array
+- epSetErrorName() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image7|
+  |image7|
 
 ksl::epErrorName
 ~~~~~~~~~~~~~~~~
@@ -469,44 +469,44 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-5:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-1:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the error name
+- the error name
 
 .. _output-on-stderr-5:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
 See also
 ^^^^^^^^
 
--  `Choices for ErrorName <#ksl-epseterrorname>`__
+- `Choices for ErrorName <#ksl-epseterrorname>`__
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image8|
+  |image8|
 
 ksl::epSetErrorType
 ~~~~~~~~~~~~~~~~~~~
@@ -520,12 +520,12 @@ arg is given, then $1 is the error type and EPS ``ep1`` is used.
 
 **Choices for ErrorType**
 
--  CommunicationsError
--  ConfigurationError
--  EnvironmentalError
--  EquipmentError
--  ProcessingError
--  QualityOfServiceError
+- CommunicationsError
+- ConfigurationError
+- EnvironmentalError
+- EquipmentError
+- ProcessingError
+- QualityOfServiceError
 
 .. _example-6:
 
@@ -544,35 +544,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the error type depending on
-   number of args as described above.
--  **$2** (string): is the error type if two args are given.
+- **$1** (array): is either the EPS or the error type depending on
+  number of args as described above.
+- **$2** (string): is the error type if two args are given.
 
 .. _exit-codes-6:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - description was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - description was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-6:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetErrorType() missing args
--  arraySetValue() no such array
+- epSetErrorType() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image9|
+  |image9|
 
 ksl::epErrorType
 ~~~~~~~~~~~~~~~~
@@ -595,46 +595,46 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-7:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-2:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the error type
+- the error type
 
 .. _output-on-stderr-7:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
 .. _see-also-1:
 
 See also
 ^^^^^^^^
 
--  `Choices for ErrorType <#ksl-epseterrortype>`__
+- `Choices for ErrorType <#ksl-epseterrortype>`__
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image10|
+  |image10|
 
 ksl::epSetSeverity
 ~~~~~~~~~~~~~~~~~~
@@ -648,11 +648,11 @@ is given, then $1 is the severity and EPS ``ep1`` is used.
 
 **Choices for Severity**
 
--  Indeterminate
--  Critical
--  Major
--  Minor
--  Warning
+- Indeterminate
+- Critical
+- Major
+- Minor
+- Warning
 
 .. _example-8:
 
@@ -671,35 +671,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the severity depending on number
-   of args as described above.
--  **$2** (string): is the severity if two args are given.
+- **$1** (array): is either the EPS or the severity depending on number
+  of args as described above.
+- **$2** (string): is the severity if two args are given.
 
 .. _exit-codes-8:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - severity was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - severity was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-8:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetSeverity() missing args
--  arraySetValue() no such array
+- epSetSeverity() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image11|
+  |image11|
 
 ksl::epSeverity
 ~~~~~~~~~~~~~~~
@@ -722,46 +722,46 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-9:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-3:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the severity
+- the severity
 
 .. _output-on-stderr-9:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
 .. _see-also-2:
 
 See also
 ^^^^^^^^
 
--  `Choices for Severity <#ksl-epsetseverity>`__
+- `Choices for Severity <#ksl-epsetseverity>`__
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image12|
+  |image12|
 
 ksl::epSetFuncName
 ~~~~~~~~~~~~~~~~~~
@@ -790,35 +790,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the function name depending on
-   number of args as described above.
--  **$2** (string): is the function name if two args are given.
+- **$1** (array): is either the EPS or the function name depending on
+  number of args as described above.
+- **$2** (string): is the function name if two args are given.
 
 .. _exit-codes-10:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - function name was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - function name was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-10:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetFuncName() missing args
--  arraySetValue() no such array
+- epSetFuncName() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image13|
+  |image13|
 
 ksl::epFuncName
 ~~~~~~~~~~~~~~~
@@ -841,39 +841,39 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-11:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-4:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the function name
+- the function name
 
 .. _output-on-stderr-11:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image14|
+  |image14|
 
 ksl::epSetFileName
 ~~~~~~~~~~~~~~~~~~
@@ -902,35 +902,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the file name on number of args
-   as described above.
--  **$2** (string): is the file name if two args are given.
+- **$1** (array): is either the EPS or the file name on number of args
+  as described above.
+- **$2** (string): is the file name if two args are given.
 
 .. _exit-codes-12:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - file name was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - file name was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-12:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetFileName() missing args
--  arraySetValue() no such array
+- epSetFileName() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image15|
+  |image15|
 
 ksl::epFileName
 ~~~~~~~~~~~~~~~
@@ -953,39 +953,39 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-13:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-5:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the file name
+- the file name
 
 .. _output-on-stderr-13:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image16|
+  |image16|
 
 ksl::epSetLineNum
 ~~~~~~~~~~~~~~~~~
@@ -1014,35 +1014,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the line number depending on
-   number of args as described above.
--  **$2** (string): is the line number if two args are given.
+- **$1** (array): is either the EPS or the line number depending on
+  number of args as described above.
+- **$2** (string): is the line number if two args are given.
 
 .. _exit-codes-14:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - line number was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - line number was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-14:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetLineNum() missing args
--  arraySetValue() no such array
+- epSetLineNum() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image17|
+  |image17|
 
 ksl::epLineNum
 ~~~~~~~~~~~~~~
@@ -1065,39 +1065,39 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-15:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-6:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the line number
+- the line number
 
 .. _output-on-stderr-15:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image18|
+  |image18|
 
 ksl::epSetCodeNum
 ~~~~~~~~~~~~~~~~~
@@ -1126,35 +1126,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the code number depending on
-   number of args as described above.
--  **$2** (string): is the code number if two args are given.
+- **$1** (array): is either the EPS or the code number depending on
+  number of args as described above.
+- **$2** (string): is the code number if two args are given.
 
 .. _exit-codes-16:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - code number was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - code number was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-16:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetCodeNum() missing args
--  arraySetValue() no such array
+- epSetCodeNum() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image19|
+  |image19|
 
 ksl::epCodeNum
 ~~~~~~~~~~~~~~
@@ -1177,39 +1177,39 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-17:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-7:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the code number
+- the code number
 
 .. _output-on-stderr-17:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image20|
+  |image20|
 
 ksl::epSetCause
 ~~~~~~~~~~~~~~~
@@ -1238,35 +1238,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the cause depending on number of
-   args as described above.
--  **$2** (string): is the cause if two args are given.
+- **$1** (array): is either the EPS or the cause depending on number of
+  args as described above.
+- **$2** (string): is the cause if two args are given.
 
 .. _exit-codes-18:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - cause was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - cause was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-18:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetCause() missing args
--  arraySetValue() no such array
+- epSetCause() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image21|
+  |image21|
 
 ksl::epCause
 ~~~~~~~~~~~~
@@ -1289,39 +1289,39 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-19:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-8:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the cause
+- the cause
 
 .. _output-on-stderr-19:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image22|
+  |image22|
 
 ksl::epSetRepair
 ~~~~~~~~~~~~~~~~
@@ -1350,35 +1350,35 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is either the EPS or the repair depending on number
-   of args as described above.
--  **$2** (string): is the repair if two args are given.
+- **$1** (array): is either the EPS or the repair depending on number of
+  args as described above.
+- **$2** (string): is the repair if two args are given.
 
 .. _exit-codes-20:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success - repair was set.
--  **1**: Failed - bad EPS or missing args.
+- **0**: Success - repair was set.
+- **1**: Failed - bad EPS or missing args.
 
 .. _output-on-stderr-20:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epSetRepair() missing args
--  arraySetValue() no such array
+- epSetRepair() missing args
+- arraySetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image23|
+  |image23|
 
 ksl::epRepair
 ~~~~~~~~~~~~~
@@ -1401,39 +1401,39 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-21:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-9:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the repair
+- the repair
 
 .. _output-on-stderr-21:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image24|
+  |image24|
 
 ksl::epTimestamp
 ~~~~~~~~~~~~~~~~
@@ -1459,39 +1459,39 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-22:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-10:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  the timestamp
+- the timestamp
 
 .. _output-on-stderr-22:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  arrayGetValue() no such array
+- arrayGetValue() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image25|
+  |image25|
 
 ksl::epHasError
 ~~~~~~~~~~~~~~~
@@ -1516,32 +1516,32 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-23:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: true - EPS is carrying an error.
--  **1**: false - EPS is not carrying an error.
+- **0**: true - EPS is carrying an error.
+- **1**: false - EPS is not carrying an error.
 
 .. _output-on-stderr-23:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epHasError() no such array
+- epHasError() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image26|
+  |image26|
 
 ksl::epPrint
 ~~~~~~~~~~~~
@@ -1566,39 +1566,39 @@ Example
 Arguments
 ^^^^^^^^^
 
--  **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
+- **$1** (array): is the EPS. If no args, then EPS ``ep1`` is used.
 
 .. _exit-codes-24:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: Success
--  **1**: Failed - likely a bad EPS.
+- **0**: Success
+- **1**: Failed - likely a bad EPS.
 
 .. _output-on-stdout-11:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
--  See output from example script at top of this file.
+- See output from example script at top of this file.
 
 .. _output-on-stderr-24:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
--  epPrint() no such array
+- epPrint() no such array
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image27|
+  |image27|
 
 .. |image1| image:: ../images/pub/errpass-example-output.png
 .. |image2| image:: ../images/pub/divider-line.png
