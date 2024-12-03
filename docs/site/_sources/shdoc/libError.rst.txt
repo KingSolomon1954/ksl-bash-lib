@@ -68,7 +68,6 @@ Contains the following:
 Index
 -----
 
-- `ksl::epDescription <#kslepdescription>`__
 - `ksl::epSet <#kslepset>`__
 - `ksl::epSetDescription <#kslepsetdescription>`__
 - `ksl::epDescription <#kslepdescription>`__
@@ -96,38 +95,37 @@ Index
 - `ksl::epHasError <#kslephaserror>`__
 - `ksl::epPrint <#kslepprint>`__
 
-ksl::epDescription
-~~~~~~~~~~~~~~~~~~
-
-Initialize and set values in an error passing structure.
-
-epSet [eps] [options…]
-
-**Options**
-
-- -ca, –cause <string>
-- -cn, –codeNum <number>
-- -d, –description <string>
-- -en, –errorName <string>
-- -et, –errorType <string>
-- -fi, –fileName <string>
-- -fu, –funcName <string>
-- -li, –lineNum <number>
-- -rp, –repair <string>
-- -sv, –severity <string>
-
-With no args, epSet works on the default ``ep1`` **error passing
-structure (EPS)**. You can pass in ``ep1`` explicitly or create your own
-EPS. If the given EPS does not already exist, then it is created.
-
-These two are equivalent: ``epSet`` and ``epSet ep1``. Or supply your
-own: ``epSet myEp``.
-
-$1 is the EPS and optional. If not supplied the default EPS of “ep1” is
-used.
-
 ksl::epSet
 ~~~~~~~~~~
+
+Set values in an error passing structure.
+
+epSet [options…]
+
+OPTIONS
+
+- -ca, –cause
+- -cn, –codeNum
+- -d, –description
+- -en, –errorName
+- -et, –errorType
+- -fi, –fileName
+- -fn, –funcName
+- -li, –lineNum
+- -rp, –repair
+- -sv, –severity
+
+With no args, epSet works on the default ``ep1`` error passing structure
+(EPS). You can pass in ``ep1`` explicitly or supply your own EPS. If the
+given EPS does not already exist in the environment, then it is created.
+
+These two are equivalent: ``epSet;`` and ``epSet ep1;`` Or supply your
+own: ``epSet myEp;``
+
+Each call to ``epSet()`` initalizes all fields to empty/default values
+with the timestamp set to current time, followed by setting any supplied
+options. Most options are strings so they will need to be in double
+quotes if they have embedded spaces.
 
 Example
 ^^^^^^^
@@ -141,7 +139,8 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): is the EPS. If not specified then EPS is ``ep1``
+- **$1** (array): is the Error Passing Structure (EPS). If not specified
+  then EPS is ``ep1``
 
   .. raw:: html
 
@@ -206,8 +205,6 @@ Output on stderr
 
   |image3|
 
-.. _kslepdescription-1:
-
 ksl::epDescription
 ~~~~~~~~~~~~~~~~~~
 
@@ -220,9 +217,8 @@ Example
 
 .. code:: bash
 
-   ksl::epDescription               # ep1 is used
+   echo $(ksl::epDescription)       # ep1 is used
    echo $(ksl::epDescription ep2)   # ep2 is used
-   str=$(ksl::epDescription ep2)    # ep2 is used
 
 .. _arguments-2:
 

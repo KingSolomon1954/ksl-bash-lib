@@ -6,6 +6,11 @@ Documentation for |LibName| version |version|.
 
 .. include:: include/introduction.rst
 
+See the source code, documentation source, and build automation at the 
+`KSL Bash Library Project <https://github.com/KingSolomon1954/ksl-bash-lib>`_
+on GitHub.
+
+             
 .. toctree::
     :maxdepth: 1
     :hidden:
