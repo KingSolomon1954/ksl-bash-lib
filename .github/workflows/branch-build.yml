@@ -28,9 +28,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-#      - name: howie
-#        run: tput colors
-
       - name: Run unit tests
 #       run: make unit-test
         run: make howie

@@ -111,8 +111,6 @@ export HIDDEN="${ESC}[8m"
 #
 ksl::isColorCapable()
 {
-
-#    [[ -t 1 && "$(tput colors)" -ge 8 ]]
     if ! tput colors 2>/dev/null; then
         return 1     # not color capable
     fi
@@ -182,8 +180,7 @@ ksl::useColor()
 
 # -----------------------------------------------------------
 
-echo "Howie before"
-if ksl::enableColor; then echo "Howie have color"; else echo "Howie no color"; fi
-echo "Howie after"
+# GitHub pipeline sensitive to enableColor() returning false
+[[ ksl::enableColor || : ]]
 
 # -----------------------------------------------------------
