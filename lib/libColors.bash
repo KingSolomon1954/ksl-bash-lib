@@ -183,7 +183,7 @@ ksl::useColor()
 # -----------------------------------------------------------
 
 echo "Howie before"
-ksl::enableColor
+if ksl::enableColor; then echo "Howie have color"; else echo "Howie no color"; fi
 echo "Howie after"
 
 # -----------------------------------------------------------
