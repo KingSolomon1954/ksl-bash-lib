@@ -37,7 +37,7 @@ unit-test,  runs unit tests\n\
 "
 
 howie:
-	KSL_BASH_LIB=$(PWD)/lib $(bash_unit_exec) -p isColorCapable test/libColorsTest.bash
+	KSL_BASH_LIB=$(PWD)/lib $(bash_unit_exec) test/libColorsTest.bash
 
 
 endif
