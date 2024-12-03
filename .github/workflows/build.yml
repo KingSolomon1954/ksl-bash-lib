@@ -1,0 +1,54 @@
+# ----------------------------------------------
+#
+# Build main/master as a CM build.
+# Runs unit-tests followed by generating docs.
+#
+# ----------------------------------------------
+
+name: CI Build
+run-name: CI Build ${{ github.event.head_commit.message }}
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - docs/site/**
+      
+  # Allow manually triggering from GitHub Actions tab
+  workflow_dispatch:
+    
+# Sets permissions of the GITHUB_TOKEN to allow writing
+# back to the repository (see docs-publish setp below).
+permissions:
+  contents: write
+  
+jobs:
+
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install podman
+        run: sudo apt install -y podman
+        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Run unit tests
+        run: make unit-test
+        
+      - name: Build docs
+        run: make docs
+
+      - name: Publish docs
+        # This copies _build/site to docs/site and performs a git
+        # checkin. Hence we need the paths-ignore specification
+        # at top of this action to prevent a build loop. Plus needs
+        # "contents" permission to write to repo.
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name ${{ github.actor }}
+          make docs-publish
+          git push

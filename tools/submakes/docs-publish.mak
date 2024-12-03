@@ -18,7 +18,9 @@ endif
 # so to catch deleted files between commits.
 #
 docs-publish:
-	git rm -q -r $(D_PUB_SITE)/*
+	if git log docs/site/index.html > /dev/null 2>&1; then \
+	    git rm -q -r $(D_PUB_SITE)/*; \
+	fi
 	mkdir -p $(D_PUB_SITE)
 	cp -p -r $(D_BLD_SITE)/* $(D_PUB_SITE)/
 	touch $(D_PUB_SITE)/.nojekyll
