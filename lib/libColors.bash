@@ -113,14 +113,14 @@ ksl::isColorCapable()
 {
     # -t fd True if file descriptor fd is open and refers to a terminal.
     [[ ! -t 1 ]] && return 1                # not color capable
-    
+
     if ! tput colors >/dev/null 2>&1; then
         return 1                            # not color capable
     fi
+    
+    (( $(tput colors) < 8 )) && return 1    # not color capable
 
-#    [[ $(tput colors) -lt 8 ]] && return 1  # not color capable
-    local val=$(tput colors)
-    if [[ $val -lt 8 ]]; then return 1; fi  # not color capable
+    return 0
 }
 
 # -----------------------------------------------------------
