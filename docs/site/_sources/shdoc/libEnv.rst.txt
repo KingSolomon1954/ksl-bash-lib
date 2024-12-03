@@ -1,0 +1,430 @@
+libEnv
+======
+
+Functions to manipulate environment PATH-like variables
+
+Overview
+--------
+
+Functions to manipulate shell environment PATH like variables with
+entries normally separated by “:” such as ``MANPATH`` and ``PATH``
+itself.
+
+Often these variables contain directory paths but they don’t have to,
+for example ``HISTCONTROL``. Between each path element is a separator
+character, normally a colon “:” but this can be changed by setting
+``evpSep``.
+
+Contains the following:
+
+-  ksl::envContains()
+-  ksl::envAppend()
+-  ksl::envPrepend()
+-  ksl::envDelete()
+-  ksl::envDeleteFirst()
+-  ksl::envDeleteLast()
+-  ksl::envSetSeparator()
+
+The following is an example ``PATH`` setup using some of these
+functions. Note that no specific testing for OS is needed. Just relies
+on whether the element exists on the file space.
+
+.. code:: bash
+
+   # Standard system path setup here
+
+   ksl::envAppend -f PATH "/bin"
+   ksl::envAppend -f PATH "/usr/bin"
+   ksl::envAppend -f PATH "/usr/local/bin"
+   ksl::envAppend -f PATH "/sbin"
+   ksl::envAppend -f PATH "/usr/sbin"
+   ksl::envAppend -f PATH "/usr/local/sbin"
+   ksl::envAppend -f PATH "${HOME}/.local/bin"
+   ksl::envAppend -f PATH "${HOME}/bin"
+   ksl::envDelete    PATH "/usr/games"
+   ksl::envDelete    PATH "/usr/local/games"
+
+   # Some platform specific setup
+
+   ksl::envPrepend -f PATH "/usr/local/opt/m4/bin"
+   ksl::envPrepend -f PATH "/usr/local/opt/openssl/bin"
+   ksl::envPrepend -f PATH "/usr/local/opt/findutils/libexec/gnubin"
+   ksl::envPrepend -f PATH "/usr/local/opt/coreutils/libexec/gnubin"
+   ksl::envPrepend -f PATH "/usr/local/opt/grep/libexec/gnubin"
+   ksl::envPrepend -f PATH "/usr/local/opt/make/libexec/gnubin"
+
+--------------
+
+Index
+-----
+
+-  `ksl::envContains <#kslenvcontains>`__
+-  `ksl::envAppend <#kslenvappend>`__
+-  `ksl::envPrepend <#kslenvprepend>`__
+-  `ksl::envDelete <#kslenvdelete>`__
+-  `ksl::envDeleteFirst <#kslenvdeletefirst>`__
+-  `ksl::envDeleteLast <#kslenvdeletelast>`__
+-  `ksl::envSetSeparator <#kslenvsetseparator>`__
+
+ksl::envContains
+~~~~~~~~~~~~~~~~
+
+True if path style variable $1 contains the string in $2.
+
+This is slightly different than just looking for a contained string as
+with ``ksl:contains()``. Here the string to look for must exactly match
+between the surrounding “:” markers.
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   if ksl::envContains PATH "/usr/bin"; then
+       echo "Yes in PATH"
+   fi
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (string): the name of a path style variable.
+-  **$2** (string): the element to look for.
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: Success - was found
+-  **1**: not found, or missing args
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  no output
+
+Output on stderr
+^^^^^^^^^^^^^^^^
+
+-  envContains() missing args
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image1|
+
+ksl::envAppend
+~~~~~~~~~~~~~~
+
+Appends an element to a PATH-style variable.
+
+Appends $2, in-place, to the end of the PATH-style variable named in $1,
+provided $2 is not already in there (options are available to control
+this).
+
+ksl::envAppend [options…] PATH_VARIABLE ELEMENT
+
+**Options**
+
+-  -a \| –allow-dups
+-  -r \| –reject-dups (default)
+-  -s \| –add-as-string (default)
+-  -f \| –file-must-exist
+
+**Option Descriptions**
+
+-  -a \| –allow-dups: Adds to PATH_VARIABLE even if ELEMENT is already
+   in there.
+
+-  -r \| –reject-dups: (default) Don’t add to PATH_VARIABLE if ELEMENT
+   is already in there.
+
+-  -s \| –add-as-string: (default) Adds ELEMENT to the PATH_VARIABLE as
+   a string - meaning do not check whether ELEMENT exists as a file.
+
+-  -f \| –file-must-exist: Adds ELEMENT, treated as a file/directory, to
+   the PATH_VARIABLE, but only if ELEMENT exists on the file space.
+
+-  If both -s and -f are given, last one wins.
+
+-  If both -a and -r are given, last one wins.
+
+.. _example-1:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   # Update MANPATH only if $HOME/man is not already in there
+   ksl::envAppend MANPATH $HOME/man
+   #
+   # Update MANPATH only if $HOME/man is not in there and it exists on file space
+   ksl::envAppend -r -f MANPATH $HOME/man # MANPATH is updated if $HOME/man exists
+
+.. _arguments-1:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (VariableName): of a path style variable, such as ``PATH``,
+   with “:” separating individual elements.
+-  **$2** (Element): a string or directory or file name to append
+
+.. _exit-codes-1:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: Success if element was appended
+-  **1**: Failed element was not appended
+
+.. _output-on-stderr-1:
+
+Output on stderr
+^^^^^^^^^^^^^^^^
+
+-  ksl::\_envXxpend(): missing args
+-  ksl::\_envXxpend(): requires two arguments got only…
+-  ksl::\_envXxpend(): invalid option…
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image2|
+
+ksl::envPrepend
+~~~~~~~~~~~~~~~
+
+Prepends $2, in-place, to the front of the PATH-style variable named in
+$1, provided $2 is not already in there (options are available to
+control this).
+
+Same args and description as `ksl::envAppend <#ksl-envappend>`__.
+
+.. raw:: html
+
+   <p>
+
+.. raw:: html
+
+   <p>
+
+|image3|
+
+ksl::envDelete
+~~~~~~~~~~~~~~
+
+Deletes all occurrences of $2, in-place, from $1.
+
+$1 is the name of a path style variable with “:” separating individual
+elements.
+
+.. _example-2:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::envDelete MANPATH "$HOME/man"
+
+.. _arguments-2:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (string): the name of a path style variable.
+-  **$2** (string): the element to delete.
+
+.. _exit-codes-2:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: No error. Doesn’t mean something was deleted.
+-  **1**: Missing or empty args
+
+.. _output-on-stdout-1:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  no output
+
+.. _output-on-stderr-2:
+
+Output on stderr
+^^^^^^^^^^^^^^^^
+
+-  envDelete() missing args
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image4|
+
+ksl::envDeleteFirst
+~~~~~~~~~~~~~~~~~~~
+
+Deletes 1st element, in-place, from $1 where $1 is the name of a path
+style variable with “:” separating individual elements.
+
+Returns 1 on an error otherwise 0.
+
+.. _example-3:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::envDeleteFirst MANPATH
+
+.. _arguments-3:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (VariableName): of a path style variable, such as ``PATH``,
+   with “:” separating individual elements.
+
+.. _exit-codes-3:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: No error. Doesn’t mean anything was deleted.
+-  **1**: Missing or empty args
+
+.. _output-on-stdout-2:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  no output
+
+.. _output-on-stderr-3:
+
+Output on stderr
+^^^^^^^^^^^^^^^^
+
+-  envDeleteFirst() missing args
+-  envDeleteFirst() empty arg
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image5|
+
+ksl::envDeleteLast
+~~~~~~~~~~~~~~~~~~
+
+Deletes last element, in-place, from $1 where $1 is the name of a path
+style variable with “:” separating individual elements.
+
+.. _example-4:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::envDeleteLast MANPATH
+
+.. _arguments-4:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (VariableName): of a path style variable, such as ``PATH``,
+   with “:” separating individual elements.
+
+.. _exit-codes-4:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: No error. Doesn’t mean anything was deleted.
+-  **1**: Missing or empty args
+
+.. _output-on-stdout-3:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  no output
+
+.. _output-on-stderr-4:
+
+Output on stderr
+^^^^^^^^^^^^^^^^
+
+-  envDeleteLast() missing args
+-  envDeleteLast() empty arg
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image6|
+
+ksl::envSetSeparator
+~~~~~~~~~~~~~~~~~~~~
+
+Use the given character as the separator between elements in a
+PATH-style variable.
+
+Initialized to “:” at startup. Stays in effect until changed.
+
+.. _example-5:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::envSetSeparator ";"
+
+.. _arguments-5:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (character): the separator.
+
+.. _exit-codes-5:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: In all cases
+
+.. |image1| image:: ../images/pub/divider-line.png
+.. |image2| image:: ../images/pub/divider-line.png
+.. |image3| image:: ../images/pub/divider-line.png
+.. |image4| image:: ../images/pub/divider-line.png
+.. |image5| image:: ../images/pub/divider-line.png
+.. |image6| image:: ../images/pub/divider-line.png

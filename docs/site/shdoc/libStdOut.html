@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libStdOut &mdash; ksl-bash-lib 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="libStrings" href="libStrings.html" />
+    <link rel="prev" title="libFiles" href="libFiles.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ksl-bash-lib
+              <img src="../_static/blue-fire-icon-60x90.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shdoc-intro.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="libArrays.html">libArrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libColors.html">libColors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libEnv.html">libEnv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libError.html">libError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libFiles.html">libFiles</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">libStdOut</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index">Index</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-stdout">ksl::stdOut</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-stderr">ksl::stdErr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-stdtrace">ksl::stdTrace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-stddebug">ksl::stdDebug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-stdinfo">ksl::stdInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-stdwarn">ksl::stdWarn</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-stderror">ksl::stdError</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-stdfatal">ksl::stdFatal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="libStrings.html">libStrings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/licenses.html">Licenses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/opensource.html">Open Source Inventory</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ksl-bash-lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="shdoc-intro.html">KSL-BASH-LIB API</a></li>
+      <li class="breadcrumb-item active">libStdOut</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/shdoc/libStdOut.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="libstdout">
+<h1>libStdOut<a class="headerlink" href="#libstdout" title="Link to this heading"></a></h1>
+<p>Functions to help print messages.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Functions to help print consistent messages.</p>
+<p>Contains the following:</p>
+<ul class="simple">
+<li><p>ksl::stdOut()</p></li>
+<li><p>ksl::stdErr()</p></li>
+<li><p>ksl::stdTrace() - prepends [TRACE] to the message</p></li>
+<li><p>ksl::stdDebug() - prepends [DEBUG] to the message</p></li>
+<li><p>ksl::stdInfo() - prepends [INFO] to the message</p></li>
+<li><p>ksl::stdWarn() - prepends [WARN] to the message</p></li>
+<li><p>ksl::stdError() - prepends [ERROR] to the message</p></li>
+<li><p>ksl::stdFatal() - prepends [FATAL] to the message</p></li>
+</ul>
+<p><img alt="image1" src="../_images/stdout-example.png" /></p>
+<p><strong>Colors</strong></p>
+<p>Colors can be changed and applied to the introducer string as well as
+the text of the message itself. So for example, <code class="docutils literal notranslate"><span class="pre">[TRACE]</span></code> would be
+displayed in the <code class="docutils literal notranslate"><span class="pre">COLOR_TRACE_INTRO</span></code> color and the text of the trace
+message would be displayed in the <code class="docutils literal notranslate"><span class="pre">COLOR_TRACE_TEXT</span></code> color. If
+<code class="docutils literal notranslate"><span class="pre">KSL_USE_COLOR</span></code> is true, then the following colors are applied to
+introducers and text.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_TRACE_INTRO=${FG_MAGENTA}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_DEBUG_INTRO=${FG_MAGENTA}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_INFO_INTRO=${FG_GREEN}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_WARN_INTRO=${FG_YELLOW}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_ERROR_INTRO=${FG_RED}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_FATAL_INTRO=${BOLD}${FG_RED}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_TRACE_TEXT=</span></code> # default is terminal color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_DEBUG_TEXT=</span></code> # default is terminal color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_INFO_TEXT=</span></code> # default is terminal color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_WARN_TEXT=</span></code> # default is terminal color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_ERROR_TEXT=${FG_RED}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COLOR_FATAL_TEXT=${FG_RED}</span></code></p></li>
+</ul>
+<p>An application can modify these colors as desired. See
+<a class="reference external" href="libColors.html">libColors</a> for color setup.</p>
+</section>
+<hr class="docutils" />
+<section id="index">
+<h2>Index<a class="headerlink" href="#index" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#kslstdout">ksl::stdOut</a></p></li>
+<li><p><a class="reference external" href="#kslstderr">ksl::stdErr</a></p></li>
+<li><p><a class="reference external" href="#kslstdtrace">ksl::stdTrace</a></p></li>
+<li><p><a class="reference external" href="#kslstddebug">ksl::stdDebug</a></p></li>
+<li><p><a class="reference external" href="#kslstdinfo">ksl::stdInfo</a></p></li>
+<li><p><a class="reference external" href="#kslstdwarn">ksl::stdWarn</a></p></li>
+<li><p><a class="reference external" href="#kslstderror">ksl::stdError</a></p></li>
+<li><p><a class="reference external" href="#kslstdfatal">ksl::stdFatal</a></p></li>
+</ul>
+<section id="ksl-stdout">
+<h3>ksl::stdOut<a class="headerlink" href="#ksl-stdout" title="Link to this heading"></a></h3>
+<p>Output text to standard out.</p>
+<p>Does not embelish text with any introducer or color.</p>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::stdOut<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">scriptName</span><span class="si">}</span><span class="s2"> v</span><span class="si">${</span><span class="nv">scriptVersion</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments">
+<h4>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): all args are printed to stdout</p></li>
+</ul>
+</section>
+<section id="exit-codes">
+<h4>Exit codes<a class="headerlink" href="#exit-codes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout">
+<h4>Output on stdout<a class="headerlink" href="#output-on-stdout" title="Link to this heading"></a></h4>
+<ul>
+<li><p>all the args</p>
+<p><p><p><img alt="image2" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-stderr">
+<h3>ksl::stdErr<a class="headerlink" href="#ksl-stderr" title="Link to this heading"></a></h3>
+<p>Output text to standard error.</p>
+<p>Does not embelish text with any introducer or color.</p>
+<section id="example-1">
+<span id="id1"></span><h4>Example<a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::stdErr<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">scriptName</span><span class="si">}</span><span class="s2"> v</span><span class="si">${</span><span class="nv">scriptVersion</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-1">
+<span id="id2"></span><h4>Arguments<a class="headerlink" href="#arguments-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): all args are printed to stdout</p></li>
+</ul>
+</section>
+<section id="exit-codes-1">
+<span id="id3"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stderr">
+<h4>Output on stderr<a class="headerlink" href="#output-on-stderr" title="Link to this heading"></a></h4>
+<ul>
+<li><p>all the args</p>
+<p><p><p><img alt="image3" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-stdtrace">
+<h3>ksl::stdTrace<a class="headerlink" href="#ksl-stdtrace" title="Link to this heading"></a></h3>
+<p>Output message to standard out prefaced by <code class="docutils literal notranslate"><span class="pre">[TRACE]</span></code>.</p>
+<p>If <a class="reference external" href="libColor.html#kslusecolor">ksl::useColor</a> is true then colors are
+applied.</p>
+<section id="example-2">
+<span id="id4"></span><h4>Example<a class="headerlink" href="#example-2" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::stdTrace<span class="w"> </span><span class="s2">&quot;Entered: showConfig()&quot;</span>
+outputs:<span class="w"> </span><span class="o">[</span>TRACE<span class="o">]</span><span class="w"> </span>Entered:<span class="w"> </span>showConfig<span class="o">()</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-2">
+<span id="id5"></span><h4>Arguments<a class="headerlink" href="#arguments-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): all args are printed to stdout</p></li>
+</ul>
+</section>
+<section id="variables-set">
+<h4>Variables set<a class="headerlink" href="#variables-set" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>COLOR_TRACE_INTRO</strong> (string): the color to use for the introducer</p></li>
+<li><p><strong>COLOR_TRACE_TEXT</strong> (string): the color to use for the text
+following the introducer</p></li>
+</ul>
+</section>
+<section id="exit-codes-2">
+<span id="id6"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-1">
+<span id="id7"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-1" title="Link to this heading"></a></h4>
+<ul>
+<li><p>[TRACE] followed by all the args</p>
+<p><p><p><img alt="image4" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-stddebug">
+<h3>ksl::stdDebug<a class="headerlink" href="#ksl-stddebug" title="Link to this heading"></a></h3>
+<p>Output message to standard out prefaced by <code class="docutils literal notranslate"><span class="pre">[DEBUG]</span></code>.</p>
+<p>If <a class="reference external" href="libColor.html#kslusecolor">ksl::useColor</a> is true then colors are
+applied.</p>
+<section id="example-3">
+<span id="id8"></span><h4>Example<a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::stdDebug<span class="w"> </span><span class="s2">&quot;Entered: showConfig()&quot;</span>
+outputs:<span class="w"> </span><span class="o">[</span>DEBUG<span class="o">]</span><span class="w"> </span>Entered:<span class="w"> </span>showConfig<span class="o">()</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-3">
+<span id="id9"></span><h4>Arguments<a class="headerlink" href="#arguments-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): all args are printed to stdout</p></li>
+</ul>
+</section>
+<section id="variables-set-1">
+<span id="id10"></span><h4>Variables set<a class="headerlink" href="#variables-set-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>COLOR_DEBUG_INTRO</strong> (string): the color to use for the introducer</p></li>
+<li><p><strong>COLOR_DEBUG_TEXT</strong> (string): the color to use for the text
+following the introducer</p></li>
+</ul>
+</section>
+<section id="exit-codes-3">
+<span id="id11"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-2">
+<span id="id12"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p>[DEBUG] followed by all the args</p>
+<p><p><p><img alt="image5" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-stdinfo">
+<h3>ksl::stdInfo<a class="headerlink" href="#ksl-stdinfo" title="Link to this heading"></a></h3>
+<p>Output message to standard out prefaced by <code class="docutils literal notranslate"><span class="pre">[INFO]</span></code>.</p>
+<p>If <a class="reference external" href="libColor.html#kslusecolor">ksl::useColor</a> is true then colors are
+applied.</p>
+<section id="example-4">
+<span id="id13"></span><h4>Example<a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::stdInfo<span class="w"> </span><span class="s2">&quot;Entered: showConfig()&quot;</span>
+outputs:<span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Entered:<span class="w"> </span>showConfig<span class="o">()</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-4">
+<span id="id14"></span><h4>Arguments<a class="headerlink" href="#arguments-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): all args are printed to stdout</p></li>
+</ul>
+</section>
+<section id="variables-set-2">
+<span id="id15"></span><h4>Variables set<a class="headerlink" href="#variables-set-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>COLOR_INFO_INTRO</strong> (string): the color to use for the introducer</p></li>
+<li><p><strong>COLOR_INFO_TEXT</strong> (string): the color to use for the text following
+the introducer</p></li>
+</ul>
+</section>
+<section id="exit-codes-4">
+<span id="id16"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-3">
+<span id="id17"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-3" title="Link to this heading"></a></h4>
+<ul>
+<li><p>[INFO] followed by all the args</p>
+<p><p><p><img alt="image6" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-stdwarn">
+<h3>ksl::stdWarn<a class="headerlink" href="#ksl-stdwarn" title="Link to this heading"></a></h3>
+<p>Output message to standard out prefaced by <code class="docutils literal notranslate"><span class="pre">[WARN]</span></code>.</p>
+<p>If <a class="reference external" href="libColor.html#kslusecolor">ksl::useColor</a> is true then colors are
+applied.</p>
+<section id="example-5">
+<span id="id18"></span><h4>Example<a class="headerlink" href="#example-5" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::stdWarn<span class="w"> </span><span class="s2">&quot;Entered: showConfig()&quot;</span>
+outputs:<span class="w"> </span><span class="o">[</span>WARN<span class="o">]</span><span class="w"> </span>Entered:<span class="w"> </span>showConfig<span class="o">()</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-5">
+<span id="id19"></span><h4>Arguments<a class="headerlink" href="#arguments-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): all args are printed to stdout</p></li>
+</ul>
+</section>
+<section id="variables-set-3">
+<span id="id20"></span><h4>Variables set<a class="headerlink" href="#variables-set-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>COLOR_WARN_INTRO</strong> (string): the color to use for the introducer</p></li>
+<li><p><strong>COLOR_WARN_TEXT</strong> (string): the color to use for the text following
+the introducer</p></li>
+</ul>
+</section>
+<section id="exit-codes-5">
+<span id="id21"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-4">
+<span id="id22"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-4" title="Link to this heading"></a></h4>
+<ul>
+<li><p>[WARN] followed by all the args</p>
+<p><p><p><img alt="image7" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-stderror">
+<h3>ksl::stdError<a class="headerlink" href="#ksl-stderror" title="Link to this heading"></a></h3>
+<p>Output message to standard error prefaced by <code class="docutils literal notranslate"><span class="pre">[ERROR]</span></code>.</p>
+<p>If <a class="reference external" href="libColor.html#kslusecolor">ksl::useColor</a> is true then colors are
+applied.</p>
+<section id="example-6">
+<span id="id23"></span><h4>Example<a class="headerlink" href="#example-6" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::stdError<span class="w"> </span><span class="s2">&quot;Entered: showConfig()&quot;</span>
+outputs:<span class="w"> </span><span class="o">[</span>ERROR<span class="o">]</span><span class="w"> </span>Entered:<span class="w"> </span>showConfig<span class="o">()</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-6">
+<span id="id24"></span><h4>Arguments<a class="headerlink" href="#arguments-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): all args are printed to stderr</p></li>
+</ul>
+</section>
+<section id="variables-set-4">
+<span id="id25"></span><h4>Variables set<a class="headerlink" href="#variables-set-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>COLOR_ERROR_INTRO</strong> (string): the color to use for the introducer</p></li>
+<li><p><strong>COLOR_ERROR_TEXT</strong> (string): the color to use for the text
+following the introducer</p></li>
+</ul>
+</section>
+<section id="exit-codes-6">
+<span id="id26"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-1">
+<span id="id27"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-1" title="Link to this heading"></a></h4>
+<ul>
+<li><p>[ERROR] followed by all the args</p>
+<p><p><p><img alt="image8" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-stdfatal">
+<h3>ksl::stdFatal<a class="headerlink" href="#ksl-stdfatal" title="Link to this heading"></a></h3>
+<p>Output message to standard error prefaced by <code class="docutils literal notranslate"><span class="pre">[FATAL]</span></code>.</p>
+<p>If <a class="reference external" href="libColor.html#kslusecolor">ksl::useColor</a> is true then colors are
+applied.</p>
+<section id="example-7">
+<span id="id28"></span><h4>Example<a class="headerlink" href="#example-7" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::stdFatal<span class="w"> </span><span class="s2">&quot;Entered: showConfig()&quot;</span>
+outputs:<span class="w"> </span><span class="o">[</span>FATAL<span class="o">]</span><span class="w"> </span>Entered:<span class="w"> </span>showConfig<span class="o">()</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-7">
+<span id="id29"></span><h4>Arguments<a class="headerlink" href="#arguments-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): all args are printed to stderr</p></li>
+</ul>
+</section>
+<section id="variables-set-5">
+<span id="id30"></span><h4>Variables set<a class="headerlink" href="#variables-set-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>COLOR_FATAL_INTRO</strong> (string): the color to use for the introducer</p></li>
+<li><p><strong>COLOR_FATAL_TEXT</strong> (string): the color to use for the text
+following the introducer</p></li>
+</ul>
+</section>
+<section id="exit-codes-7">
+<span id="id31"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-2">
+<span id="id32"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p>[FATAL] followed by all the args</p>
+<p><p><p><img alt="image9" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="libFiles.html" class="btn btn-neutral float-left" title="libFiles" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="libStrings.html" class="btn btn-neutral float-right" title="libStrings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, KingSolomon1954@github.com.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libStrings &mdash; ksl-bash-lib 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Licenses and Usage Rights" href="../licenses/licenses.html" />
+    <link rel="prev" title="libStdOut" href="libStdOut.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ksl-bash-lib
+              <img src="../_static/blue-fire-icon-60x90.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shdoc-intro.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="libArrays.html">libArrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libColors.html">libColors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libEnv.html">libEnv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libError.html">libError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libFiles.html">libFiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStdOut.html">libStdOut</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">libStrings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index">Index</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-strlen">ksl::strlen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-strlenr">ksl::strlenR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isempty">ksl::isEmpty</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isemptyr">ksl::isEmptyR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-startswith">ksl::startsWith</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-endswith">ksl::endsWith</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-contains">ksl::contains</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-trimleft">ksl::trimLeft</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-trimright">ksl::trimRight</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-trimwhitespace">ksl::trimWhitespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-tolower">ksl::toLower</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-toupper">ksl::toUpper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-capitalize">ksl::capitalize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isalphnum">ksl::isAlphNum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isalpha">ksl::isAlpha</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isascii">ksl::isAscii</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isblank">ksl::isBlank</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-iscntrl">ksl::isCntrl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isprint">ksl::isPrint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isgraph">ksl::isGraph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-islower">ksl::isLower</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isupper">ksl::isUpper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-ispunct">ksl::isPunct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isspace">ksl::isSpace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isword">ksl::isWord</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isdigit">ksl::isDigit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isinteger">ksl::isInteger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isnumber">ksl::isNumber</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isfloat">ksl::isFloat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-isxdigit">ksl::isXdigit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/licenses.html">Licenses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/opensource.html">Open Source Inventory</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ksl-bash-lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="shdoc-intro.html">KSL-BASH-LIB API</a></li>
+      <li class="breadcrumb-item active">libStrings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/shdoc/libStrings.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="libstrings">
+<h1>libStrings<a class="headerlink" href="#libstrings" title="Link to this heading"></a></h1>
+<p>Functions to process shell strings.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Functions to process and manipulate shell strings.</p>
+<p>Contains the following:</p>
+<ul class="simple">
+<li><p>ksl::strlen()</p></li>
+<li><p>ksl::strlenR()</p></li>
+<li><p>ksl::isEmpty()</p></li>
+<li><p>ksl::isEmptyR()</p></li>
+<li><p>ksl::startsWith()</p></li>
+<li><p>ksl::endsWith()</p></li>
+<li><p>ksl::trimRight()</p></li>
+<li><p>ksl::trimLeft()</p></li>
+<li><p>ksl::trimWhitespace()</p></li>
+<li><p>ksl::contains()</p></li>
+<li><p>ksl::toLower()</p></li>
+<li><p>ksl::toUpper()</p></li>
+<li><p>ksl::capitalize()</p></li>
+<li><p>ksl::isAlphNum()</p></li>
+<li><p>ksl::isAlpha()</p></li>
+<li><p>ksl::# isAscii()</p></li>
+<li><p>ksl::isBlank()</p></li>
+<li><p>ksl::isCntrl()</p></li>
+<li><p>ksl::isDigit()</p></li>
+<li><p>ksl::isGraph()</p></li>
+<li><p>ksl::isLower()</p></li>
+<li><p>ksl::isInteger()</p></li>
+<li><p>ksl::isPrint()</p></li>
+<li><p>ksl::isPunct()</p></li>
+<li><p>ksl::isSpace()</p></li>
+<li><p>ksl::isUpper()</p></li>
+<li><p>ksl::# isWord()</p></li>
+<li><p>ksl::isXdigit()</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="index">
+<h2>Index<a class="headerlink" href="#index" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#kslstrlen">ksl::strlen</a></p></li>
+<li><p><a class="reference external" href="#kslstrlenr">ksl::strlenR</a></p></li>
+<li><p><a class="reference external" href="#kslisempty">ksl::isEmpty</a></p></li>
+<li><p><a class="reference external" href="#kslisemptyr">ksl::isEmptyR</a></p></li>
+<li><p><a class="reference external" href="#kslstartswith">ksl::startsWith</a></p></li>
+<li><p><a class="reference external" href="#kslendswith">ksl::endsWith</a></p></li>
+<li><p><a class="reference external" href="#kslcontains">ksl::contains</a></p></li>
+<li><p><a class="reference external" href="#ksltrimleft">ksl::trimLeft</a></p></li>
+<li><p><a class="reference external" href="#ksltrimright">ksl::trimRight</a></p></li>
+<li><p><a class="reference external" href="#ksltrimwhitespace">ksl::trimWhitespace</a></p></li>
+<li><p><a class="reference external" href="#ksltolower">ksl::toLower</a></p></li>
+<li><p><a class="reference external" href="#ksltoupper">ksl::toUpper</a></p></li>
+<li><p><a class="reference external" href="#kslcapitalize">ksl::capitalize</a></p></li>
+<li><p><a class="reference external" href="#kslisalphnum">ksl::isAlphNum</a></p></li>
+<li><p><a class="reference external" href="#kslisalpha">ksl::isAlpha</a></p></li>
+<li><p><a class="reference external" href="#kslisascii">ksl::isAscii</a></p></li>
+<li><p><a class="reference external" href="#kslisblank">ksl::isBlank</a></p></li>
+<li><p><a class="reference external" href="#ksliscntrl">ksl::isCntrl</a></p></li>
+<li><p><a class="reference external" href="#kslisprint">ksl::isPrint</a></p></li>
+<li><p><a class="reference external" href="#kslisgraph">ksl::isGraph</a></p></li>
+<li><p><a class="reference external" href="#kslislower">ksl::isLower</a></p></li>
+<li><p><a class="reference external" href="#kslisupper">ksl::isUpper</a></p></li>
+<li><p><a class="reference external" href="#kslispunct">ksl::isPunct</a></p></li>
+<li><p><a class="reference external" href="#kslisspace">ksl::isSpace</a></p></li>
+<li><p><a class="reference external" href="#kslisword">ksl::isWord</a></p></li>
+<li><p><a class="reference external" href="#kslisdigit">ksl::isDigit</a></p></li>
+<li><p><a class="reference external" href="#kslisinteger">ksl::isInteger</a></p></li>
+<li><p><a class="reference external" href="#kslisnumber">ksl::isNumber</a></p></li>
+<li><p><a class="reference external" href="#kslisfloat">ksl::isFloat</a></p></li>
+<li><p><a class="reference external" href="#kslisxdigit">ksl::isXdigit</a></p></li>
+</ul>
+<section id="ksl-strlen">
+<h3>ksl::strlen<a class="headerlink" href="#ksl-strlen" title="Link to this heading"></a></h3>
+<p>Returns the number of characters in string.</p>
+<p>Passes string by value. See also strlenR() next.</p>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">x</span><span class="o">=</span><span class="k">$(</span>ksl::strlen<span class="w"> </span><span class="s2">&quot;dinosaur&quot;</span><span class="k">)</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments">
+<h4>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string of interest</p></li>
+</ul>
+</section>
+<section id="exit-codes">
+<h4>Exit codes<a class="headerlink" href="#exit-codes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout">
+<h4>Output on stdout<a class="headerlink" href="#output-on-stdout" title="Link to this heading"></a></h4>
+<ul>
+<li><p>the string length</p>
+<p><p><p><img alt="image1" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-strlenr">
+<h3>ksl::strlenR<a class="headerlink" href="#ksl-strlenr" title="Link to this heading"></a></h3>
+<p>Returns the number of characters held in string variable.</p>
+<p>Passes string by reference. See also strlen() previous.</p>
+<section id="example-1">
+<span id="id1"></span><h4>Example<a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span>dinosaur
+<span class="nv">x</span><span class="o">=</span><span class="k">$(</span>ksl::strlenR<span class="w"> </span>ANIMAL<span class="k">)</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-1">
+<span id="id2"></span><h4>Arguments<a class="headerlink" href="#arguments-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the variable name holding a string</p></li>
+</ul>
+</section>
+<section id="exit-codes-1">
+<span id="id3"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-1">
+<span id="id4"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-1" title="Link to this heading"></a></h4>
+<ul>
+<li><p>the string length</p>
+<p><p><p><img alt="image2" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isempty">
+<h3>ksl::isEmpty<a class="headerlink" href="#ksl-isempty" title="Link to this heading"></a></h3>
+<p>Returns true if string is empty, otherwise false.</p>
+<p>Passes string by value. See also isEmptyR() next.</p>
+<section id="example-2">
+<span id="id5"></span><h4>Example<a class="headerlink" href="#example-2" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span>dinosaur
+<span class="k">if</span><span class="w"> </span>ksl::isEmpty<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-2">
+<span id="id6"></span><h4>Arguments<a class="headerlink" href="#arguments-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string of interest</p></li>
+</ul>
+</section>
+<section id="exit-codes-2">
+<span id="id7"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: if string is empty (true)</p></li>
+<li><p><strong>1</strong>: if string is non-empty (false)</p>
+<p><p><p><img alt="image3" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isemptyr">
+<h3>ksl::isEmptyR<a class="headerlink" href="#ksl-isemptyr" title="Link to this heading"></a></h3>
+<p>Returns true if string variable holds a non-zero string.</p>
+<p>Passes string by reference. See also isEmpty() previous.</p>
+<section id="example-3">
+<span id="id8"></span><h4>Example<a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span>dinosaur
+<span class="k">if</span><span class="w"> </span>ksl::isEmptyR<span class="w"> </span>ANIMAL<span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-3">
+<span id="id9"></span><h4>Arguments<a class="headerlink" href="#arguments-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the variable name holding a string</p></li>
+</ul>
+</section>
+<section id="exit-codes-3">
+<span id="id10"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-3" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: if string variable is empty (true)</p></li>
+<li><p><strong>1</strong>: if string variable is non-empty (false)</p>
+<p><p><p><img alt="image4" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-startswith">
+<h3>ksl::startsWith<a class="headerlink" href="#ksl-startswith" title="Link to this heading"></a></h3>
+<p>Returns true if $1 string starts with $2 string.</p>
+<section id="example-4">
+<span id="id11"></span><h4>Example<a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;old dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::startsWith<span class="w"> </span><span class="nv">$ANIMAL</span><span class="w"> </span><span class="s2">&quot;old&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-4">
+<span id="id12"></span><h4>Arguments<a class="headerlink" href="#arguments-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the major string to test</p></li>
+<li><p><strong>$2</strong> (…): the minor string to look for</p></li>
+</ul>
+</section>
+<section id="exit-codes-4">
+<span id="id13"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-4" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the major string starts with the minor string (true)</p></li>
+<li><p><strong>1</strong>: the major string does not start with the minor string (false)</p>
+<p><p><p><img alt="image5" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-endswith">
+<h3>ksl::endsWith<a class="headerlink" href="#ksl-endswith" title="Link to this heading"></a></h3>
+<p>Returns true if $1 string ends with $2 string.</p>
+<section id="example-5">
+<span id="id14"></span><h4>Example<a class="headerlink" href="#example-5" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;old dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::endsWith<span class="w"> </span><span class="nv">$ANIMAL</span><span class="w"> </span><span class="s2">&quot;dinosaur&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-5">
+<span id="id15"></span><h4>Arguments<a class="headerlink" href="#arguments-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the major string to test</p></li>
+<li><p><strong>$2</strong> (…): the minor string to look for</p></li>
+</ul>
+</section>
+<section id="exit-codes-5">
+<span id="id16"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-5" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the major string ends with the minor string (true)</p></li>
+<li><p><strong>1</strong>: the major string does not end with the minor string (false)</p>
+<p><p><p><img alt="image6" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-contains">
+<h3>ksl::contains<a class="headerlink" href="#ksl-contains" title="Link to this heading"></a></h3>
+<p>Returns true if $1 string contains the string in $2.</p>
+<section id="example-6">
+<span id="id17"></span><h4>Example<a class="headerlink" href="#example-6" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;old dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::contains<span class="w"> </span><span class="nv">$ANIMAL</span><span class="w"> </span><span class="s2">&quot;dinosaur&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-6">
+<span id="id18"></span><h4>Arguments<a class="headerlink" href="#arguments-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the major string to test</p></li>
+<li><p><strong>$2</strong> (…): the minor string to look for</p></li>
+</ul>
+</section>
+<section id="exit-codes-6">
+<span id="id19"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-6" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the major string contains the minor string (true)</p></li>
+<li><p><strong>1</strong>: the major string does not contain the minor string (false)</p>
+<p><p><p><img alt="image7" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-trimleft">
+<h3>ksl::trimLeft<a class="headerlink" href="#ksl-trimleft" title="Link to this heading"></a></h3>
+<p>Returns a copy of $1 with the matching string in $2 removed from the
+front of $1.</p>
+<p>If $2 is not given then defaults to removing whitespace. $2 argument is
+a prefix.</p>
+<section id="example-7">
+<span id="id20"></span><h4>Example<a class="headerlink" href="#example-7" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;old dinosaur&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>ksl::trimLeft<span class="w"> </span><span class="nv">$ANIMAL</span><span class="w"> </span><span class="s2">&quot;old &quot;</span>
+outputs:<span class="w"> </span><span class="s2">&quot;dinosaur&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-7">
+<span id="id21"></span><h4>Arguments<a class="headerlink" href="#arguments-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the major string to operate on</p></li>
+<li><p><strong>$2</strong> (…): the minor string to look for</p></li>
+</ul>
+</section>
+<section id="exit-codes-7">
+<span id="id22"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-2">
+<span id="id23"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p>the resulting string</p>
+<p><p><p><img alt="image8" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-trimright">
+<h3>ksl::trimRight<a class="headerlink" href="#ksl-trimright" title="Link to this heading"></a></h3>
+<p>Returns a copy of $1 with the matching string in $2 removed from the end
+of $1.</p>
+<p>If $2 is not given then defaults to removing whitespace. $2 argument is
+a prefix.</p>
+<section id="example-8">
+<span id="id24"></span><h4>Example<a class="headerlink" href="#example-8" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;old dinosaur&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>ksl::trimRight<span class="w"> </span><span class="nv">$ANIMAL</span><span class="w"> </span><span class="s2">&quot;dinosaur&quot;</span>
+outputs:<span class="w"> </span><span class="s2">&quot;old &quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-8">
+<span id="id25"></span><h4>Arguments<a class="headerlink" href="#arguments-8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the major string to operate on</p></li>
+<li><p><strong>$2</strong> (…): the minor string to look for</p></li>
+</ul>
+</section>
+<section id="exit-codes-8">
+<span id="id26"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-3">
+<span id="id27"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-3" title="Link to this heading"></a></h4>
+<ul>
+<li><p>the resulting string</p>
+<p><p><p><img alt="image9" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-trimwhitespace">
+<h3>ksl::trimWhitespace<a class="headerlink" href="#ksl-trimwhitespace" title="Link to this heading"></a></h3>
+<p>Returns a copy of $1 with the whitspace removed from both the start and
+end of $1.</p>
+<section id="example-9">
+<span id="id28"></span><h4>Example<a class="headerlink" href="#example-9" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;  old dinosaur\t&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>ksl::trimWhitespace<span class="w"> </span><span class="nv">$ANIMAL</span>
+outputs:<span class="w"> </span><span class="s2">&quot;old dinosaur&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-9">
+<span id="id29"></span><h4>Arguments<a class="headerlink" href="#arguments-9" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-9">
+<span id="id30"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-9" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-4">
+<span id="id31"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-4" title="Link to this heading"></a></h4>
+<ul>
+<li><p>the resulting string</p>
+<p><p><p><img alt="image10" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-tolower">
+<h3>ksl::toLower<a class="headerlink" href="#ksl-tolower" title="Link to this heading"></a></h3>
+<p>Returns a copy of $1 string converted to lower case.</p>
+<section id="example-10">
+<span id="id32"></span><h4>Example<a class="headerlink" href="#example-10" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;Old Dinosaur&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>ksl::toLower<span class="w"> </span><span class="nv">$ANIMAL</span>
+outputs:<span class="w"> </span><span class="s2">&quot;old dinosaur&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-10">
+<span id="id33"></span><h4>Arguments<a class="headerlink" href="#arguments-10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-10">
+<span id="id34"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-5">
+<span id="id35"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-5" title="Link to this heading"></a></h4>
+<ul>
+<li><p>the resulting string</p>
+<p><p><p><img alt="image11" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-toupper">
+<h3>ksl::toUpper<a class="headerlink" href="#ksl-toupper" title="Link to this heading"></a></h3>
+<p>Returns a copy of $1 string converted to upper case.</p>
+<section id="example-11">
+<span id="id36"></span><h4>Example<a class="headerlink" href="#example-11" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;Old Dinosaur&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>ksl::toUpper<span class="w"> </span><span class="nv">$ANIMAL</span>
+outputs:<span class="w"> </span><span class="s2">&quot;OLD DINOSAUR&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-11">
+<span id="id37"></span><h4>Arguments<a class="headerlink" href="#arguments-11" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-11">
+<span id="id38"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-11" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-6">
+<span id="id39"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-6" title="Link to this heading"></a></h4>
+<ul>
+<li><p>the resulting string</p>
+<p><p><p><img alt="image12" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-capitalize">
+<h3>ksl::capitalize<a class="headerlink" href="#ksl-capitalize" title="Link to this heading"></a></h3>
+<p>Returns a copy of $1 string with first character capitalized and the
+rest left alone.</p>
+<section id="example-12">
+<span id="id40"></span><h4>Example<a class="headerlink" href="#example-12" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;old dinosaur&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>ksl::capitalize<span class="w"> </span><span class="nv">$ANIMAL</span>
+outputs:<span class="w"> </span><span class="s2">&quot;Old dinosaur&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-12">
+<span id="id41"></span><h4>Arguments<a class="headerlink" href="#arguments-12" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-12">
+<span id="id42"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-12" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: in all cases</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-7">
+<span id="id43"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-7" title="Link to this heading"></a></h4>
+<ul>
+<li><p>the resulting string</p>
+<p><p><p><img alt="image13" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isalphnum">
+<h3>ksl::isAlphNum<a class="headerlink" href="#ksl-isalphnum" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are alphanumeric as defined by the
+POSIX standard.</p>
+<section id="example-13">
+<span id="id44"></span><h4>Example<a class="headerlink" href="#example-13" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isAlphaNum<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-13">
+<span id="id45"></span><h4>Arguments<a class="headerlink" href="#arguments-13" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-13">
+<span id="id46"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-13" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only alpha numeric characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just alpha numeric characters
+(false)</p>
+<p><p><p><img alt="image14" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isalpha">
+<h3>ksl::isAlpha<a class="headerlink" href="#ksl-isalpha" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are alpha as defined by the POSIX
+standard.</p>
+<section id="example-14">
+<span id="id47"></span><h4>Example<a class="headerlink" href="#example-14" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isAlpha<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-14">
+<span id="id48"></span><h4>Arguments<a class="headerlink" href="#arguments-14" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-14">
+<span id="id49"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-14" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only alpha characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just alpha characters (false)</p>
+<p><p><p><img alt="image15" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isascii">
+<h3>ksl::isAscii<a class="headerlink" href="#ksl-isascii" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are ASCII characters as defined by
+the POSIX standard.</p>
+<p>ASCII is not currently working. Need to investigate.</p>
+<section id="example-15">
+<span id="id50"></span><h4>Example<a class="headerlink" href="#example-15" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isAscii<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-15">
+<span id="id51"></span><h4>Arguments<a class="headerlink" href="#arguments-15" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-15">
+<span id="id52"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-15" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only ASCII characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just ASCII characters (false)</p>
+<p><p><p><img alt="image16" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isblank">
+<h3>ksl::isBlank<a class="headerlink" href="#ksl-isblank" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are blank as defined by the POSIX
+standard.</p>
+<section id="example-16">
+<span id="id53"></span><h4>Example<a class="headerlink" href="#example-16" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isBlank<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-16">
+<span id="id54"></span><h4>Arguments<a class="headerlink" href="#arguments-16" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-16">
+<span id="id55"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-16" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only blank characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just blank characters (false)</p>
+<p><p><p><img alt="image17" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-iscntrl">
+<h3>ksl::isCntrl<a class="headerlink" href="#ksl-iscntrl" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are control characters as defined
+by the POSIX standard.</p>
+<section id="example-17">
+<span id="id56"></span><h4>Example<a class="headerlink" href="#example-17" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isCntrl<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-17">
+<span id="id57"></span><h4>Arguments<a class="headerlink" href="#arguments-17" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-17">
+<span id="id58"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-17" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only control characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just control characters (false)</p>
+<p><p><p><img alt="image18" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isprint">
+<h3>ksl::isPrint<a class="headerlink" href="#ksl-isprint" title="Link to this heading"></a></h3>
+<p>Returns true if $1 contains only characters that are printable as
+defined by POSIX standard.</p>
+<section id="example-18">
+<span id="id59"></span><h4>Example<a class="headerlink" href="#example-18" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isPrint<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-18">
+<span id="id60"></span><h4>Arguments<a class="headerlink" href="#arguments-18" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-18">
+<span id="id61"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-18" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only printable characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just printable characters
+(false)</p>
+<p><p><p><img alt="image19" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isgraph">
+<h3>ksl::isGraph<a class="headerlink" href="#ksl-isgraph" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are in the graph class (displayable
+on a screen) as defined by the POSIX standard.</p>
+<section id="example-19">
+<span id="id62"></span><h4>Example<a class="headerlink" href="#example-19" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isGraph<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-19">
+<span id="id63"></span><h4>Arguments<a class="headerlink" href="#arguments-19" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-19">
+<span id="id64"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-19" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only digit characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just digit characters (false)</p>
+<p><p><p><img alt="image20" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-islower">
+<h3>ksl::isLower<a class="headerlink" href="#ksl-islower" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are lower case as defined by the
+POSIX standard.</p>
+<section id="example-20">
+<span id="id65"></span><h4>Example<a class="headerlink" href="#example-20" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isLower<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-20">
+<span id="id66"></span><h4>Arguments<a class="headerlink" href="#arguments-20" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-20">
+<span id="id67"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-20" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only lowercase characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just lowercase characters
+(false)</p>
+<p><p><p><img alt="image21" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isupper">
+<h3>ksl::isUpper<a class="headerlink" href="#ksl-isupper" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are upper case as defined by the
+POSIX standard.</p>
+<section id="example-21">
+<span id="id68"></span><h4>Example<a class="headerlink" href="#example-21" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isUpper<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-21">
+<span id="id69"></span><h4>Arguments<a class="headerlink" href="#arguments-21" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-21">
+<span id="id70"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-21" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only upper case characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just upper case characters
+(false)</p>
+<p><p><p><img alt="image22" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-ispunct">
+<h3>ksl::isPunct<a class="headerlink" href="#ksl-ispunct" title="Link to this heading"></a></h3>
+<p>Returns true if $1 contains only characters that are punctuations as
+defined by the POSIX standard.</p>
+<section id="example-22">
+<span id="id71"></span><h4>Example<a class="headerlink" href="#example-22" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isPunct<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-22">
+<span id="id72"></span><h4>Arguments<a class="headerlink" href="#arguments-22" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-22">
+<span id="id73"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-22" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only punctuation characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just punctuation characters
+(false)</p>
+<p><p><p><img alt="image23" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isspace">
+<h3>ksl::isSpace<a class="headerlink" href="#ksl-isspace" title="Link to this heading"></a></h3>
+<p>Returns true if $1 contains only characters that are spaces as defined
+by the POSIX standard.</p>
+<section id="example-23">
+<span id="id74"></span><h4>Example<a class="headerlink" href="#example-23" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isSpace<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-23">
+<span id="id75"></span><h4>Arguments<a class="headerlink" href="#arguments-23" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-23">
+<span id="id76"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-23" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only space characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just space characters (false)</p>
+<p><p><p><img alt="image24" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isword">
+<h3>ksl::isWord<a class="headerlink" href="#ksl-isword" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are considered a word - containing
+only letters, digits, and the character _.</p>
+<p>isWord is not currently working. Need to investigate.</p>
+<section id="example-24">
+<span id="id77"></span><h4>Example<a class="headerlink" href="#example-24" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isWord<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-24">
+<span id="id78"></span><h4>Arguments<a class="headerlink" href="#arguments-24" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-24">
+<span id="id79"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-24" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains a valid word (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than a word (false)</p>
+<p><p><p><img alt="image25" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isdigit">
+<h3>ksl::isDigit<a class="headerlink" href="#ksl-isdigit" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are digits as defined by the POSIX
+standard.</p>
+<p>Note that “+” “-” “.” are not digits.</p>
+<section id="example-25">
+<span id="id80"></span><h4>Example<a class="headerlink" href="#example-25" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isDigit<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-25">
+<span id="id81"></span><h4>Arguments<a class="headerlink" href="#arguments-25" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-25">
+<span id="id82"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-25" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only digit characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just digit characters (false)</p>
+<p><p><p><img alt="image26" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isinteger">
+<h3>ksl::isInteger<a class="headerlink" href="#ksl-isinteger" title="Link to this heading"></a></h3>
+<p>Returns true if $1 forms a valid integer meaning all digits with an
+optional preceding +/-.</p>
+<p>Does not check for length.</p>
+<section id="example-26">
+<span id="id83"></span><h4>Example<a class="headerlink" href="#example-26" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isInteger<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-26">
+<span id="id84"></span><h4>Arguments<a class="headerlink" href="#arguments-26" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-26">
+<span id="id85"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-26" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains a valid integer (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just an integer (false)</p>
+<p><p><p><img alt="image27" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isnumber">
+<h3>ksl::isNumber<a class="headerlink" href="#ksl-isnumber" title="Link to this heading"></a></h3>
+<p>Returns true if $1 forms a valid number.</p>
+<section id="example-27">
+<span id="id86"></span><h4>Example<a class="headerlink" href="#example-27" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isNumber<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-27">
+<span id="id87"></span><h4>Arguments<a class="headerlink" href="#arguments-27" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-27">
+<span id="id88"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-27" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains a valid number (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just a number (false)</p>
+<p><p><p><img alt="image28" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isfloat">
+<h3>ksl::isFloat<a class="headerlink" href="#ksl-isfloat" title="Link to this heading"></a></h3>
+<p>Returns true if $1 forms a valid floating point number.</p>
+<section id="example-28">
+<span id="id89"></span><h4>Example<a class="headerlink" href="#example-28" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isFloat<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-28">
+<span id="id90"></span><h4>Arguments<a class="headerlink" href="#arguments-28" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-28">
+<span id="id91"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-28" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains a valid floating point number (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just a floating point number
+(false)</p>
+<p><p><p><img alt="image29" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-isxdigit">
+<h3>ksl::isXdigit<a class="headerlink" href="#ksl-isxdigit" title="Link to this heading"></a></h3>
+<p>Returns true if all characters in $1 are valid hexadecimal digits.</p>
+<section id="example-29">
+<span id="id92"></span><h4>Example<a class="headerlink" href="#example-29" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ANIMAL</span><span class="o">=</span><span class="s2">&quot;dinosaur&quot;</span>
+<span class="k">if</span><span class="w"> </span>ksl::isXdigit<span class="w"> </span><span class="nv">$ANIMAL</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;yes&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-29">
+<span id="id93"></span><h4>Arguments<a class="headerlink" href="#arguments-29" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (…): the string to operate on</p></li>
+</ul>
+</section>
+<section id="exit-codes-29">
+<span id="id94"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-29" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: the string contains only hexadecimal characters (true)</p></li>
+<li><p><strong>1</strong>: the string contains more than just hexadecimal characters
+(false)</p>
+<p><p><p><img alt="image30" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="libStdOut.html" class="btn btn-neutral float-left" title="libStdOut" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../licenses/licenses.html" class="btn btn-neutral float-right" title="Licenses and Usage Rights" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, KingSolomon1954@github.com.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

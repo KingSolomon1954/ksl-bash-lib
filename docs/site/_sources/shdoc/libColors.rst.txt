@@ -1,0 +1,248 @@
+libColors
+=========
+
+Functions to help with color.
+
+Overview
+--------
+
+Functions to help with color.
+
+Contains the following:
+
+-  ksl::isColorCapable()
+-  ksl::enableColor()
+-  ksl::disableColor()
+-  ksl::useColor()
+
+Sourcing ``libColors.bash`` implicitly calls ``ksl::enableColor()`` and
+if the terminal is capable of color, ``KSL_USE_COLOR`` is set to true.
+So an application does not need to do anything additional. If desired,
+applications can call ``ksl::useColor()`` if they need to test for
+color.
+
+Also provides the following shell variables that help with colors.
+
+-  ESC
+
+-  FG
+
+-  BG
+
+-  FG_BLACK
+
+-  FG_RED
+
+-  FG_GREEN
+
+-  FG_YELLOW
+
+-  FG_BLUE
+
+-  FG_MAGENTA
+
+-  FG_CYAN
+
+-  FG_WHITE
+
+-  FG_ORANGE
+
+-  BG_BLACK
+
+-  BG_RED
+
+-  BG_GREEN
+
+-  BG_YELLOW
+
+-  BG_BLUE
+
+-  BG_MAGENTA
+
+-  BG_CYAN
+
+-  BG_WHITE
+
+-  BG_ORANGE
+
+-  CLEAR
+
+-  BOLD
+
+-  DIM
+
+-  UNDERLINE
+
+-  BLINK
+
+-  REVERSE
+
+-  HIDDEN
+
+--------------
+
+Index
+-----
+
+-  `ksl::isColorCapable <#ksliscolorcapable>`__
+-  `ksl::enableColor <#kslenablecolor>`__
+-  `ksl::disableColor <#ksldisablecolor>`__
+-  `ksl::useColor <#kslusecolor>`__
+
+ksl::isColorCapable
+~~~~~~~~~~~~~~~~~~~
+
+Determines if the terminal is capable of color.
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   if ksl::isColorCapable; then echo yes; fi
+
+*Function has no arguments.*
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: terminal is capable of color
+-  **1**: terminal is not capable of color
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image1|
+
+ksl::enableColor
+~~~~~~~~~~~~~~~~
+
+Enables color if terminal is capable.
+
+This is called implicitly once, when the ``libColors.bash`` is sourced.
+
+.. _example-1:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::enableColor
+
+*Function has no arguments.*
+
+Variables set
+^^^^^^^^^^^^^
+
+-  **KSL_USE_COLOR** (boolean): set to true or false
+
+.. _exit-codes-1:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: if terminal is color capable and KSL_USE_COLOR is set to true
+-  **1**: terminal is not color capable and KSL_USE_COLOR remains
+   unchanged
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image2|
+
+ksl::disableColor
+~~~~~~~~~~~~~~~~~
+
+Disables color.
+
+.. _example-2:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::disableColor
+
+*Function has no arguments.*
+
+.. _variables-set-1:
+
+Variables set
+^^^^^^^^^^^^^
+
+-  **KSL_USE_COLOR** (boolean): sets it to false
+
+.. _exit-codes-2:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image3|
+
+ksl::useColor
+~~~~~~~~~~~~~
+
+Returns true if color is enabled.
+
+.. _example-3:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   if ksl::useColor; then echo yes; fi
+
+*Function has no arguments.*
+
+.. _variables-set-2:
+
+Variables set
+^^^^^^^^^^^^^
+
+-  **KSL_USE_COLOR** (boolean): returns value of this variable
+
+.. _exit-codes-3:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: if KSL_USE_COLOR is true
+-  **1**: if KSL_USE_COLOR is false
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image4|
+
+.. |image1| image:: ../images/pub/divider-line.png
+.. |image2| image:: ../images/pub/divider-line.png
+.. |image3| image:: ../images/pub/divider-line.png
+.. |image4| image:: ../images/pub/divider-line.png

@@ -1,0 +1,290 @@
+libFiles
+========
+
+Functions to manipulate directory and file names.
+
+Overview
+--------
+
+Functions to manipulate directory and file names.
+
+Contains the following:
+
+-  ksl::baseName()
+-  ksl::dirName()
+-  ksl::scriptName()
+-  ksl::scriptDir()
+-  ksl::suffix()
+-  ksl::notSuffix()
+
+--------------
+
+Index
+-----
+
+-  `ksl::baseName <#kslbasename>`__
+-  `ksl::dirName <#ksldirname>`__
+-  `ksl::scriptDir <#kslscriptdir>`__
+-  `ksl::scriptName <#kslscriptname>`__
+-  `ksl::suffix <#kslsuffix>`__
+-  `ksl::notSuffix <#kslnotsuffix>`__
+
+ksl::baseName
+~~~~~~~~~~~~~
+
+Strip leading directory components from filename.
+
+Does not touch any suffixes.
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::baseName /music/beatles/yellow-submarine.flak
+   Output: yellow-submarine.flak
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (string): the filename
+
+Exit codes
+^^^^^^^^^^
+
+-  **1**: error, missing args
+-  **0**: in all other cases
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the basename
+
+Output on stderr
+^^^^^^^^^^^^^^^^
+
+-  “baseName(): missing operand”
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image1|
+
+ksl::dirName
+~~~~~~~~~~~~
+
+Strip last component from filename.
+
+.. _example-1:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::dirName /music/beatles/yellow-submarine.flak
+   Output: /music/beatles
+
+.. _arguments-1:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (string): the filename
+
+.. _exit-codes-1:
+
+Exit codes
+^^^^^^^^^^
+
+-  **1**: error, missing args
+-  **0**: in all other cases
+
+.. _output-on-stdout-1:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the dirname
+
+.. _output-on-stderr-1:
+
+Output on stderr
+^^^^^^^^^^^^^^^^
+
+-  “dirName(): missing operand”
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image2|
+
+ksl::scriptDir
+~~~~~~~~~~~~~~
+
+Returns the absolute path to the script itself.
+
+Usage for this is primarily at script startup, for those occasions when
+a script needs to know the location of the script itself. This is just
+the dirname of $0.
+
+Takes no args. Uses $0 from env.
+
+.. _example-2:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   echo $(ksl::scriptDir)
+
+.. _output-on-stdout-2:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the path
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image3|
+
+ksl::scriptName
+~~~~~~~~~~~~~~~
+
+Returns the name of the script with suffix.
+
+Usage for this is primarily at script startup, so that a script doesn’t
+need to hard code in its name. This is just the basename of $0.
+
+Takes no args. Uses $0 from env.
+
+.. _example-3:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   echo $(ksl::scriptName)
+
+.. _output-on-stdout-3:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the script name
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image4|
+
+ksl::suffix
+~~~~~~~~~~~
+
+Returns the file name suffix - the last ‘.’ and following characters.
+
+This conforms to the Makefile $(suffix …) command.
+
+.. _example-4:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::suffix /home/elvis/bin/power.bash
+   Output: .bash
+
+.. _arguments-2:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (string): the filename
+
+.. _output-on-stdout-4:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the suffix
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image5|
+
+ksl::notSuffix
+~~~~~~~~~~~~~~
+
+Returns the file name wiithout any suffix.
+
+.. _example-5:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ksl::suffix /home/elvis/bin/power.bash
+   Output: power
+
+.. _arguments-3:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (string): the filename
+
+.. _output-on-stdout-5:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the filename
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image6|
+
+.. |image1| image:: ../images/pub/divider-line.png
+.. |image2| image:: ../images/pub/divider-line.png
+.. |image3| image:: ../images/pub/divider-line.png
+.. |image4| image:: ../images/pub/divider-line.png
+.. |image5| image:: ../images/pub/divider-line.png
+.. |image6| image:: ../images/pub/divider-line.png

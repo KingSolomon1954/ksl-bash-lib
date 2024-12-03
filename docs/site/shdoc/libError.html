@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libError &mdash; ksl-bash-lib 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="libFiles" href="libFiles.html" />
+    <link rel="prev" title="libEnv" href="libEnv.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ksl-bash-lib
+              <img src="../_static/blue-fire-icon-60x90.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shdoc-intro.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="libArrays.html">libArrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libColors.html">libColors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libEnv.html">libEnv</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">libError</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index">Index</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epdescription">ksl::epDescription</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epset">ksl::epSet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epsetdescription">ksl::epSetDescription</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kslepdescription-1">ksl::epDescription</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epappend">ksl::epAppend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epprepend">ksl::epPrepend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epseterrorname">ksl::epSetErrorName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-eperrorname">ksl::epErrorName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epseterrortype">ksl::epSetErrorType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-eperrortype">ksl::epErrorType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epsetseverity">ksl::epSetSeverity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epseverity">ksl::epSeverity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epsetfuncname">ksl::epSetFuncName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epfuncname">ksl::epFuncName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epsetfilename">ksl::epSetFileName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epfilename">ksl::epFileName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epsetlinenum">ksl::epSetLineNum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-eplinenum">ksl::epLineNum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epsetcodenum">ksl::epSetCodeNum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epcodenum">ksl::epCodeNum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epsetcause">ksl::epSetCause</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epcause">ksl::epCause</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epsetrepair">ksl::epSetRepair</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-eprepair">ksl::epRepair</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-eptimestamp">ksl::epTimestamp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-ephaserror">ksl::epHasError</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-epprint">ksl::epPrint</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="libFiles.html">libFiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStdOut.html">libStdOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStrings.html">libStrings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/licenses.html">Licenses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/opensource.html">Open Source Inventory</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ksl-bash-lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="shdoc-intro.html">KSL-BASH-LIB API</a></li>
+      <li class="breadcrumb-item active">libError</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/shdoc/libError.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="liberror">
+<h1>libError<a class="headerlink" href="#liberror" title="Link to this heading"></a></h1>
+<p>Functions to support error passing</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Error passing is a technique where lower layer functions set values in
+an error passing structure, and higher layer functions up along the call
+tree add more context and detail to form strong diagnostics.</p>
+<p><code class="docutils literal notranslate"><span class="pre">epSet()</span></code> is meant to be called at the lowest level of a call tree.
+Generally the leaf most function does the <code class="docutils literal notranslate"><span class="pre">epSet()</span></code>. Each parent
+function up along the call chain tests for a returned fail condition,
+testing either the child function return code or checking the <strong>error
+passing structure (EPS)</strong> itself using <code class="docutils literal notranslate"><span class="pre">epHasError()</span></code>. The parent then
+contributes to the error passing structure by appending, prepending, and
+setting additional fields to provide improved context and diagnostics to
+its caller. At the level in the program where the error can be analyzed
+for severity, corrective action is taken and the EPS is usually printed
+or logged.</p>
+<p>See <a class="reference external" href="../shdoc/example-error-pass.bash">Error Passing Example</a> which
+is runnable. Output from a run:</p>
+<p><img alt="image1" src="../_images/errpass-example-output.png" /></p>
+<p>Contains the following:</p>
+<p><strong>Lifecycle</strong></p>
+<ul class="simple">
+<li><p>epSet()</p></li>
+</ul>
+<p><strong>Modifiers</strong></p>
+<ul class="simple">
+<li><p>epPrepend()</p></li>
+<li><p>epAppend()</p></li>
+<li><p>epSetErrorName()</p></li>
+<li><p>epSetErrorType()</p></li>
+<li><p>epSetDescription()</p></li>
+<li><p>epSetSeverity()</p></li>
+<li><p>epSetProbableCause()</p></li>
+<li><p>epSetProposedRepair()</p></li>
+<li><p>epSetFileName()</p></li>
+<li><p>epSetFuncName()</p></li>
+<li><p>epSetLineNum()</p></li>
+<li><p>epSetCodeNum()</p></li>
+</ul>
+<p><strong>Observers</strong></p>
+<ul class="simple">
+<li><p>epErrorName()</p></li>
+<li><p>epErrorType()</p></li>
+<li><p>epSeverity()</p></li>
+<li><p>epFileName()</p></li>
+<li><p>epFuncName()</p></li>
+<li><p>epLineNum()</p></li>
+<li><p>epCodeNum()</p></li>
+<li><p>epFullDesc()</p></li>
+<li><p>epDescription()</p></li>
+<li><p>epProbableCause()</p></li>
+<li><p>epProposedRepair()</p></li>
+<li><p>epTimestamp()</p></li>
+<li><p>epHasError()</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="index">
+<h2>Index<a class="headerlink" href="#index" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#kslepdescription">ksl::epDescription</a></p></li>
+<li><p><a class="reference external" href="#kslepset">ksl::epSet</a></p></li>
+<li><p><a class="reference external" href="#kslepsetdescription">ksl::epSetDescription</a></p></li>
+<li><p><a class="reference external" href="#kslepdescription">ksl::epDescription</a></p></li>
+<li><p><a class="reference external" href="#kslepappend">ksl::epAppend</a></p></li>
+<li><p><a class="reference external" href="#kslepprepend">ksl::epPrepend</a></p></li>
+<li><p><a class="reference external" href="#kslepseterrorname">ksl::epSetErrorName</a></p></li>
+<li><p><a class="reference external" href="#ksleperrorname">ksl::epErrorName</a></p></li>
+<li><p><a class="reference external" href="#kslepseterrortype">ksl::epSetErrorType</a></p></li>
+<li><p><a class="reference external" href="#ksleperrortype">ksl::epErrorType</a></p></li>
+<li><p><a class="reference external" href="#kslepsetseverity">ksl::epSetSeverity</a></p></li>
+<li><p><a class="reference external" href="#kslepseverity">ksl::epSeverity</a></p></li>
+<li><p><a class="reference external" href="#kslepsetfuncname">ksl::epSetFuncName</a></p></li>
+<li><p><a class="reference external" href="#kslepfuncname">ksl::epFuncName</a></p></li>
+<li><p><a class="reference external" href="#kslepsetfilename">ksl::epSetFileName</a></p></li>
+<li><p><a class="reference external" href="#kslepfilename">ksl::epFileName</a></p></li>
+<li><p><a class="reference external" href="#kslepsetlinenum">ksl::epSetLineNum</a></p></li>
+<li><p><a class="reference external" href="#ksleplinenum">ksl::epLineNum</a></p></li>
+<li><p><a class="reference external" href="#kslepsetcodenum">ksl::epSetCodeNum</a></p></li>
+<li><p><a class="reference external" href="#kslepcodenum">ksl::epCodeNum</a></p></li>
+<li><p><a class="reference external" href="#kslepsetcause">ksl::epSetCause</a></p></li>
+<li><p><a class="reference external" href="#kslepcause">ksl::epCause</a></p></li>
+<li><p><a class="reference external" href="#kslepsetrepair">ksl::epSetRepair</a></p></li>
+<li><p><a class="reference external" href="#ksleprepair">ksl::epRepair</a></p></li>
+<li><p><a class="reference external" href="#ksleptimestamp">ksl::epTimestamp</a></p></li>
+<li><p><a class="reference external" href="#kslephaserror">ksl::epHasError</a></p></li>
+<li><p><a class="reference external" href="#kslepprint">ksl::epPrint</a></p></li>
+</ul>
+<section id="ksl-epdescription">
+<h3>ksl::epDescription<a class="headerlink" href="#ksl-epdescription" title="Link to this heading"></a></h3>
+<p>Initialize and set values in an error passing structure.</p>
+<p>epSet [eps] [options…]</p>
+<p><strong>Options</strong></p>
+<ul class="simple">
+<li><p>-ca, –cause &lt;string&gt;</p></li>
+<li><p>-cn, –codeNum &lt;number&gt;</p></li>
+<li><p>-d, –description &lt;string&gt;</p></li>
+<li><p>-en, –errorName &lt;string&gt;</p></li>
+<li><p>-et, –errorType &lt;string&gt;</p></li>
+<li><p>-fi, –fileName &lt;string&gt;</p></li>
+<li><p>-fu, –funcName &lt;string&gt;</p></li>
+<li><p>-li, –lineNum &lt;number&gt;</p></li>
+<li><p>-rp, –repair &lt;string&gt;</p></li>
+<li><p>-sv, –severity &lt;string&gt;</p></li>
+</ul>
+<p>With no args, epSet works on the default <code class="docutils literal notranslate"><span class="pre">ep1</span></code> <strong>error passing
+structure (EPS)</strong>. You can pass in <code class="docutils literal notranslate"><span class="pre">ep1</span></code> explicitly or create your own
+EPS. If the given EPS does not already exist, then it is created.</p>
+<p>These two are equivalent: <code class="docutils literal notranslate"><span class="pre">epSet</span></code> and <code class="docutils literal notranslate"><span class="pre">epSet</span> <span class="pre">ep1</span></code>. Or supply your
+own: <code class="docutils literal notranslate"><span class="pre">epSet</span> <span class="pre">myEp</span></code>.</p>
+<p>$1 is the EPS and optional. If not supplied the default EPS of “ep1” is
+used.</p>
+</section>
+<section id="ksl-epset">
+<h3>ksl::epSet<a class="headerlink" href="#ksl-epset" title="Link to this heading"></a></h3>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>ksl::epSet<span class="w">                </span><span class="c1"># ep1 is initalized</span>
+<span class="nb">echo</span><span class="w"> </span>ksl::epSet<span class="w"> </span>ep2<span class="w">            </span><span class="c1"># ep2 is initalized</span>
+<span class="nb">echo</span><span class="w"> </span>ksl::epSet<span class="w"> </span>--fi<span class="w"> </span>/home/abc<span class="w"> </span><span class="c1"># ep1 is initalized and file name is set</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments">
+<h4>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>$1</strong> (array): is the EPS. If not specified then EPS is <code class="docutils literal notranslate"><span class="pre">ep1</span></code></p>
+<p><p><p><img alt="image2" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epsetdescription">
+<h3>ksl::epSetDescription<a class="headerlink" href="#ksl-epsetdescription" title="Link to this heading"></a></h3>
+<p>Sets the description field in the given EPS.</p>
+<p>Overwrites any previous description. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the description. If one
+arg is given, then $1 is the description and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<section id="example-1">
+<span id="id1"></span><h4>Example<a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetDescription<span class="w"> </span><span class="s2">&quot;Broken channel&quot;</span><span class="w">      </span><span class="c1"># ep1 is used</span>
+ksl::epSetDescription<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;Broken channel&quot;</span><span class="w">  </span><span class="c1"># ep2 is used</span>
+ksl::epSetDescription<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w">                    </span><span class="c1"># sets ep1 description to empty</span>
+ksl::epSetDescription<span class="w">                       </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-1">
+<span id="id2"></span><h4>Arguments<a class="headerlink" href="#arguments-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the description depending on
+number of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the description if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes">
+<h4>Exit codes<a class="headerlink" href="#exit-codes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - description was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr">
+<h4>Output on stderr<a class="headerlink" href="#output-on-stderr" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetDescription() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image3" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="kslepdescription-1">
+<span id="id3"></span><h3>ksl::epDescription<a class="headerlink" href="#kslepdescription-1" title="Link to this heading"></a></h3>
+<p>Retrieve the description.</p>
+<section id="example-2">
+<span id="id4"></span><h4>Example<a class="headerlink" href="#example-2" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epDescription<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epDescription<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epDescription<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-2">
+<span id="id5"></span><h4>Arguments<a class="headerlink" href="#arguments-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-1">
+<span id="id6"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout">
+<h4>Output on stdout<a class="headerlink" href="#output-on-stdout" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the description</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-1">
+<span id="id7"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-1" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() no such array</p>
+<p><p><p><img alt="image4" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epappend">
+<h3>ksl::epAppend<a class="headerlink" href="#ksl-epappend" title="Link to this heading"></a></h3>
+<p>Appends given string to the description in the given EPS.</p>
+<p>EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the string to append. If
+one arg is given, then $1 is the string to append and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is
+used.</p>
+<section id="example-3">
+<span id="id8"></span><h4>Example<a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epAppend<span class="w"> </span><span class="s2">&quot;Broken channel&quot;</span><span class="w">        </span><span class="c1"># ep1 is used</span>
+ksl::epAppend<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;Broken channel&quot;</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+ksl::epAppend<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w">                      </span><span class="c1"># append empty string to ep1</span>
+ksl::epAppend<span class="w">                         </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-3">
+<span id="id9"></span><h4>Arguments<a class="headerlink" href="#arguments-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the string to append depending
+on number of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the string to append if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-2">
+<span id="id10"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - string was appended.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-2">
+<span id="id11"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epAppend() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image5" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epprepend">
+<h3>ksl::epPrepend<a class="headerlink" href="#ksl-epprepend" title="Link to this heading"></a></h3>
+<p>Prepends given string to the description in the given EPS.</p>
+<p>EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the string to prepend.
+If one arg is given, then $1 is the string to prepend and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is
+used.</p>
+<section id="example-4">
+<span id="id12"></span><h4>Example<a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epPrepend<span class="w"> </span><span class="s2">&quot;Broken channel&quot;</span><span class="w">        </span><span class="c1"># ep1 is used</span>
+ksl::epPrepend<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;Broken channel&quot;</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+ksl::epPrepend<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w">                      </span><span class="c1"># prepend empty string to ep1</span>
+ksl::epPrepend<span class="w">                         </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-4">
+<span id="id13"></span><h4>Arguments<a class="headerlink" href="#arguments-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the string to prepend depending
+on number of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the string to prepend if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-3">
+<span id="id14"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - string was prepended.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-3">
+<span id="id15"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-3" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epPrepend() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image6" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epseterrorname">
+<h3>ksl::epSetErrorName<a class="headerlink" href="#ksl-epseterrorname" title="Link to this heading"></a></h3>
+<p>Sets the error name in the given EPS.</p>
+<p>Overwrites any previous error name. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the error name. If one
+arg is given, then $1 is the error name and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<p><strong>Choices for ErrorName</strong></p>
+<ul class="simple">
+<li><p>CaughtException</p></li>
+<li><p>ConfigurationError</p></li>
+<li><p>DataFormatError</p></li>
+<li><p>AlreadyExistsError</p></li>
+<li><p>IllegalStateError</p></li>
+<li><p>InputOutputError</p></li>
+<li><p>InvalidAccessError</p></li>
+<li><p>InvalidArgumentError</p></li>
+<li><p>LengthError</p></li>
+<li><p>LogicError</p></li>
+<li><p>NetworkError</p></li>
+<li><p>NoPermissionError</p></li>
+<li><p>NotFoundError</p></li>
+<li><p>NotImplementedError</p></li>
+<li><p>NullPointerError</p></li>
+<li><p>NullValueError</p></li>
+<li><p>OperationNotPossibleError</p></li>
+<li><p>OverflowError</p></li>
+<li><p>RangeError</p></li>
+<li><p>SignalError</p></li>
+<li><p>SystemCallError</p></li>
+<li><p>TimeoutError</p></li>
+<li><p>UnderflowError</p></li>
+</ul>
+<section id="arguments-5">
+<span id="id16"></span><h4>Arguments<a class="headerlink" href="#arguments-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the error name depending on
+number of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the error name if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-4">
+<span id="id17"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - error name was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-4">
+<span id="id18"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-4" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetErrorName() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image7" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-eperrorname">
+<h3>ksl::epErrorName<a class="headerlink" href="#ksl-eperrorname" title="Link to this heading"></a></h3>
+<p>Returns the error name in the given EPS.</p>
+<section id="example-5">
+<span id="id19"></span><h4>Example<a class="headerlink" href="#example-5" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epErrorName<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epErrorName<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epErrorName<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-6">
+<span id="id20"></span><h4>Arguments<a class="headerlink" href="#arguments-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-5">
+<span id="id21"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-1">
+<span id="id22"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the error name</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-5">
+<span id="id23"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>arrayGetValue() no such array</p></li>
+</ul>
+</section>
+<section id="see-also">
+<h4>See also<a class="headerlink" href="#see-also" title="Link to this heading"></a></h4>
+<ul>
+<li><p><a class="reference external" href="#ksl-epseterrorname">Choices for ErrorName</a></p>
+<p><p><p><img alt="image8" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epseterrortype">
+<h3>ksl::epSetErrorType<a class="headerlink" href="#ksl-epseterrortype" title="Link to this heading"></a></h3>
+<p>Sets the error type in the given EPS.</p>
+<p>Overwrites any previous error type. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the error type. If one
+arg is given, then $1 is the error type and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<p><strong>Choices for ErrorType</strong></p>
+<ul class="simple">
+<li><p>CommunicationsError</p></li>
+<li><p>ConfigurationError</p></li>
+<li><p>EnvironmentalError</p></li>
+<li><p>EquipmentError</p></li>
+<li><p>ProcessingError</p></li>
+<li><p>QualityOfServiceError</p></li>
+</ul>
+<section id="example-6">
+<span id="id24"></span><h4>Example<a class="headerlink" href="#example-6" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetErrorType<span class="w"> </span><span class="s2">&quot;ProcessingError&quot;</span><span class="w">      </span><span class="c1"># ep1 is used</span>
+ksl::epSetErrorType<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;ProcessingError&quot;</span><span class="w">  </span><span class="c1"># ep2 is used</span>
+ksl::epSetErrorType<span class="w">  </span><span class="s2">&quot;&quot;</span><span class="w">                    </span><span class="c1"># sets ep1 error type to empty</span>
+ksl::epSetErrorType<span class="w">                        </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-7">
+<span id="id25"></span><h4>Arguments<a class="headerlink" href="#arguments-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the error type depending on
+number of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the error type if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-6">
+<span id="id26"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - description was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-6">
+<span id="id27"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-6" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetErrorType() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image9" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-eperrortype">
+<h3>ksl::epErrorType<a class="headerlink" href="#ksl-eperrortype" title="Link to this heading"></a></h3>
+<p>Returns the error type in the given EPS.</p>
+<section id="example-7">
+<span id="id28"></span><h4>Example<a class="headerlink" href="#example-7" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epErrorType<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epErrorType<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epErrorType<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-8">
+<span id="id29"></span><h4>Arguments<a class="headerlink" href="#arguments-8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-7">
+<span id="id30"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-2">
+<span id="id31"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the error type</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-7">
+<span id="id32"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>arrayGetValue() no such array</p></li>
+</ul>
+</section>
+<section id="see-also-1">
+<span id="id33"></span><h4>See also<a class="headerlink" href="#see-also-1" title="Link to this heading"></a></h4>
+<ul>
+<li><p><a class="reference external" href="#ksl-epseterrortype">Choices for ErrorType</a></p>
+<p><p><p><img alt="image10" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epsetseverity">
+<h3>ksl::epSetSeverity<a class="headerlink" href="#ksl-epsetseverity" title="Link to this heading"></a></h3>
+<p>Sets the error severity in the given EPS.</p>
+<p>Overwrites any previous severity. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the severity. If one arg
+is given, then $1 is the severity and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<p><strong>Choices for Severity</strong></p>
+<ul class="simple">
+<li><p>Indeterminate</p></li>
+<li><p>Critical</p></li>
+<li><p>Major</p></li>
+<li><p>Minor</p></li>
+<li><p>Warning</p></li>
+</ul>
+<section id="example-8">
+<span id="id34"></span><h4>Example<a class="headerlink" href="#example-8" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetSeverity<span class="w"> </span><span class="s2">&quot;Critical&quot;</span><span class="w">        </span><span class="c1"># ep1 is used</span>
+ksl::epSetSeverity<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;Critical&quot;</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+ksl::epSetSeverity<span class="w">  </span><span class="s2">&quot;&quot;</span><span class="w">               </span><span class="c1"># sets ep1 severity to empty</span>
+ksl::epSetSeverity<span class="w">                   </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-9">
+<span id="id35"></span><h4>Arguments<a class="headerlink" href="#arguments-9" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the severity depending on number
+of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the severity if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-8">
+<span id="id36"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - severity was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-8">
+<span id="id37"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-8" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetSeverity() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image11" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epseverity">
+<h3>ksl::epSeverity<a class="headerlink" href="#ksl-epseverity" title="Link to this heading"></a></h3>
+<p>Returns the severity in the given EPS.</p>
+<section id="example-9">
+<span id="id38"></span><h4>Example<a class="headerlink" href="#example-9" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSeverity<span class="w">              </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epSeverity<span class="w"> </span>ep2<span class="k">)</span><span class="w">  </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epSeverity<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-10">
+<span id="id39"></span><h4>Arguments<a class="headerlink" href="#arguments-10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-9">
+<span id="id40"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-9" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-3">
+<span id="id41"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the severity</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-9">
+<span id="id42"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-9" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>arrayGetValue() no such array</p></li>
+</ul>
+</section>
+<section id="see-also-2">
+<span id="id43"></span><h4>See also<a class="headerlink" href="#see-also-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p><a class="reference external" href="#ksl-epsetseverity">Choices for Severity</a></p>
+<p><p><p><img alt="image12" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epsetfuncname">
+<h3>ksl::epSetFuncName<a class="headerlink" href="#ksl-epsetfuncname" title="Link to this heading"></a></h3>
+<p>Sets the function name in the given EPS.</p>
+<p>Overwrites any previous function name. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the function name. If
+one arg is given, then $1 is the function name and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<section id="example-10">
+<span id="id44"></span><h4>Example<a class="headerlink" href="#example-10" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetFuncName<span class="w"> </span><span class="s2">&quot;crcCheck()&quot;</span><span class="w">      </span><span class="c1"># ep1 is used</span>
+ksl::epSetFuncName<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;crcCheck()&quot;</span><span class="w">  </span><span class="c1"># ep2 is used</span>
+ksl::epSetFuncName<span class="w">  </span><span class="s2">&quot;&quot;</span><span class="w">               </span><span class="c1"># sets ep1 function name to empty</span>
+ksl::epSetFuncName<span class="w">                   </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-11">
+<span id="id45"></span><h4>Arguments<a class="headerlink" href="#arguments-11" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the function name depending on
+number of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the function name if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-10">
+<span id="id46"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - function name was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-10">
+<span id="id47"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-10" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetFuncName() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image13" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epfuncname">
+<h3>ksl::epFuncName<a class="headerlink" href="#ksl-epfuncname" title="Link to this heading"></a></h3>
+<p>Returns the function name in the given EPS.</p>
+<section id="example-11">
+<span id="id48"></span><h4>Example<a class="headerlink" href="#example-11" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epFuncName<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epFuncName<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epFuncName<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-12">
+<span id="id49"></span><h4>Arguments<a class="headerlink" href="#arguments-12" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-11">
+<span id="id50"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-11" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-4">
+<span id="id51"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the function name</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-11">
+<span id="id52"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-11" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() no such array</p>
+<p><p><p><img alt="image14" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epsetfilename">
+<h3>ksl::epSetFileName<a class="headerlink" href="#ksl-epsetfilename" title="Link to this heading"></a></h3>
+<p>Sets the file name in the given EPS.</p>
+<p>Overwrites any previous file name. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the file name. If one
+arg is given, then $1 is the file name and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<section id="example-12">
+<span id="id53"></span><h4>Example<a class="headerlink" href="#example-12" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetFileName<span class="w"> </span><span class="s2">&quot;config.yml&quot;</span><span class="w">     </span><span class="c1"># ep1 is used</span>
+ksl::epSetFileName<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;config.yml&quot;</span><span class="w"> </span><span class="c1"># ep2 is used</span>
+ksl::epSetFileName<span class="w">  </span><span class="s2">&quot;&quot;</span><span class="w">              </span><span class="c1"># sets ep1 file name to empty</span>
+ksl::epSetFileName<span class="w">                  </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-13">
+<span id="id54"></span><h4>Arguments<a class="headerlink" href="#arguments-13" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the file name on number of args
+as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the file name if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-12">
+<span id="id55"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-12" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - file name was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-12">
+<span id="id56"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-12" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetFileName() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image15" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epfilename">
+<h3>ksl::epFileName<a class="headerlink" href="#ksl-epfilename" title="Link to this heading"></a></h3>
+<p>Returns the file name in the given EPS.</p>
+<section id="example-13">
+<span id="id57"></span><h4>Example<a class="headerlink" href="#example-13" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epFileName<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epFileName<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epFileName<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-14">
+<span id="id58"></span><h4>Arguments<a class="headerlink" href="#arguments-14" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-13">
+<span id="id59"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-13" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-5">
+<span id="id60"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the file name</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-13">
+<span id="id61"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-13" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() no such array</p>
+<p><p><p><img alt="image16" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epsetlinenum">
+<h3>ksl::epSetLineNum<a class="headerlink" href="#ksl-epsetlinenum" title="Link to this heading"></a></h3>
+<p>Sets the line number in the given EPS.</p>
+<p>Overwrites any previous line number. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the line number. If one
+arg is given, then $1 is the line number and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<section id="example-14">
+<span id="id62"></span><h4>Example<a class="headerlink" href="#example-14" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetLineNum<span class="w"> </span><span class="s2">&quot;55&quot;</span><span class="w">        </span><span class="c1"># ep1 is used</span>
+ksl::epSetLineNum<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;55&quot;</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+ksl::epSetLineNum<span class="w">  </span><span class="s2">&quot;&quot;</span><span class="w">         </span><span class="c1"># sets ep1 line number to empty</span>
+ksl::epSetLineNum<span class="w">             </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-15">
+<span id="id63"></span><h4>Arguments<a class="headerlink" href="#arguments-15" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the line number depending on
+number of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the line number if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-14">
+<span id="id64"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-14" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - line number was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-14">
+<span id="id65"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-14" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetLineNum() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image17" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-eplinenum">
+<h3>ksl::epLineNum<a class="headerlink" href="#ksl-eplinenum" title="Link to this heading"></a></h3>
+<p>Returns the line number in the given EPS.</p>
+<section id="example-15">
+<span id="id66"></span><h4>Example<a class="headerlink" href="#example-15" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epLineNum<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epLineNum<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epLineNum<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-16">
+<span id="id67"></span><h4>Arguments<a class="headerlink" href="#arguments-16" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-15">
+<span id="id68"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-15" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-6">
+<span id="id69"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the line number</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-15">
+<span id="id70"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-15" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() no such array</p>
+<p><p><p><img alt="image18" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epsetcodenum">
+<h3>ksl::epSetCodeNum<a class="headerlink" href="#ksl-epsetcodenum" title="Link to this heading"></a></h3>
+<p>Sets a code number in the given EPS.</p>
+<p>Overwrites any previous code number. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the code number. If one
+arg is given, then $1 is the code number and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<section id="example-16">
+<span id="id71"></span><h4>Example<a class="headerlink" href="#example-16" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetCodeNum<span class="w"> </span><span class="s2">&quot;999&quot;</span><span class="w">        </span><span class="c1"># ep1 is used</span>
+ksl::epSetCodeNum<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;999&quot;</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+ksl::epSetCodeNum<span class="w">  </span><span class="s2">&quot;&quot;</span><span class="w">          </span><span class="c1"># sets ep1 code number to empty</span>
+ksl::epSetCodeNum<span class="w">              </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-17">
+<span id="id72"></span><h4>Arguments<a class="headerlink" href="#arguments-17" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the code number depending on
+number of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the code number if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-16">
+<span id="id73"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-16" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - code number was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-16">
+<span id="id74"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-16" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetCodeNum() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image19" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epcodenum">
+<h3>ksl::epCodeNum<a class="headerlink" href="#ksl-epcodenum" title="Link to this heading"></a></h3>
+<p>Returns the code number in the given EPS.</p>
+<section id="example-17">
+<span id="id75"></span><h4>Example<a class="headerlink" href="#example-17" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epCodeNum<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epCodeNum<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epCodeNum<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-18">
+<span id="id76"></span><h4>Arguments<a class="headerlink" href="#arguments-18" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-17">
+<span id="id77"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-17" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-7">
+<span id="id78"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the code number</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-17">
+<span id="id79"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-17" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() no such array</p>
+<p><p><p><img alt="image20" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epsetcause">
+<h3>ksl::epSetCause<a class="headerlink" href="#ksl-epsetcause" title="Link to this heading"></a></h3>
+<p>Sets a probable cause string in the given EPS.</p>
+<p>Overwrites any previous cause. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the cause. If one arg is
+given, then $1 is the cause and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<section id="example-18">
+<span id="id80"></span><h4>Example<a class="headerlink" href="#example-18" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetCause<span class="w"> </span><span class="s2">&quot;no power&quot;</span><span class="w">      </span><span class="c1"># ep1 is used</span>
+ksl::epSetCause<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;no power&quot;</span><span class="w">  </span><span class="c1"># ep2 is used</span>
+ksl::epSetCause<span class="w">  </span><span class="s2">&quot;&quot;</span><span class="w">             </span><span class="c1"># sets ep1 cause to empty</span>
+ksl::epSetCause<span class="w">                 </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-19">
+<span id="id81"></span><h4>Arguments<a class="headerlink" href="#arguments-19" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the cause depending on number of
+args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the cause if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-18">
+<span id="id82"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-18" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - cause was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-18">
+<span id="id83"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-18" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetCause() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image21" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epcause">
+<h3>ksl::epCause<a class="headerlink" href="#ksl-epcause" title="Link to this heading"></a></h3>
+<p>Returns the probable cause in the given EPS.</p>
+<section id="example-19">
+<span id="id84"></span><h4>Example<a class="headerlink" href="#example-19" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epCause<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epCause<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epCause<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-20">
+<span id="id85"></span><h4>Arguments<a class="headerlink" href="#arguments-20" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-19">
+<span id="id86"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-19" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-8">
+<span id="id87"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the cause</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-19">
+<span id="id88"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-19" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() no such array</p>
+<p><p><p><img alt="image22" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epsetrepair">
+<h3>ksl::epSetRepair<a class="headerlink" href="#ksl-epsetrepair" title="Link to this heading"></a></h3>
+<p>Sets a probable repair string in the given EPS.</p>
+<p>Overwrites any previous repair. EPS must already exist.</p>
+<p>If two args are given, then $1 is EPS and $2 is the repair. If one arg
+is given, then $1 is the repair and EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p>
+<section id="example-20">
+<span id="id89"></span><h4>Example<a class="headerlink" href="#example-20" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epSetRepair<span class="w"> </span><span class="s2">&quot;plug it in&quot;</span><span class="w">      </span><span class="c1"># ep1 is used</span>
+ksl::epSetRepair<span class="w"> </span>ep2<span class="w"> </span><span class="s2">&quot;plug it in&quot;</span><span class="w">  </span><span class="c1"># ep2 is used</span>
+ksl::epSetRepair<span class="w">  </span><span class="s2">&quot;&quot;</span><span class="w">               </span><span class="c1"># sets ep1 repair to empty</span>
+ksl::epSetRepair<span class="w">                   </span><span class="c1"># error</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-21">
+<span id="id90"></span><h4>Arguments<a class="headerlink" href="#arguments-21" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is either the EPS or the repair depending on number
+of args as described above.</p></li>
+<li><p><strong>$2</strong> (string): is the repair if two args are given.</p></li>
+</ul>
+</section>
+<section id="exit-codes-20">
+<span id="id91"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-20" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - repair was set.</p></li>
+<li><p><strong>1</strong>: Failed - bad EPS or missing args.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-20">
+<span id="id92"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-20" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epSetRepair() missing args</p></li>
+<li><p>arraySetValue() no such array</p>
+<p><p><p><img alt="image23" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-eprepair">
+<h3>ksl::epRepair<a class="headerlink" href="#ksl-eprepair" title="Link to this heading"></a></h3>
+<p>Returns the probable repair in the given EPS.</p>
+<section id="example-21">
+<span id="id93"></span><h4>Example<a class="headerlink" href="#example-21" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epRepair<span class="w">                    </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epRepair<span class="w"> </span>ep2<span class="k">)</span><span class="w">        </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epRepair<span class="w"> </span>ep2<span class="k">)</span><span class="w">         </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-22">
+<span id="id94"></span><h4>Arguments<a class="headerlink" href="#arguments-22" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-21">
+<span id="id95"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-21" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-9">
+<span id="id96"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-9" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the repair</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-21">
+<span id="id97"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-21" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() no such array</p>
+<p><p><p><img alt="image24" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-eptimestamp">
+<h3>ksl::epTimestamp<a class="headerlink" href="#ksl-eptimestamp" title="Link to this heading"></a></h3>
+<p>Returns the timestamp in the given EPS.</p>
+<p>The value for timestamp was established on the most recent call to
+epSet().</p>
+<section id="example-22">
+<span id="id98"></span><h4>Example<a class="headerlink" href="#example-22" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epTimestamp<span class="w">               </span><span class="c1"># ep1 is used</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ksl::epTimestamp<span class="w"> </span>ep2<span class="k">)</span><span class="w">   </span><span class="c1"># ep2 is used</span>
+<span class="nv">str</span><span class="o">=</span><span class="k">$(</span>ksl::epTimestamp<span class="w"> </span>ep2<span class="k">)</span><span class="w">    </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-23">
+<span id="id99"></span><h4>Arguments<a class="headerlink" href="#arguments-23" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-22">
+<span id="id100"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-22" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-10">
+<span id="id101"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the timestamp</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-22">
+<span id="id102"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-22" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() no such array</p>
+<p><p><p><img alt="image25" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-ephaserror">
+<h3>ksl::epHasError<a class="headerlink" href="#ksl-ephaserror" title="Link to this heading"></a></h3>
+<p>Returns true if EPS is carrying an error.</p>
+<p>The EPS is considered to be carrying an error if either the description
+field or the code number field is non-empty.</p>
+<section id="example-23">
+<span id="id103"></span><h4>Example<a class="headerlink" href="#example-23" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>ksl::epHasError<span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span>epPrint<span class="p">;</span><span class="w"> </span><span class="k">fi</span><span class="w">   </span><span class="c1"># ep1 is used</span>
+<span class="o">[[</span><span class="w"> </span>ksl::epHasError<span class="w"> </span>ep2<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-24">
+<span id="id104"></span><h4>Arguments<a class="headerlink" href="#arguments-24" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-23">
+<span id="id105"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-23" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: true - EPS is carrying an error.</p></li>
+<li><p><strong>1</strong>: false - EPS is not carrying an error.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-23">
+<span id="id106"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-23" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epHasError() no such array</p>
+<p><p><p><img alt="image26" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-epprint">
+<h3>ksl::epPrint<a class="headerlink" href="#ksl-epprint" title="Link to this heading"></a></h3>
+<p>Prints the given EPS in a formatted style to stdout.</p>
+<p>$1 is the EPS and optional. If not supplied the default EPS of “ep1” is
+used.</p>
+<section id="example-24">
+<span id="id107"></span><h4>Example<a class="headerlink" href="#example-24" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::epPrint<span class="w">         </span><span class="c1"># ep1 is used</span>
+ksl::epPrint<span class="w"> </span>ep2<span class="w">     </span><span class="c1"># ep2 is used</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-25">
+<span id="id108"></span><h4>Arguments<a class="headerlink" href="#arguments-25" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): is the EPS. If no args, then EPS <code class="docutils literal notranslate"><span class="pre">ep1</span></code> is used.</p></li>
+</ul>
+</section>
+<section id="exit-codes-24">
+<span id="id109"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-24" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success</p></li>
+<li><p><strong>1</strong>: Failed - likely a bad EPS.</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-11">
+<span id="id110"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-11" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>See output from example script at top of this file.</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-24">
+<span id="id111"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-24" title="Link to this heading"></a></h4>
+<ul>
+<li><p>epPrint() no such array</p>
+<p><p><p><img alt="image27" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="libEnv.html" class="btn btn-neutral float-left" title="libEnv" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="libFiles.html" class="btn btn-neutral float-right" title="libFiles" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, KingSolomon1954@github.com.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

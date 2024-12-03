@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libArrays &mdash; ksl-bash-lib 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="libColors" href="libColors.html" />
+    <link rel="prev" title="KSL-BASH-LIB API" href="shdoc-intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ksl-bash-lib
+              <img src="../_static/blue-fire-icon-60x90.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shdoc-intro.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">libArrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index">Index</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arrayexists">ksl::arrayExists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arraysize">ksl::arraySize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arrayhaskey">ksl::arrayHasKey</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arraysetvalue">ksl::arraySetValue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arraygetvalue">ksl::arrayGetValue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arrayappendvalue">ksl::arrayAppendValue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arrayprependvalue">ksl::arrayPrependValue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arraydeleteelement">ksl::arrayDeleteElement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-arrayvisit">ksl::arrayVisit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="libColors.html">libColors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libEnv.html">libEnv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libError.html">libError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libFiles.html">libFiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStdOut.html">libStdOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStrings.html">libStrings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/licenses.html">Licenses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/opensource.html">Open Source Inventory</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ksl-bash-lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="shdoc-intro.html">KSL-BASH-LIB API</a></li>
+      <li class="breadcrumb-item active">libArrays</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/shdoc/libArrays.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="libarrays">
+<h1>libArrays<a class="headerlink" href="#libarrays" title="Link to this heading"></a></h1>
+<p>Functions to support array processing</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Functions to help with arrays.</p>
+<p>Contains the following:</p>
+<ul class="simple">
+<li><p>ksl::arrayExists()</p></li>
+<li><p>ksl::arraySize()</p></li>
+<li><p>ksl::arrayHasKey()</p></li>
+<li><p>ksl::arrayGetValue()</p></li>
+<li><p>ksl::arraySetValue()</p></li>
+<li><p>ksl::arrayDeleteElement()</p></li>
+<li><p>ksl::arrayAppendValue()</p></li>
+<li><p>ksl::arrayPrependValue()</p></li>
+<li><p>ksl::arrayVisit()</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="index">
+<h2>Index<a class="headerlink" href="#index" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#kslarrayexists">ksl::arrayExists</a></p></li>
+<li><p><a class="reference external" href="#kslarraysize">ksl::arraySize</a></p></li>
+<li><p><a class="reference external" href="#kslarrayhaskey">ksl::arrayHasKey</a></p></li>
+<li><p><a class="reference external" href="#kslarraysetvalue">ksl::arraySetValue</a></p></li>
+<li><p><a class="reference external" href="#kslarraygetvalue">ksl::arrayGetValue</a></p></li>
+<li><p><a class="reference external" href="#kslarrayappendvalue">ksl::arrayAppendValue</a></p></li>
+<li><p><a class="reference external" href="#kslarrayprependvalue">ksl::arrayPrependValue</a></p></li>
+<li><p><a class="reference external" href="#kslarraydeleteelement">ksl::arrayDeleteElement</a></p></li>
+<li><p><a class="reference external" href="#kslarrayvisit">ksl::arrayVisit</a></p></li>
+</ul>
+<section id="ksl-arrayexists">
+<h3>ksl::arrayExists<a class="headerlink" href="#ksl-arrayexists" title="Link to this heading"></a></h3>
+<p>Returns true if the array exists.</p>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>ksl::arrayExists<span class="w"> </span>myArray<span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;have it&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments">
+<h4>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): the name of the array</p></li>
+</ul>
+</section>
+<section id="exit-codes">
+<h4>Exit codes<a class="headerlink" href="#exit-codes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong>: not an array or missing args</p></li>
+<li><p><strong>0</strong>: it is an array that exists</p></li>
+</ul>
+</section>
+<section id="output-on-stdout">
+<h4>Output on stdout<a class="headerlink" href="#output-on-stdout" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr">
+<h4>Output on stderr<a class="headerlink" href="#output-on-stderr" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayExists() missing args</p>
+<p><p><p><img alt="image1" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-arraysize">
+<h3>ksl::arraySize<a class="headerlink" href="#ksl-arraysize" title="Link to this heading"></a></h3>
+<p>Returns the size of the array.</p>
+<p>This is the number of elements it contains.</p>
+<section id="example-1">
+<span id="id1"></span><h4>Example<a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;There are </span><span class="k">$(</span>ksl::arraySize<span class="w"> </span>myArray<span class="k">)</span><span class="s2"> elements&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-1">
+<span id="id2"></span><h4>Arguments<a class="headerlink" href="#arguments-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): the name of the array</p></li>
+</ul>
+</section>
+<section id="exit-codes-1">
+<span id="id3"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong>: not an array or missing args</p></li>
+<li><p><strong>0</strong>: success</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-1">
+<span id="id4"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the size of the array</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-1">
+<span id="id5"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-1" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arraySize() missing args:</p></li>
+<li><p>arraySize() no such array:</p>
+<p><p><p><img alt="image2" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-arrayhaskey">
+<h3>ksl::arrayHasKey<a class="headerlink" href="#ksl-arrayhaskey" title="Link to this heading"></a></h3>
+<p>Returns true if the array has an element with the given key</p>
+<section id="example-2">
+<span id="id6"></span><h4>Example<a class="headerlink" href="#example-2" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>ksl::arrayHasKey<span class="w"> </span>acronyms<span class="w"> </span>CRC<span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;have it&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-2">
+<span id="id7"></span><h4>Arguments<a class="headerlink" href="#arguments-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): the name of the array</p></li>
+<li><p><strong>$2</strong> (string): the name of the key</p></li>
+</ul>
+</section>
+<section id="exit-codes-2">
+<span id="id8"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong>: not an array or missing args</p></li>
+<li><p><strong>0</strong>: success</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-2">
+<span id="id9"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-2">
+<span id="id10"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayHasKey() missing args</p></li>
+<li><p>arrayHasKey() no such array:</p>
+<p><p><p><img alt="image3" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-arraysetvalue">
+<h3>ksl::arraySetValue<a class="headerlink" href="#ksl-arraysetvalue" title="Link to this heading"></a></h3>
+<p>Set a value in an array.</p>
+<p>The element is created if it does not exist. If the element already
+exists, then its previous value is overwritten.</p>
+<section id="example-3">
+<span id="id11"></span><h4>Example<a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::arraySetValue<span class="w"> </span>acronyms<span class="w"> </span>CRC<span class="w"> </span><span class="s2">&quot;Cyclic Redundancy Check&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-3">
+<span id="id12"></span><h4>Arguments<a class="headerlink" href="#arguments-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): the name of the array</p></li>
+<li><p><strong>$2</strong> (string): the name of the key</p></li>
+<li><p><strong>$3</strong> (string): the value to set for this element</p></li>
+</ul>
+</section>
+<section id="exit-codes-3">
+<span id="id13"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong>: not an array or missing args</p></li>
+<li><p><strong>0</strong>: success</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-3">
+<span id="id14"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-3">
+<span id="id15"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-3" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arraySetValue() missing args</p></li>
+<li><p>arraySetValue() no such array:</p>
+<p><p><p><img alt="image4" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-arraygetvalue">
+<h3>ksl::arrayGetValue<a class="headerlink" href="#ksl-arraygetvalue" title="Link to this heading"></a></h3>
+<p>Get a value from an array.</p>
+<section id="example-4">
+<span id="id16"></span><h4>Example<a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">val</span><span class="o">=</span><span class="k">$(</span>ksl::arrayGetValue<span class="w"> </span>acronyms<span class="w"> </span>CRC<span class="k">)</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-4">
+<span id="id17"></span><h4>Arguments<a class="headerlink" href="#arguments-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): the name of the array</p></li>
+<li><p><strong>$2</strong> (string): the name of the key</p></li>
+</ul>
+</section>
+<section id="exit-codes-4">
+<span id="id18"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong>: not an array, no such key, or missing args</p></li>
+<li><p><strong>0</strong>: success</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-4">
+<span id="id19"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>the value</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-4">
+<span id="id20"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-4" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayGetValue() missing args</p></li>
+<li><p>arrayGetValue() no such array:</p></li>
+<li><p>arrayGetValue() no such key:</p>
+<p><p><p><img alt="image5" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-arrayappendvalue">
+<h3>ksl::arrayAppendValue<a class="headerlink" href="#ksl-arrayappendvalue" title="Link to this heading"></a></h3>
+<p>Append to a value in an array.</p>
+<p>The element must already exist, otherwise it’s an error.</p>
+<section id="example-5">
+<span id="id21"></span><h4>Example<a class="headerlink" href="#example-5" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::arrayAppend<span class="w"> </span>errpass<span class="w"> </span>DESC<span class="w"> </span><span class="s2">&quot; on channel 12&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-5">
+<span id="id22"></span><h4>Arguments<a class="headerlink" href="#arguments-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): the name of the array</p></li>
+<li><p><strong>$2</strong> (string): the name of the key</p></li>
+<li><p><strong>$3</strong> (string): the value to append for this element</p></li>
+</ul>
+</section>
+<section id="exit-codes-5">
+<span id="id23"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong>: not an array, no such key, or missing args</p></li>
+<li><p><strong>0</strong>: success</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-5">
+<span id="id24"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-5">
+<span id="id25"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-5" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayAppendValue() missing args</p></li>
+<li><p>arrayAppendValue() no such array:</p></li>
+<li><p>arrayAppendValue() no such key:</p>
+<p><p><p><img alt="image6" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-arrayprependvalue">
+<h3>ksl::arrayPrependValue<a class="headerlink" href="#ksl-arrayprependvalue" title="Link to this heading"></a></h3>
+<p>Prepend to a value in an array.</p>
+<p>The element must already exist, otherwise it’s an error.</p>
+<section id="example-6">
+<span id="id26"></span><h4>Example<a class="headerlink" href="#example-6" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::arrayPrepend<span class="w"> </span>errpass<span class="w"> </span>DESC<span class="w"> </span><span class="s2">&quot;Fatal error: &quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-6">
+<span id="id27"></span><h4>Arguments<a class="headerlink" href="#arguments-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): the name of the array</p></li>
+<li><p><strong>$2</strong> (string): the name of the key</p></li>
+<li><p><strong>$3</strong> (string): the value to prepend for this element</p></li>
+</ul>
+</section>
+<section id="exit-codes-6">
+<span id="id28"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong>: not an array, no such key, or missing args</p></li>
+<li><p><strong>0</strong>: success</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-6">
+<span id="id29"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-6">
+<span id="id30"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-6" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayPrependValue() missing args</p></li>
+<li><p>arrayPrependValue() no such array:</p></li>
+<li><p>arrayPrependValue() no such key:</p>
+<p><p><p><img alt="image7" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-arraydeleteelement">
+<h3>ksl::arrayDeleteElement<a class="headerlink" href="#ksl-arraydeleteelement" title="Link to this heading"></a></h3>
+<p>Deletes an array element.</p>
+<p>It is not an error if the element doesn’t exist.</p>
+<section id="example-7">
+<span id="id31"></span><h4>Example<a class="headerlink" href="#example-7" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::arrayDeleteElement<span class="w"> </span>dogs<span class="w"> </span>SHEPPARD
+</pre></div>
+</div>
+</section>
+<section id="arguments-7">
+<span id="id32"></span><h4>Arguments<a class="headerlink" href="#arguments-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): - the name of the array</p></li>
+<li><p><strong>$2</strong> (string): - the name of the key</p></li>
+</ul>
+</section>
+<section id="exit-codes-7">
+<span id="id33"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong>: not an array, no such key, or missing args</p></li>
+<li><p><strong>0</strong>: success</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-7">
+<span id="id34"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-7">
+<span id="id35"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-7" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayDeleteElement() missing args</p></li>
+<li><p>arrayDeleteElement() no such array:</p>
+<p><p><p><img alt="image8" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-arrayvisit">
+<h3>ksl::arrayVisit<a class="headerlink" href="#ksl-arrayvisit" title="Link to this heading"></a></h3>
+<p>Visits each element in an array and invokes your function on it.</p>
+<p>Your function is called with three args, plus any additional args you
+provide:</p>
+<ul class="simple">
+<li><p>&lt;value&gt; - $1 the value from the array</p></li>
+<li><p>&lt;key|index&gt; - $2 the array’s key or index where this value is found</p></li>
+<li><p>&lt;array name&gt; - $3 the array name</p></li>
+<li><p>[additonal args…] - user provided args, if any</p></li>
+</ul>
+<p>If your function returns 10 or 11, then visit() will stop visiting
+remaining elements. Typically use 10 to exit early with success, and 11
+to exit early with an error. But you can apply any meaning to these two
+values as they both exit early for whatever reason.</p>
+<p>Returns</p>
+<ul class="simple">
+<li><p>0 - success if all elements have been visited</p></li>
+<li><p>1 - fail missing or bad args</p></li>
+<li><p>10 - success if your function stopped visiting with a 10</p></li>
+<li><p>11 - error if your function stopped visiting with an 11</p></li>
+</ul>
+<section id="example-8">
+<span id="id36"></span><h4>Example<a class="headerlink" href="#example-8" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::arrayVisit<span class="w"> </span>dogs<span class="w"> </span>findValue<span class="w"> </span><span class="s2">&quot;Roving rover&quot;</span>
+<span class="nv">ret</span><span class="o">=</span><span class="nv">$?</span>
+<span class="o">[[</span><span class="w"> </span><span class="nv">$ret</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Not found&quot;</span>
+<span class="o">[[</span><span class="w"> </span><span class="nv">$ret</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Found it&quot;</span>
+<span class="o">[[</span><span class="w"> </span><span class="nv">$ret</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">11</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error from findValue()&quot;</span>
+<span class="c1">#</span>
+<span class="c1"># Your function</span>
+findValue<span class="o">()</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="c1"># $1 = element value</span>
+<span class="w">    </span><span class="c1"># $2 = element key|index</span>
+<span class="w">    </span><span class="c1"># $3 = array name</span>
+<span class="w">    </span><span class="c1"># $4 = &quot;Roving rover&quot;</span>
+<span class="w">    </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$4</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="m">10</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-8">
+<span id="id37"></span><h4>Arguments<a class="headerlink" href="#arguments-8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (array): the name of array (required)</p></li>
+<li><p><strong>$2</strong> (function): the function to call on each element (required)</p></li>
+<li><p><strong>$3</strong> ([args…]): additional arguments (optional) to pass into your
+function</p></li>
+</ul>
+</section>
+<section id="exit-codes-8">
+<span id="id38"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: success - all elements visited</p></li>
+<li><p><strong>1</strong>: fail - not an array or missing args</p></li>
+<li><p><strong>10</strong>: success if your function stopped visiting with a 10</p></li>
+<li><p><strong>11</strong>: error if your function stopped visiting with an 11</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-8">
+<span id="id39"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-8">
+<span id="id40"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-8" title="Link to this heading"></a></h4>
+<ul>
+<li><p>arrayVisit() missing args</p></li>
+<li><p>arrayVisit() no such array:</p>
+<p><p><p><img alt="image9" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="shdoc-intro.html" class="btn btn-neutral float-left" title="KSL-BASH-LIB API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="libColors.html" class="btn btn-neutral float-right" title="libColors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, KingSolomon1954@github.com.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

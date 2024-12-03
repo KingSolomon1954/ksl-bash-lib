@@ -1,0 +1,1404 @@
+libStrings
+==========
+
+Functions to process shell strings.
+
+Overview
+--------
+
+Functions to process and manipulate shell strings.
+
+Contains the following:
+
+-  ksl::strlen()
+-  ksl::strlenR()
+-  ksl::isEmpty()
+-  ksl::isEmptyR()
+-  ksl::startsWith()
+-  ksl::endsWith()
+-  ksl::trimRight()
+-  ksl::trimLeft()
+-  ksl::trimWhitespace()
+-  ksl::contains()
+-  ksl::toLower()
+-  ksl::toUpper()
+-  ksl::capitalize()
+-  ksl::isAlphNum()
+-  ksl::isAlpha()
+-  ksl::# isAscii()
+-  ksl::isBlank()
+-  ksl::isCntrl()
+-  ksl::isDigit()
+-  ksl::isGraph()
+-  ksl::isLower()
+-  ksl::isInteger()
+-  ksl::isPrint()
+-  ksl::isPunct()
+-  ksl::isSpace()
+-  ksl::isUpper()
+-  ksl::# isWord()
+-  ksl::isXdigit()
+
+--------------
+
+Index
+-----
+
+-  `ksl::strlen <#kslstrlen>`__
+-  `ksl::strlenR <#kslstrlenr>`__
+-  `ksl::isEmpty <#kslisempty>`__
+-  `ksl::isEmptyR <#kslisemptyr>`__
+-  `ksl::startsWith <#kslstartswith>`__
+-  `ksl::endsWith <#kslendswith>`__
+-  `ksl::contains <#kslcontains>`__
+-  `ksl::trimLeft <#ksltrimleft>`__
+-  `ksl::trimRight <#ksltrimright>`__
+-  `ksl::trimWhitespace <#ksltrimwhitespace>`__
+-  `ksl::toLower <#ksltolower>`__
+-  `ksl::toUpper <#ksltoupper>`__
+-  `ksl::capitalize <#kslcapitalize>`__
+-  `ksl::isAlphNum <#kslisalphnum>`__
+-  `ksl::isAlpha <#kslisalpha>`__
+-  `ksl::isAscii <#kslisascii>`__
+-  `ksl::isBlank <#kslisblank>`__
+-  `ksl::isCntrl <#ksliscntrl>`__
+-  `ksl::isPrint <#kslisprint>`__
+-  `ksl::isGraph <#kslisgraph>`__
+-  `ksl::isLower <#kslislower>`__
+-  `ksl::isUpper <#kslisupper>`__
+-  `ksl::isPunct <#kslispunct>`__
+-  `ksl::isSpace <#kslisspace>`__
+-  `ksl::isWord <#kslisword>`__
+-  `ksl::isDigit <#kslisdigit>`__
+-  `ksl::isInteger <#kslisinteger>`__
+-  `ksl::isNumber <#kslisnumber>`__
+-  `ksl::isFloat <#kslisfloat>`__
+-  `ksl::isXdigit <#kslisxdigit>`__
+
+ksl::strlen
+~~~~~~~~~~~
+
+Returns the number of characters in string.
+
+Passes string by value. See also strlenR() next.
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   x=$(ksl::strlen "dinosaur")
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string of interest
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the string length
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image1|
+
+ksl::strlenR
+~~~~~~~~~~~~
+
+Returns the number of characters held in string variable.
+
+Passes string by reference. See also strlen() previous.
+
+.. _example-1:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL=dinosaur
+   x=$(ksl::strlenR ANIMAL)
+
+.. _arguments-1:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the variable name holding a string
+
+.. _exit-codes-1:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+.. _output-on-stdout-1:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the string length
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image2|
+
+ksl::isEmpty
+~~~~~~~~~~~~
+
+Returns true if string is empty, otherwise false.
+
+Passes string by value. See also isEmptyR() next.
+
+.. _example-2:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL=dinosaur
+   if ksl::isEmpty $ANIMAL; then echo "yes"; fi
+
+.. _arguments-2:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string of interest
+
+.. _exit-codes-2:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: if string is empty (true)
+-  **1**: if string is non-empty (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image3|
+
+ksl::isEmptyR
+~~~~~~~~~~~~~
+
+Returns true if string variable holds a non-zero string.
+
+Passes string by reference. See also isEmpty() previous.
+
+.. _example-3:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL=dinosaur
+   if ksl::isEmptyR ANIMAL; then echo "yes"; fi
+
+.. _arguments-3:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the variable name holding a string
+
+.. _exit-codes-3:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: if string variable is empty (true)
+-  **1**: if string variable is non-empty (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image4|
+
+ksl::startsWith
+~~~~~~~~~~~~~~~
+
+Returns true if $1 string starts with $2 string.
+
+.. _example-4:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="old dinosaur"
+   if ksl::startsWith $ANIMAL "old"; then echo "yes"; fi
+
+.. _arguments-4:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the major string to test
+-  **$2** (…): the minor string to look for
+
+.. _exit-codes-4:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the major string starts with the minor string (true)
+-  **1**: the major string does not start with the minor string (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image5|
+
+ksl::endsWith
+~~~~~~~~~~~~~
+
+Returns true if $1 string ends with $2 string.
+
+.. _example-5:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="old dinosaur"
+   if ksl::endsWith $ANIMAL "dinosaur"; then echo "yes"; fi
+
+.. _arguments-5:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the major string to test
+-  **$2** (…): the minor string to look for
+
+.. _exit-codes-5:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the major string ends with the minor string (true)
+-  **1**: the major string does not end with the minor string (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image6|
+
+ksl::contains
+~~~~~~~~~~~~~
+
+Returns true if $1 string contains the string in $2.
+
+.. _example-6:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="old dinosaur"
+   if ksl::contains $ANIMAL "dinosaur"; then echo "yes"; fi
+
+.. _arguments-6:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the major string to test
+-  **$2** (…): the minor string to look for
+
+.. _exit-codes-6:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the major string contains the minor string (true)
+-  **1**: the major string does not contain the minor string (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image7|
+
+ksl::trimLeft
+~~~~~~~~~~~~~
+
+Returns a copy of $1 with the matching string in $2 removed from the
+front of $1.
+
+If $2 is not given then defaults to removing whitespace. $2 argument is
+a prefix.
+
+.. _example-7:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="old dinosaur"
+   echo ksl::trimLeft $ANIMAL "old "
+   outputs: "dinosaur"
+
+.. _arguments-7:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the major string to operate on
+-  **$2** (…): the minor string to look for
+
+.. _exit-codes-7:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+.. _output-on-stdout-2:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the resulting string
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image8|
+
+ksl::trimRight
+~~~~~~~~~~~~~~
+
+Returns a copy of $1 with the matching string in $2 removed from the end
+of $1.
+
+If $2 is not given then defaults to removing whitespace. $2 argument is
+a prefix.
+
+.. _example-8:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="old dinosaur"
+   echo ksl::trimRight $ANIMAL "dinosaur"
+   outputs: "old "
+
+.. _arguments-8:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the major string to operate on
+-  **$2** (…): the minor string to look for
+
+.. _exit-codes-8:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+.. _output-on-stdout-3:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the resulting string
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image9|
+
+ksl::trimWhitespace
+~~~~~~~~~~~~~~~~~~~
+
+Returns a copy of $1 with the whitspace removed from both the start and
+end of $1.
+
+.. _example-9:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="  old dinosaur\t"
+   echo ksl::trimWhitespace $ANIMAL
+   outputs: "old dinosaur"
+
+.. _arguments-9:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-9:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+.. _output-on-stdout-4:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the resulting string
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image10|
+
+ksl::toLower
+~~~~~~~~~~~~
+
+Returns a copy of $1 string converted to lower case.
+
+.. _example-10:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="Old Dinosaur"
+   echo ksl::toLower $ANIMAL
+   outputs: "old dinosaur"
+
+.. _arguments-10:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-10:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+.. _output-on-stdout-5:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the resulting string
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image11|
+
+ksl::toUpper
+~~~~~~~~~~~~
+
+Returns a copy of $1 string converted to upper case.
+
+.. _example-11:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="Old Dinosaur"
+   echo ksl::toUpper $ANIMAL
+   outputs: "OLD DINOSAUR"
+
+.. _arguments-11:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-11:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+.. _output-on-stdout-6:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the resulting string
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image12|
+
+ksl::capitalize
+~~~~~~~~~~~~~~~
+
+Returns a copy of $1 string with first character capitalized and the
+rest left alone.
+
+.. _example-12:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="old dinosaur"
+   echo ksl::capitalize $ANIMAL
+   outputs: "Old dinosaur"
+
+.. _arguments-12:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-12:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: in all cases
+
+.. _output-on-stdout-7:
+
+Output on stdout
+^^^^^^^^^^^^^^^^
+
+-  the resulting string
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image13|
+
+ksl::isAlphNum
+~~~~~~~~~~~~~~
+
+Returns true if all characters in $1 are alphanumeric as defined by the
+POSIX standard.
+
+.. _example-13:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isAlphaNum $ANIMAL; then echo "yes"; fi
+
+.. _arguments-13:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-13:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only alpha numeric characters (true)
+-  **1**: the string contains more than just alpha numeric characters
+   (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image14|
+
+ksl::isAlpha
+~~~~~~~~~~~~
+
+Returns true if all characters in $1 are alpha as defined by the POSIX
+standard.
+
+.. _example-14:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isAlpha $ANIMAL; then echo "yes"; fi
+
+.. _arguments-14:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-14:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only alpha characters (true)
+-  **1**: the string contains more than just alpha characters (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image15|
+
+ksl::isAscii
+~~~~~~~~~~~~
+
+Returns true if all characters in $1 are ASCII characters as defined by
+the POSIX standard.
+
+ASCII is not currently working. Need to investigate.
+
+.. _example-15:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isAscii $ANIMAL; then echo "yes"; fi
+
+.. _arguments-15:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-15:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only ASCII characters (true)
+-  **1**: the string contains more than just ASCII characters (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image16|
+
+ksl::isBlank
+~~~~~~~~~~~~
+
+Returns true if all characters in $1 are blank as defined by the POSIX
+standard.
+
+.. _example-16:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isBlank $ANIMAL; then echo "yes"; fi
+
+.. _arguments-16:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-16:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only blank characters (true)
+-  **1**: the string contains more than just blank characters (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image17|
+
+ksl::isCntrl
+~~~~~~~~~~~~
+
+Returns true if all characters in $1 are control characters as defined
+by the POSIX standard.
+
+.. _example-17:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isCntrl $ANIMAL; then echo "yes"; fi
+
+.. _arguments-17:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-17:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only control characters (true)
+-  **1**: the string contains more than just control characters (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image18|
+
+ksl::isPrint
+~~~~~~~~~~~~
+
+Returns true if $1 contains only characters that are printable as
+defined by POSIX standard.
+
+.. _example-18:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isPrint $ANIMAL; then echo "yes"; fi
+
+.. _arguments-18:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-18:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only printable characters (true)
+-  **1**: the string contains more than just printable characters
+   (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image19|
+
+ksl::isGraph
+~~~~~~~~~~~~
+
+Returns true if all characters in $1 are in the graph class (displayable
+on a screen) as defined by the POSIX standard.
+
+.. _example-19:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isGraph $ANIMAL; then echo "yes"; fi
+
+.. _arguments-19:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-19:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only digit characters (true)
+-  **1**: the string contains more than just digit characters (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image20|
+
+ksl::isLower
+~~~~~~~~~~~~
+
+Returns true if all characters in $1 are lower case as defined by the
+POSIX standard.
+
+.. _example-20:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isLower $ANIMAL; then echo "yes"; fi
+
+.. _arguments-20:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-20:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only lowercase characters (true)
+-  **1**: the string contains more than just lowercase characters
+   (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image21|
+
+ksl::isUpper
+~~~~~~~~~~~~
+
+Returns true if all characters in $1 are upper case as defined by the
+POSIX standard.
+
+.. _example-21:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isUpper $ANIMAL; then echo "yes"; fi
+
+.. _arguments-21:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-21:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only upper case characters (true)
+-  **1**: the string contains more than just upper case characters
+   (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image22|
+
+ksl::isPunct
+~~~~~~~~~~~~
+
+Returns true if $1 contains only characters that are punctuations as
+defined by the POSIX standard.
+
+.. _example-22:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isPunct $ANIMAL; then echo "yes"; fi
+
+.. _arguments-22:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-22:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only punctuation characters (true)
+-  **1**: the string contains more than just punctuation characters
+   (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image23|
+
+ksl::isSpace
+~~~~~~~~~~~~
+
+Returns true if $1 contains only characters that are spaces as defined
+by the POSIX standard.
+
+.. _example-23:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isSpace $ANIMAL; then echo "yes"; fi
+
+.. _arguments-23:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-23:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only space characters (true)
+-  **1**: the string contains more than just space characters (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image24|
+
+ksl::isWord
+~~~~~~~~~~~
+
+Returns true if all characters in $1 are considered a word - containing
+only letters, digits, and the character \_.
+
+isWord is not currently working. Need to investigate.
+
+.. _example-24:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isWord $ANIMAL; then echo "yes"; fi
+
+.. _arguments-24:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-24:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains a valid word (true)
+-  **1**: the string contains more than a word (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image25|
+
+ksl::isDigit
+~~~~~~~~~~~~
+
+Returns true if all characters in $1 are digits as defined by the POSIX
+standard.
+
+Note that “+” “-” “.” are not digits.
+
+.. _example-25:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isDigit $ANIMAL; then echo "yes"; fi
+
+.. _arguments-25:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-25:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only digit characters (true)
+-  **1**: the string contains more than just digit characters (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image26|
+
+ksl::isInteger
+~~~~~~~~~~~~~~
+
+Returns true if $1 forms a valid integer meaning all digits with an
+optional preceding +/-.
+
+Does not check for length.
+
+.. _example-26:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isInteger $ANIMAL; then echo "yes"; fi
+
+.. _arguments-26:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-26:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains a valid integer (true)
+-  **1**: the string contains more than just an integer (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image27|
+
+ksl::isNumber
+~~~~~~~~~~~~~
+
+Returns true if $1 forms a valid number.
+
+.. _example-27:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isNumber $ANIMAL; then echo "yes"; fi
+
+.. _arguments-27:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-27:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains a valid number (true)
+-  **1**: the string contains more than just a number (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image28|
+
+ksl::isFloat
+~~~~~~~~~~~~
+
+Returns true if $1 forms a valid floating point number.
+
+.. _example-28:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isFloat $ANIMAL; then echo "yes"; fi
+
+.. _arguments-28:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-28:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains a valid floating point number (true)
+-  **1**: the string contains more than just a floating point number
+   (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image29|
+
+ksl::isXdigit
+~~~~~~~~~~~~~
+
+Returns true if all characters in $1 are valid hexadecimal digits.
+
+.. _example-29:
+
+Example
+^^^^^^^
+
+.. code:: bash
+
+   ANIMAL="dinosaur"
+   if ksl::isXdigit $ANIMAL; then echo "yes"; fi
+
+.. _arguments-29:
+
+Arguments
+^^^^^^^^^
+
+-  **$1** (…): the string to operate on
+
+.. _exit-codes-29:
+
+Exit codes
+^^^^^^^^^^
+
+-  **0**: the string contains only hexadecimal characters (true)
+-  **1**: the string contains more than just hexadecimal characters
+   (false)
+
+   .. raw:: html
+
+      <p>
+
+   .. raw:: html
+
+      <p>
+
+   |image30|
+
+.. |image1| image:: ../images/pub/divider-line.png
+.. |image2| image:: ../images/pub/divider-line.png
+.. |image3| image:: ../images/pub/divider-line.png
+.. |image4| image:: ../images/pub/divider-line.png
+.. |image5| image:: ../images/pub/divider-line.png
+.. |image6| image:: ../images/pub/divider-line.png
+.. |image7| image:: ../images/pub/divider-line.png
+.. |image8| image:: ../images/pub/divider-line.png
+.. |image9| image:: ../images/pub/divider-line.png
+.. |image10| image:: ../images/pub/divider-line.png
+.. |image11| image:: ../images/pub/divider-line.png
+.. |image12| image:: ../images/pub/divider-line.png
+.. |image13| image:: ../images/pub/divider-line.png
+.. |image14| image:: ../images/pub/divider-line.png
+.. |image15| image:: ../images/pub/divider-line.png
+.. |image16| image:: ../images/pub/divider-line.png
+.. |image17| image:: ../images/pub/divider-line.png
+.. |image18| image:: ../images/pub/divider-line.png
+.. |image19| image:: ../images/pub/divider-line.png
+.. |image20| image:: ../images/pub/divider-line.png
+.. |image21| image:: ../images/pub/divider-line.png
+.. |image22| image:: ../images/pub/divider-line.png
+.. |image23| image:: ../images/pub/divider-line.png
+.. |image24| image:: ../images/pub/divider-line.png
+.. |image25| image:: ../images/pub/divider-line.png
+.. |image26| image:: ../images/pub/divider-line.png
+.. |image27| image:: ../images/pub/divider-line.png
+.. |image28| image:: ../images/pub/divider-line.png
+.. |image29| image:: ../images/pub/divider-line.png
+.. |image30| image:: ../images/pub/divider-line.png

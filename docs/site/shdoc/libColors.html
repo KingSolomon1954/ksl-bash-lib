@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libColors &mdash; ksl-bash-lib 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="libEnv" href="libEnv.html" />
+    <link rel="prev" title="libArrays" href="libArrays.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ksl-bash-lib
+              <img src="../_static/blue-fire-icon-60x90.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shdoc-intro.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="libArrays.html">libArrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">libColors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index">Index</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-iscolorcapable">ksl::isColorCapable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-enablecolor">ksl::enableColor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-disablecolor">ksl::disableColor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-usecolor">ksl::useColor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="libEnv.html">libEnv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libError.html">libError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libFiles.html">libFiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStdOut.html">libStdOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStrings.html">libStrings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/licenses.html">Licenses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/opensource.html">Open Source Inventory</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ksl-bash-lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="shdoc-intro.html">KSL-BASH-LIB API</a></li>
+      <li class="breadcrumb-item active">libColors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/shdoc/libColors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="libcolors">
+<h1>libColors<a class="headerlink" href="#libcolors" title="Link to this heading"></a></h1>
+<p>Functions to help with color.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Functions to help with color.</p>
+<p>Contains the following:</p>
+<ul class="simple">
+<li><p>ksl::isColorCapable()</p></li>
+<li><p>ksl::enableColor()</p></li>
+<li><p>ksl::disableColor()</p></li>
+<li><p>ksl::useColor()</p></li>
+</ul>
+<p>Sourcing <code class="docutils literal notranslate"><span class="pre">libColors.bash</span></code> implicitly calls <code class="docutils literal notranslate"><span class="pre">ksl::enableColor()</span></code> and
+if the terminal is capable of color, <code class="docutils literal notranslate"><span class="pre">KSL_USE_COLOR</span></code> is set to true.
+So an application does not need to do anything additional. If desired,
+applications can call <code class="docutils literal notranslate"><span class="pre">ksl::useColor()</span></code> if they need to test for
+color.</p>
+<p>Also provides the following shell variables that help with colors.</p>
+<ul class="simple">
+<li><p>ESC</p></li>
+<li><p>FG</p></li>
+<li><p>BG</p></li>
+<li><p>FG_BLACK</p></li>
+<li><p>FG_RED</p></li>
+<li><p>FG_GREEN</p></li>
+<li><p>FG_YELLOW</p></li>
+<li><p>FG_BLUE</p></li>
+<li><p>FG_MAGENTA</p></li>
+<li><p>FG_CYAN</p></li>
+<li><p>FG_WHITE</p></li>
+<li><p>FG_ORANGE</p></li>
+<li><p>BG_BLACK</p></li>
+<li><p>BG_RED</p></li>
+<li><p>BG_GREEN</p></li>
+<li><p>BG_YELLOW</p></li>
+<li><p>BG_BLUE</p></li>
+<li><p>BG_MAGENTA</p></li>
+<li><p>BG_CYAN</p></li>
+<li><p>BG_WHITE</p></li>
+<li><p>BG_ORANGE</p></li>
+<li><p>CLEAR</p></li>
+<li><p>BOLD</p></li>
+<li><p>DIM</p></li>
+<li><p>UNDERLINE</p></li>
+<li><p>BLINK</p></li>
+<li><p>REVERSE</p></li>
+<li><p>HIDDEN</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="index">
+<h2>Index<a class="headerlink" href="#index" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#ksliscolorcapable">ksl::isColorCapable</a></p></li>
+<li><p><a class="reference external" href="#kslenablecolor">ksl::enableColor</a></p></li>
+<li><p><a class="reference external" href="#ksldisablecolor">ksl::disableColor</a></p></li>
+<li><p><a class="reference external" href="#kslusecolor">ksl::useColor</a></p></li>
+</ul>
+<section id="ksl-iscolorcapable">
+<h3>ksl::isColorCapable<a class="headerlink" href="#ksl-iscolorcapable" title="Link to this heading"></a></h3>
+<p>Determines if the terminal is capable of color.</p>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>ksl::isColorCapable<span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>yes<span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+<p><em>Function has no arguments.</em></p>
+</section>
+<section id="exit-codes">
+<h4>Exit codes<a class="headerlink" href="#exit-codes" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: terminal is capable of color</p></li>
+<li><p><strong>1</strong>: terminal is not capable of color</p>
+<p><p><p><img alt="image1" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-enablecolor">
+<h3>ksl::enableColor<a class="headerlink" href="#ksl-enablecolor" title="Link to this heading"></a></h3>
+<p>Enables color if terminal is capable.</p>
+<p>This is called implicitly once, when the <code class="docutils literal notranslate"><span class="pre">libColors.bash</span></code> is sourced.</p>
+<section id="example-1">
+<span id="id1"></span><h4>Example<a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::enableColor
+</pre></div>
+</div>
+<p><em>Function has no arguments.</em></p>
+</section>
+<section id="variables-set">
+<h4>Variables set<a class="headerlink" href="#variables-set" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>KSL_USE_COLOR</strong> (boolean): set to true or false</p></li>
+</ul>
+</section>
+<section id="exit-codes-1">
+<span id="id2"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-1" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: if terminal is color capable and KSL_USE_COLOR is set to true</p></li>
+<li><p><strong>1</strong>: terminal is not color capable and KSL_USE_COLOR remains
+unchanged</p>
+<p><p><p><img alt="image2" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-disablecolor">
+<h3>ksl::disableColor<a class="headerlink" href="#ksl-disablecolor" title="Link to this heading"></a></h3>
+<p>Disables color.</p>
+<section id="example-2">
+<span id="id3"></span><h4>Example<a class="headerlink" href="#example-2" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::disableColor
+</pre></div>
+</div>
+<p><em>Function has no arguments.</em></p>
+</section>
+<section id="variables-set-1">
+<span id="id4"></span><h4>Variables set<a class="headerlink" href="#variables-set-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>KSL_USE_COLOR</strong> (boolean): sets it to false</p></li>
+</ul>
+</section>
+<section id="exit-codes-2">
+<span id="id5"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: in all cases</p>
+<p><p><p><img alt="image3" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-usecolor">
+<h3>ksl::useColor<a class="headerlink" href="#ksl-usecolor" title="Link to this heading"></a></h3>
+<p>Returns true if color is enabled.</p>
+<section id="example-3">
+<span id="id6"></span><h4>Example<a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>ksl::useColor<span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>yes<span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</pre></div>
+</div>
+<p><em>Function has no arguments.</em></p>
+</section>
+<section id="variables-set-2">
+<span id="id7"></span><h4>Variables set<a class="headerlink" href="#variables-set-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>KSL_USE_COLOR</strong> (boolean): returns value of this variable</p></li>
+</ul>
+</section>
+<section id="exit-codes-3">
+<span id="id8"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-3" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>0</strong>: if KSL_USE_COLOR is true</p></li>
+<li><p><strong>1</strong>: if KSL_USE_COLOR is false</p>
+<p><p><p><img alt="image4" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="libArrays.html" class="btn btn-neutral float-left" title="libArrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="libEnv.html" class="btn btn-neutral float-right" title="libEnv" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, KingSolomon1954@github.com.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

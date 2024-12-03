@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libEnv &mdash; ksl-bash-lib 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="libError" href="libError.html" />
+    <link rel="prev" title="libColors" href="libColors.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ksl-bash-lib
+              <img src="../_static/blue-fire-icon-60x90.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shdoc-intro.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="libArrays.html">libArrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libColors.html">libColors</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">libEnv</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index">Index</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-envcontains">ksl::envContains</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-envappend">ksl::envAppend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-envprepend">ksl::envPrepend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-envdelete">ksl::envDelete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-envdeletefirst">ksl::envDeleteFirst</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-envdeletelast">ksl::envDeleteLast</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ksl-envsetseparator">ksl::envSetSeparator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="libError.html">libError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libFiles.html">libFiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStdOut.html">libStdOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libStrings.html">libStrings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/licenses.html">Licenses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses/opensource.html">Open Source Inventory</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ksl-bash-lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="shdoc-intro.html">KSL-BASH-LIB API</a></li>
+      <li class="breadcrumb-item active">libEnv</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/shdoc/libEnv.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="libenv">
+<h1>libEnv<a class="headerlink" href="#libenv" title="Link to this heading"></a></h1>
+<p>Functions to manipulate environment PATH-like variables</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Functions to manipulate shell environment PATH like variables with
+entries normally separated by “:” such as <code class="docutils literal notranslate"><span class="pre">MANPATH</span></code> and <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
+itself.</p>
+<p>Often these variables contain directory paths but they don’t have to,
+for example <code class="docutils literal notranslate"><span class="pre">HISTCONTROL</span></code>. Between each path element is a separator
+character, normally a colon “:” but this can be changed by setting
+<code class="docutils literal notranslate"><span class="pre">evpSep</span></code>.</p>
+<p>Contains the following:</p>
+<ul class="simple">
+<li><p>ksl::envContains()</p></li>
+<li><p>ksl::envAppend()</p></li>
+<li><p>ksl::envPrepend()</p></li>
+<li><p>ksl::envDelete()</p></li>
+<li><p>ksl::envDeleteFirst()</p></li>
+<li><p>ksl::envDeleteLast()</p></li>
+<li><p>ksl::envSetSeparator()</p></li>
+</ul>
+<p>The following is an example <code class="docutils literal notranslate"><span class="pre">PATH</span></code> setup using some of these
+functions. Note that no specific testing for OS is needed. Just relies
+on whether the element exists on the file space.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard system path setup here</span>
+
+ksl::envAppend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/bin&quot;</span>
+ksl::envAppend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/bin&quot;</span>
+ksl::envAppend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/bin&quot;</span>
+ksl::envAppend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/sbin&quot;</span>
+ksl::envAppend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/sbin&quot;</span>
+ksl::envAppend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/sbin&quot;</span>
+ksl::envAppend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.local/bin&quot;</span>
+ksl::envAppend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/bin&quot;</span>
+ksl::envDelete<span class="w">    </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/games&quot;</span>
+ksl::envDelete<span class="w">    </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/games&quot;</span>
+
+<span class="c1"># Some platform specific setup</span>
+
+ksl::envPrepend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/opt/m4/bin&quot;</span>
+ksl::envPrepend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/opt/openssl/bin&quot;</span>
+ksl::envPrepend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/opt/findutils/libexec/gnubin&quot;</span>
+ksl::envPrepend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/opt/coreutils/libexec/gnubin&quot;</span>
+ksl::envPrepend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/opt/grep/libexec/gnubin&quot;</span>
+ksl::envPrepend<span class="w"> </span>-f<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/local/opt/make/libexec/gnubin&quot;</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="index">
+<h2>Index<a class="headerlink" href="#index" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#kslenvcontains">ksl::envContains</a></p></li>
+<li><p><a class="reference external" href="#kslenvappend">ksl::envAppend</a></p></li>
+<li><p><a class="reference external" href="#kslenvprepend">ksl::envPrepend</a></p></li>
+<li><p><a class="reference external" href="#kslenvdelete">ksl::envDelete</a></p></li>
+<li><p><a class="reference external" href="#kslenvdeletefirst">ksl::envDeleteFirst</a></p></li>
+<li><p><a class="reference external" href="#kslenvdeletelast">ksl::envDeleteLast</a></p></li>
+<li><p><a class="reference external" href="#kslenvsetseparator">ksl::envSetSeparator</a></p></li>
+</ul>
+<section id="ksl-envcontains">
+<h3>ksl::envContains<a class="headerlink" href="#ksl-envcontains" title="Link to this heading"></a></h3>
+<p>True if path style variable $1 contains the string in $2.</p>
+<p>This is slightly different than just looking for a contained string as
+with <code class="docutils literal notranslate"><span class="pre">ksl:contains()</span></code>. Here the string to look for must exactly match
+between the surrounding “:” markers.</p>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>ksl::envContains<span class="w"> </span>PATH<span class="w"> </span><span class="s2">&quot;/usr/bin&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Yes in PATH&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments">
+<h4>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (string): the name of a path style variable.</p></li>
+<li><p><strong>$2</strong> (string): the element to look for.</p></li>
+</ul>
+</section>
+<section id="exit-codes">
+<h4>Exit codes<a class="headerlink" href="#exit-codes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success - was found</p></li>
+<li><p><strong>1</strong>: not found, or missing args</p></li>
+</ul>
+</section>
+<section id="output-on-stdout">
+<h4>Output on stdout<a class="headerlink" href="#output-on-stdout" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr">
+<h4>Output on stderr<a class="headerlink" href="#output-on-stderr" title="Link to this heading"></a></h4>
+<ul>
+<li><p>envContains() missing args</p>
+<p><p><p><img alt="image1" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-envappend">
+<h3>ksl::envAppend<a class="headerlink" href="#ksl-envappend" title="Link to this heading"></a></h3>
+<p>Appends an element to a PATH-style variable.</p>
+<p>Appends $2, in-place, to the end of the PATH-style variable named in $1,
+provided $2 is not already in there (options are available to control
+this).</p>
+<p>ksl::envAppend [options…] PATH_VARIABLE ELEMENT</p>
+<p><strong>Options</strong></p>
+<ul class="simple">
+<li><p>-a | –allow-dups</p></li>
+<li><p>-r | –reject-dups (default)</p></li>
+<li><p>-s | –add-as-string (default)</p></li>
+<li><p>-f | –file-must-exist</p></li>
+</ul>
+<p><strong>Option Descriptions</strong></p>
+<ul class="simple">
+<li><p>-a | –allow-dups: Adds to PATH_VARIABLE even if ELEMENT is already
+in there.</p></li>
+<li><p>-r | –reject-dups: (default) Don’t add to PATH_VARIABLE if ELEMENT
+is already in there.</p></li>
+<li><p>-s | –add-as-string: (default) Adds ELEMENT to the PATH_VARIABLE as
+a string - meaning do not check whether ELEMENT exists as a file.</p></li>
+<li><p>-f | –file-must-exist: Adds ELEMENT, treated as a file/directory, to
+the PATH_VARIABLE, but only if ELEMENT exists on the file space.</p></li>
+<li><p>If both -s and -f are given, last one wins.</p></li>
+<li><p>If both -a and -r are given, last one wins.</p></li>
+</ul>
+<section id="example-1">
+<span id="id1"></span><h4>Example<a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Update MANPATH only if $HOME/man is not already in there</span>
+ksl::envAppend<span class="w"> </span>MANPATH<span class="w"> </span><span class="nv">$HOME</span>/man
+<span class="c1">#</span>
+<span class="c1"># Update MANPATH only if $HOME/man is not in there and it exists on file space</span>
+ksl::envAppend<span class="w"> </span>-r<span class="w"> </span>-f<span class="w"> </span>MANPATH<span class="w"> </span><span class="nv">$HOME</span>/man<span class="w"> </span><span class="c1"># MANPATH is updated if $HOME/man exists</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-1">
+<span id="id2"></span><h4>Arguments<a class="headerlink" href="#arguments-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (VariableName): of a path style variable, such as <code class="docutils literal notranslate"><span class="pre">PATH</span></code>,
+with “:” separating individual elements.</p></li>
+<li><p><strong>$2</strong> (Element): a string or directory or file name to append</p></li>
+</ul>
+</section>
+<section id="exit-codes-1">
+<span id="id3"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: Success if element was appended</p></li>
+<li><p><strong>1</strong>: Failed element was not appended</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-1">
+<span id="id4"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-1" title="Link to this heading"></a></h4>
+<ul>
+<li><p>ksl::_envXxpend(): missing args</p></li>
+<li><p>ksl::_envXxpend(): requires two arguments got only…</p></li>
+<li><p>ksl::_envXxpend(): invalid option…</p>
+<p><p><p><img alt="image2" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-envprepend">
+<h3>ksl::envPrepend<a class="headerlink" href="#ksl-envprepend" title="Link to this heading"></a></h3>
+<p>Prepends $2, in-place, to the front of the PATH-style variable named in
+$1, provided $2 is not already in there (options are available to
+control this).</p>
+<p>Same args and description as <a class="reference external" href="#ksl-envappend">ksl::envAppend</a>.</p>
+<p><p><p><img alt="image3" src="../_images/divider-line.png" /></p>
+</section>
+<section id="ksl-envdelete">
+<h3>ksl::envDelete<a class="headerlink" href="#ksl-envdelete" title="Link to this heading"></a></h3>
+<p>Deletes all occurrences of $2, in-place, from $1.</p>
+<p>$1 is the name of a path style variable with “:” separating individual
+elements.</p>
+<section id="example-2">
+<span id="id5"></span><h4>Example<a class="headerlink" href="#example-2" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::envDelete<span class="w"> </span>MANPATH<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/man&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-2">
+<span id="id6"></span><h4>Arguments<a class="headerlink" href="#arguments-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (string): the name of a path style variable.</p></li>
+<li><p><strong>$2</strong> (string): the element to delete.</p></li>
+</ul>
+</section>
+<section id="exit-codes-2">
+<span id="id7"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: No error. Doesn’t mean something was deleted.</p></li>
+<li><p><strong>1</strong>: Missing or empty args</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-1">
+<span id="id8"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-2">
+<span id="id9"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-2" title="Link to this heading"></a></h4>
+<ul>
+<li><p>envDelete() missing args</p>
+<p><p><p><img alt="image4" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-envdeletefirst">
+<h3>ksl::envDeleteFirst<a class="headerlink" href="#ksl-envdeletefirst" title="Link to this heading"></a></h3>
+<p>Deletes 1st element, in-place, from $1 where $1 is the name of a path
+style variable with “:” separating individual elements.</p>
+<p>Returns 1 on an error otherwise 0.</p>
+<section id="example-3">
+<span id="id10"></span><h4>Example<a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::envDeleteFirst<span class="w"> </span>MANPATH
+</pre></div>
+</div>
+</section>
+<section id="arguments-3">
+<span id="id11"></span><h4>Arguments<a class="headerlink" href="#arguments-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (VariableName): of a path style variable, such as <code class="docutils literal notranslate"><span class="pre">PATH</span></code>,
+with “:” separating individual elements.</p></li>
+</ul>
+</section>
+<section id="exit-codes-3">
+<span id="id12"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: No error. Doesn’t mean anything was deleted.</p></li>
+<li><p><strong>1</strong>: Missing or empty args</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-2">
+<span id="id13"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-3">
+<span id="id14"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-3" title="Link to this heading"></a></h4>
+<ul>
+<li><p>envDeleteFirst() missing args</p></li>
+<li><p>envDeleteFirst() empty arg</p>
+<p><p><p><img alt="image5" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-envdeletelast">
+<h3>ksl::envDeleteLast<a class="headerlink" href="#ksl-envdeletelast" title="Link to this heading"></a></h3>
+<p>Deletes last element, in-place, from $1 where $1 is the name of a path
+style variable with “:” separating individual elements.</p>
+<section id="example-4">
+<span id="id15"></span><h4>Example<a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::envDeleteLast<span class="w"> </span>MANPATH
+</pre></div>
+</div>
+</section>
+<section id="arguments-4">
+<span id="id16"></span><h4>Arguments<a class="headerlink" href="#arguments-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (VariableName): of a path style variable, such as <code class="docutils literal notranslate"><span class="pre">PATH</span></code>,
+with “:” separating individual elements.</p></li>
+</ul>
+</section>
+<section id="exit-codes-4">
+<span id="id17"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: No error. Doesn’t mean anything was deleted.</p></li>
+<li><p><strong>1</strong>: Missing or empty args</p></li>
+</ul>
+</section>
+<section id="output-on-stdout-3">
+<span id="id18"></span><h4>Output on stdout<a class="headerlink" href="#output-on-stdout-3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>no output</p></li>
+</ul>
+</section>
+<section id="output-on-stderr-4">
+<span id="id19"></span><h4>Output on stderr<a class="headerlink" href="#output-on-stderr-4" title="Link to this heading"></a></h4>
+<ul>
+<li><p>envDeleteLast() missing args</p></li>
+<li><p>envDeleteLast() empty arg</p>
+<p><p><p><img alt="image6" src="../_images/divider-line.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="ksl-envsetseparator">
+<h3>ksl::envSetSeparator<a class="headerlink" href="#ksl-envsetseparator" title="Link to this heading"></a></h3>
+<p>Use the given character as the separator between elements in a
+PATH-style variable.</p>
+<p>Initialized to “:” at startup. Stays in effect until changed.</p>
+<section id="example-5">
+<span id="id20"></span><h4>Example<a class="headerlink" href="#example-5" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ksl::envSetSeparator<span class="w"> </span><span class="s2">&quot;;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments-5">
+<span id="id21"></span><h4>Arguments<a class="headerlink" href="#arguments-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>$1</strong> (character): the separator.</p></li>
+</ul>
+</section>
+<section id="exit-codes-5">
+<span id="id22"></span><h4>Exit codes<a class="headerlink" href="#exit-codes-5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>0</strong>: In all cases</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="libColors.html" class="btn btn-neutral float-left" title="libColors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="libError.html" class="btn btn-neutral float-right" title="libError" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, KingSolomon1954@github.com.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
