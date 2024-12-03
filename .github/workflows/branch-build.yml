@@ -29,8 +29,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run unit tests
-#       run: make unit-test
-        run: make howie
+        run: make unit-test
 
       - name: Build docs
         run: make docs
