@@ -36,8 +36,4 @@ unit-tests, runs unit tests\n\
 unit-test,  runs unit tests\n\
 "
 
-howie:
-	KSL_BASH_LIB=$(PWD)/lib $(bash_unit_exec) test/libColorsTest.bash
-
-
 endif
