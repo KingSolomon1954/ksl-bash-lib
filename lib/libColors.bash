@@ -111,13 +111,20 @@ export HIDDEN="${ESC}[8m"
 #
 ksl::isColorCapable()
 {
-    if ! tput colors 2>/dev/null; then
+    # -t fd True if file descriptor fd is open and refers to a terminal.
+    if [[ ! -t 1 ]]; then
         return 1     # not color capable
     fi
     
-    local val=$(tput colors)
-    # -t fd True if file descriptor fd is open and refers to a terminal.
-    [[ -t 1 && $val -ge 8 ]]
+    if ! tput colors 2>/dev/null; then
+        return 1     # not color capable
+    fi
+
+    [[ $(tput colors) -ge 8 ]] && return 0
+    return 1    # not color capable
+    
+#    local val=$(tput colors)
+#    [[ -t 1 && $val -ge 8 ]]
 }
 
 # -----------------------------------------------------------
