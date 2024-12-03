@@ -112,19 +112,15 @@ export HIDDEN="${ESC}[8m"
 ksl::isColorCapable()
 {
     # -t fd True if file descriptor fd is open and refers to a terminal.
-    if [[ ! -t 1 ]]; then
-        return 1     # not color capable
-    fi
+    [[ ! -t 1 ]] && return 1                # not color capable
     
-    if ! tput colors 2>/dev/null; then
-        return 1     # not color capable
+    if ! tput colors >/dev/null 2>&1; then
+        return 1                            # not color capable
     fi
 
-    [[ $(tput colors) -ge 8 ]] && return 0
-    return 1    # not color capable
-    
-#    local val=$(tput colors)
-#    [[ -t 1 && $val -ge 8 ]]
+#    [[ $(tput colors) -lt 8 ]] && return 1  # not color capable
+    local val=$(tput colors)
+    if [[ $val -lt 8 ]]; then return 1; fi  # not color capable
 }
 
 # -----------------------------------------------------------
@@ -187,8 +183,11 @@ ksl::useColor()
 
 # -----------------------------------------------------------
 
-# GitHub pipeline sensitive to enableColor() returning false
-echo "howie $TERM"
-[[ ksl::enableColor || : ]]
+# Initialize libColor upon source'ing.
+# GitHub pipeline sensitive to enableColor() returning false.
+# GitHub uses TERM=dumb. Strangely the GitHub pipeline output does
+# indeed display in color, probably due to display in browser.
+#
+if ksl::enableColor; then : ; fi
 
 # -----------------------------------------------------------

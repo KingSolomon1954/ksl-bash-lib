@@ -4,7 +4,7 @@ source "${KSL_BASH_LIB}"/libStdOut.bash
 
 # -----------------------------------------------------------
 
-test_traceTest()
+test_stdOutTest()
 {
     echo
     echo -e -n "\t" && ksl::stdOut "This is a message using ksl::stdOut"

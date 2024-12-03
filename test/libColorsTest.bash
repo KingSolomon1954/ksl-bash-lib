@@ -18,7 +18,7 @@ test_isColorCapable()
 test_enableColor()
 {
     if ksl::enableColor; then
-        assert "[ -n "${KSL_USE_COLOR}" ]"
+        assert "[[ -n "${KSL_USE_COLOR}" ]]"
         assert "[[ "${KSL_USE_COLOR}" == "true" || "${KSL_USE_COLOR}" == "false" ]]"
     fi
 }
