@@ -188,6 +188,7 @@ ksl::useColor()
 # -----------------------------------------------------------
 
 # GitHub pipeline sensitive to enableColor() returning false
+echo "howie $TERM"
 [[ ksl::enableColor || : ]]
 
 # -----------------------------------------------------------
