@@ -9,7 +9,7 @@ test_isColorCapable()
     local -i ret
     ksl::isColorCapable
     ret=$?
-    assert "[[ $? -eq 0 || $? -gt 0 ]]"
+    assert "[[ $ret -eq 0 || $ret -gt 0 ]]"
 }
 
 # -----------------------------------------------------------
