@@ -15,7 +15,7 @@ on:
 
 permissions:
   contents: write
-      
+
 jobs:
 
   Build:
@@ -28,13 +28,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      -name howie
+       run tput colors
+
       - name: Run unit tests
-#        run: make unit-test
+#       run: make unit-test
         run: make howie
+
       - name: Build docs
         run: make docs
 
       # Branch builds do not publish docs
       # -name: Publish Docs
-        
+
       # TODO: Create a release
