@@ -11,7 +11,7 @@
 # Often these variables contain directory paths but they don't have to,
 # for example `HISTCONTROL`. Between each path element is a separator
 # character, normally a colon ":" but this can be changed by setting
-# `evpSep`.
+# `envSep`.
 #
 # Contains the following:
 #
