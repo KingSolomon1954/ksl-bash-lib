@@ -14,8 +14,13 @@ ifndef D_PUB_SITE
     $(error Parent makefile must define 'D_PUB_SITE')
 endif
 
-# Always git remove and then recreate docs tree
-# so to catch deleted files between commits.
+# Always git remove first and then recreate the docs tree so to catch
+# deleted files between commits.
+#
+# Also have to prevent GitHub actions from exiting with an error when
+# issuing git commit and there are no published files that have changed.
+# This is an expected use case.  See below the "or" "||" conditional 
+# fragment with a null shell statement '|| ":"'
 #
 docs-publish:
 	if git log docs/site/index.html > /dev/null 2>&1; then \
@@ -26,7 +31,6 @@ docs-publish:
 	touch $(D_PUB_SITE)/.nojekyll
 	git add -A $(D_PUB_SITE)
 	git commit -m "Publish documentation" || ":"
-	# -git commit -m "Publish documentation"
 	@echo "Reminder: issue \"git push\" when ready."
 
 .PHONY: docs-publish
