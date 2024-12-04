@@ -3,7 +3,7 @@ KSL_BASH_LIB
 TODO: form a releaseable ksl shell library
 TODO: consider https://github.com/bats-core/bats-core for testing
 TODO: multi-layered config feature, yaml parsing
-TODO: Readme.md needs writing
+TODO: Readme.md needs updates for release and installation
 
 Done: add shellcheck https://github.com/koalaman/shellcheck
 Done: automation using shdoc embedded comments https://github.com/reconquest/shdoc
@@ -17,3 +17,4 @@ Done: docs for libColors
 Done: docs for libFiles
 Done: docs for libStdOut
 Done: docs for libStrings
+Done: Initial Readme.md
