@@ -25,7 +25,8 @@ docs-publish:
 	cp -p -r $(D_BLD_SITE)/* $(D_PUB_SITE)/
 	touch $(D_PUB_SITE)/.nojekyll
 	git add -A $(D_PUB_SITE)
-	-git commit -m "Publish documentation"
+	git commit -m "Publish documentation" || ":"
+	# -git commit -m "Publish documentation"
 	@echo "Reminder: issue \"git push\" when ready."
 
 .PHONY: docs-publish
