@@ -37,4 +37,24 @@ jobs:
       # Branch builds do not publish docs
       # -name: Publish Docs
 
-      # TODO: Create a release
+      - name: Create release tarball
+        id: tar-ball
+        run: |
+          make release-tarball
+          TAR_FILE=$(cat _build/release/tarfile-name)
+          LIB_VERSION=$(cat _build/release/lib-version)
+          TAG_NAME=$(cat _build/release/lib-name)-${{ github.ref_name }}
+          echo "TAR_FILE=${TAR_FILE}"       >> ${GITHUB_OUTPUT}
+          echo "LIB_VERSION=${LIB_VERSION}" >> ${GITHUB_OUTPUT}
+          echo "TAG_NAME=${TAG_NAME}"       >> ${GITHUB_OUTPUT}
+
+      - name: Handoff tarball to GH releases
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.tar-ball.outputs.TAR_FILE }}
+          name: Branch (${{ github.ref_name }}) ${{ steps.tar-ball.outputs.LIB_VERSION }}
+          tag_name: ${{ steps.tar-ball.outputs.TAG_NAME }}
+          # if needed, you can set the release body here
+          #body: "Release notes"
+          draft: false
+          prerelease: false

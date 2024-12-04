@@ -32,6 +32,7 @@ include $(D_TEST)/unit-test.mak
 include $(D_DOCS)/docs.mak
 include $(D_MAK)/version-vars.mak
 include $(D_MAK)/bash-static-analysis.mak
+include $(D_MAK)/release-tarball.mak
 include $(D_MAK)/help.mak
 
 all-relay: unit-tests
