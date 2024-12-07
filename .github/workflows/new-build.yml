@@ -44,7 +44,7 @@ jobs:
           echo "commit message: ${{ github.event.head_commit.message }}"
           echo "executing on branch: ${{ github.ref_name }}"
 
-      - name: Test for release
+      - name: Determine if release
         id: test_for_release
         run: |
           if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
@@ -54,14 +54,13 @@ jobs:
                   echo "do_release=false" >> ${GITHUB_OUTPUT}; \
               fi; \
           fi
-
           
       - name: Bump major version number
         if: ${{ steps.test_for_release.outputs.do_release }}
         run:  |
           bump_level=$(echo "${{ github.event.head_commit.message }}" | awk '{ print $2 }')
-          echo "howie bump_level=$bump_level"
           make BUMP=$bump_level bump-version
+          
 #          [[ -z $bump_level ]] && exit 1
 
 #      - name: Bump minor version number
