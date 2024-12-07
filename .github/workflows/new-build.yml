@@ -48,17 +48,17 @@ jobs:
       - name: Determine if release build
         id: test_for_release
         run: |
-          do_release="false"
+          do_release=1
           if [[ ${{ github.event_name == 'pull_request' }} ]]; then \
               if ${{ github.event.action == 'closed' }}; then \
                   if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
-                      do_release="true"; \
+                      do_release=0; \
                   fi; \
               fi; \
           fi
           echo "howie do_release=$do_release"
-          # echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
-          echo "do_release=true" >> ${GITHUB_OUTPUT}
+          echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
+          #echo "do_release=true" >> ${GITHUB_OUTPUT}
           cat ${GITHUB_OUTPUT}
           
           
@@ -71,7 +71,7 @@ jobs:
 #          fi
           
       - name: Release-only bump version number
-        if: ${{ steps.test_for_release.outputs.do_release == "true" }}
+        if: ${{ steps.test_for_release.outputs.do_release }}
         run:  |
           bump_level=$(echo "${{ github.event.head_commit.message }}" | awk '{ print $2 }')
           make BUMP=$bump_level bump-version
