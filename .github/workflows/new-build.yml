@@ -57,10 +57,9 @@ jobs:
           
       - name: Bump major version number
         if: ${{ steps.test_for_release.outputs.do_release }}
-#        if: ${{ startsWith(github.event.head_commit.message, 'Release:') && github.refs == 'main' }}
         run:  |
-          echo "commit message: ${{ github.event.head_commit.message }}"
-          echo "executing on branch: ${{ github.ref_name }}"
+          bump_level=$(echo "${{ github.event.head_commit.message }}" | awk \{ print $2 \})
+          echo "howie bump_level=$bump_level"
           make BUMP=major bump-version
 
 #      - name: Bump minor version number
