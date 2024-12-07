@@ -43,10 +43,20 @@ jobs:
           echo make unit-test
           echo "commit message: ${{ github.event.head_commit.message }}"
           echo "executing on branch: ${{ github.ref_name }}"
-        
+
+      - name: Test for release
+        id: test_for_release
+        run: |
+          if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
+              if ${{ github.ref_name == 'main' }}; then \
+                  echo "do_release=true"  >> ${GIHUB_OUTPUT}; \
+              else \
+                  echo "do_release=false" >> ${GIHUB_OUTPUT}; \
+          fi
+          
       - name: Bump major version number
-        # if: ${{ github.event_name == "pull_request" }}
-        if: ${{ startsWith(github.event.head_commit.message, 'Release:') && github.refs == 'main' }}
+        if: ${{ steps.test_for_release.do_release }}
+#        if: ${{ startsWith(github.event.head_commit.message, 'Release:') && github.refs == 'main' }}
         run:  |
           echo "commit message: ${{ github.event.head_commit.message }}"
           echo "executing on branch: ${{ github.ref_name }}"
