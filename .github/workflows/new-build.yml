@@ -56,7 +56,7 @@ jobs:
           fi
           
       - name: Bump major version number
-        if: ${{ steps.test_for_release.do_release }}
+        if: ${{ steps.test_for_release.do_release == true }}
 #        if: ${{ startsWith(github.event.head_commit.message, 'Release:') && github.refs == 'main' }}
         run:  |
           echo "commit message: ${{ github.event.head_commit.message }}"
