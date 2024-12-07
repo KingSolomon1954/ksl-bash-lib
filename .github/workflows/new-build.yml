@@ -48,17 +48,16 @@ jobs:
       - name: Determine if release build
         id: test_for_release
         run: |
-          do_release="no"
+          do_release=false
           if [[ ${{ github.event_name == 'pull_request' }} ]]; then \
               if ${{ github.event.action == 'closed' }}; then \
                   if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
-                      do_release="yes"; \
+                      do_release=true; \
                   fi; \
               fi; \
           fi
           echo "howie do_release=$do_release"
-          # echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
-          echo "do_release=yes" >> ${GITHUB_OUTPUT}
+          echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
           cat ${GITHUB_OUTPUT}
           
           
