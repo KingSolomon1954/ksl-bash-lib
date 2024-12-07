@@ -71,7 +71,7 @@ jobs:
 #          fi
           
       - name: Release-only bump version number
-        if: ${{ steps.test_for_release.outputs.do_release == "yes" }}
+        if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run:  |
           bump_level=$(echo "${{ github.event.head_commit.message }}" | awk '{ print $2 }')
           make BUMP=$bump_level bump-version
