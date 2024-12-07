@@ -54,14 +54,15 @@ jobs:
                   echo "do_release=false" >> ${GITHUB_OUTPUT}; \
               fi; \
           fi
+
           
       - name: Bump major version number
         if: ${{ steps.test_for_release.outputs.do_release }}
         run:  |
           bump_level=$(echo "${{ github.event.head_commit.message }}" | awk '{ print $2 }')
           echo "howie bump_level=$bump_level"
-          [[ -z $bump_level ]] && exit 1
-          make BUMP=major bump-version
+          make BUMP=$bump_level bump-version
+#          [[ -z $bump_level ]] && exit 1
 
 #      - name: Bump minor version number
 #       if: branch is main
