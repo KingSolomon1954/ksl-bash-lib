@@ -56,6 +56,7 @@ jobs:
                   fi; \
               fi; \
           fi
+          echo "howie do_release=$do_release"
           echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
           
 #          if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
