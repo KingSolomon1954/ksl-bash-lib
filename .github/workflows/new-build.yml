@@ -48,15 +48,11 @@ jobs:
       - name: Determine if release build
         id: test_for_release
         run: |
-          if [[ ${{ github.event_name == pull_request }} ]]; then \
+          if [[ ${{ github.event_name == "pull_request" }} ]]; then \
               if ${{ startsWith(github.event.pull_request.title, 'Release:') }}; then \
-                  if [[ ${{ github.event.pull_request.type == closed }} ]] ,
-              fi
+                  echo "howie Got Release on pull_request"; \
+              fi; \
           fi
-
-          ith(github.event.head_commit.message, 'Release:') }}; then \
-
-          
           if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
               if [[ ${{ github.ref_name == 'CreateReleases' }} ]]; then \
                   echo "do_release=true"  >> ${GITHUB_OUTPUT}; \
