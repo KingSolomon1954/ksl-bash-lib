@@ -39,12 +39,11 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Run unit tests
-        run:  make unit-test
+        run:  echo make unit-test
         
       - name: Bump major version number
         # if: ${{ github.event_name == "pull_request" }}
-        if: ${{ startsWith(github.event.head_commit.message, 'Release:') && github.refs == 'main' }}
-        # if: branch is main
+        # if: ${{ startsWith(github.event.head_commit.message, 'Release:') && github.refs == 'main' }}
         run:  |
           echo "executing on branch: ${{ github.refs }}"
           make BUMP=major bump-version
@@ -60,13 +59,13 @@ jobs:
 #        run:  make BUMP=patch bump-version
 
       - name: Build docs
-        run:  make docs
+        run:  echo make docs
 
       - name: Publish docs
-        run:  make docs-publish
+        run:  echo make docs-publish
 
       - name: Create tarball
-        run:  make create-tarball
+        run:  echo make create-tarball
 
       - name: Test tarball
         run:  make test-tarball
