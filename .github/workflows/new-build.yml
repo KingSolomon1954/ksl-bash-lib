@@ -39,7 +39,10 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Run unit tests
-        run:  echo make unit-test
+        run:  |
+          echo make unit-test
+          echo "commit message: ${{ github.event.head_commit.message }}"
+          echo "executing on branch: ${{ github.ref_name }}"
         
       - name: Bump major version number
         # if: ${{ github.event_name == "pull_request" }}
