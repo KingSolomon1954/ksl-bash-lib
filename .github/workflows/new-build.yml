@@ -42,9 +42,8 @@ jobs:
         run:  make unit-test
         
       - name: Bump major version number
-        if: ${{ github.event_name == "pull_request" }}
+        if: ${{ github.event_name == "pull_request" && startsWith(github.event.pull_request.title, 'Release: major') }}
         if: ${{ github.event_name == "push_request" }}
-        if: startsWith(github.event.pull_request.title, 'Release: major')
         # if: branch is main
         run:  make BUMP=major bump-version
 
