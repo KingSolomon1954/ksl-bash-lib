@@ -57,7 +57,8 @@ jobs:
               fi; \
           fi
           echo "howie do_release=$do_release"
-          echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
+          # echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
+          echo "do_release=true" >> ${GITHUB_OUTPUT}
           cat ${GITHUB_OUTPUT}
           
           
