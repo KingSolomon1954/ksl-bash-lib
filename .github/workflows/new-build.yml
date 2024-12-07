@@ -43,7 +43,7 @@ jobs:
         
       - name: Bump major version number
         # if: ${{ github.event_name == "pull_request" }}
-        if: ${{ startsWith(github.event.head_commit.message, 'Release:' }}
+        if: ${{ startsWith(github.event.head_commit.message, 'Release:') }}
         if: ${{ github.refs == 'main' }}
         # if: branch is main
         run:  |
