@@ -9,11 +9,15 @@ run-name: Build ${{ github.event.head_commit.message }}
 
 on:
   push:
-    branches:
-      - CreateReleases
     paths-ignore:
       - docs/site/**
       - ./version
+    branches:
+      - CreateReleases
+    
+  pull_request:
+    branches:
+      - main
       
   # Allow manually triggering from GitHub Actions tab
   workflow_dispatch:
@@ -28,10 +32,6 @@ jobs:
   Build:
     runs-on: ubuntu-latest
 
-    # && startsWith(github.event.pull_request.title, 'Release: major') }}
-
-    # startsWith(github.event.pull_request.title, 'Release: major')
-
     steps:
       - name: Install podman
         run:  sudo apt install -y podman
@@ -45,9 +45,18 @@ jobs:
           echo "commit message: ${{ github.event.head_commit.message }}"
           echo "executing on branch: ${{ github.ref_name }}"
 
-      - name: Determine if release
+      - name: Determine if release build
         id: test_for_release
         run: |
+          if [[ ${{ github.event_name == pull_request }} ]]; then \
+              if ${{ startsWith(github.event.pull_request.title, 'Release:') }}; then \
+                  if [[ ${{ github.event.pull_request.type == closed }} ]] ,
+              fi
+          fi
+
+          ith(github.event.head_commit.message, 'Release:') }}; then \
+
+          
           if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
               if [[ ${{ github.ref_name == 'CreateReleases' }} ]]; then \
                   echo "do_release=true"  >> ${GITHUB_OUTPUT}; \
@@ -67,6 +76,10 @@ jobs:
 
       - name: Publish docs
         run:  echo make docs-publish
+
+      - name: Release-only create changelog
+        if: ${{ steps.test_for_release.outputs.do_release }}
+        run: echo "Create changelog"
 
       - name: Create tarball
         run:  echo make create-tarball
