@@ -45,7 +45,7 @@ jobs:
         # if: ${{ github.event_name == "pull_request" }}
         # if: ${{ startsWith(github.event.head_commit.message, 'Release:') && github.refs == 'main' }}
         run:  |
-          echo "executing on branch: ${{ github.refs }}"
+          echo "executing on branch: ${{ github.ref_name }}"
           make BUMP=major bump-version
 
 #      - name: Bump minor version number
