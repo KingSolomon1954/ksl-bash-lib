@@ -23,15 +23,20 @@ endif
 # fragment with a null shell statement '|| ":"'
 #
 docs-publish:
-	if git log docs/site/index.html > /dev/null 2>&1; then \
-	    git rm -q -r $(D_PUB_SITE)/*; \
-	fi
+	rm -rf $(D_PUB_SITE)/*
 	mkdir -p $(D_PUB_SITE)
 	cp -p -r $(D_BLD_SITE)/* $(D_PUB_SITE)/
 	touch $(D_PUB_SITE)/.nojekyll
-	git add -A $(D_PUB_SITE)
-	git commit -m "Publish documentation" || ":"
-	@echo "Reminder: issue \"git push\" when ready."
+
+#	if git log docs/site/index.html > /dev/null 2>&1; then \
+#	    git rm -q -r $(D_PUB_SITE)/*; \
+#	fi
+#	mkdir -p $(D_PUB_SITE)
+#	cp -p -r $(D_BLD_SITE)/* $(D_PUB_SITE)/
+#	touch $(D_PUB_SITE)/.nojekyll
+#	git add -A $(D_PUB_SITE)
+#	git commit -m "Publish documentation" || ":"
+#	@echo "Reminder: issue \"git push\" when ready."
 
 .PHONY: docs-publish
 
