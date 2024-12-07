@@ -32,7 +32,7 @@ release: bump-version update-changelog create-tarball test-tarball
 
 bump-version:
 	@git checkout version   # Always start fresh, allow back-to-back runs
-	@echo "Bumping $(BUMP) version"
+	@echo "Bumping \"$(BUMP)\" version"
 	@echo "Old version: $$(cat version)"
 	@$(D_SCP)/bump-version.bash $(BUMP) version
 	@echo "New version: $$(cat version)"
