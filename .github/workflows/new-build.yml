@@ -13,6 +13,7 @@ on:
       - CreateReleases
     paths-ignore:
       - docs/site/**
+      - ./version
       
   # Allow manually triggering from GitHub Actions tab
   workflow_dispatch:
@@ -60,17 +61,6 @@ jobs:
         run:  |
           bump_level=$(echo "${{ github.event.head_commit.message }}" | awk '{ print $2 }')
           make BUMP=$bump_level bump-version
-          
-#          [[ -z $bump_level ]] && exit 1
-
-#      - name: Bump minor version number
-#       if: branch is main
-#        run:  make BUMP=minor bump-version
-        
-#      - name: Bump patch version number
-#       if: startsWith(github.event.pull_request.title, 'Release: patch')
-#       if: branch is main
-#        run:  make BUMP=patch bump-version
 
       - name: Build docs
         run:  echo make docs
@@ -84,34 +74,29 @@ jobs:
       - name: Test tarball
         run:  make test-tarball
         
-#      - name: Checkin docs
-#        if: startsWith(github.event.pull_request.title, 'Release:')
-#       if: branch is main
+      - name: Checkin docs
+        if: ${{ steps.test_for_release.outputs.do_release }}
         # Performs a git checkin on docs.
         # Hence we need the paths-ignore specification
         # at top of this action to prevent a build loop. 
         # Plus needs "contents" permission to write to repo.
-#        run: |
-#          git config --global user.email "you@example.com"
-#          git config --global user.name ${{ github.actor }}
-#          git add -A docs/site
-#          git commit -m "Publish documentation"
-#          git push
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name ${{ github.actor }}
+          git add -A docs/site
+          echo howie git commit -m "Publish documentation"
+          echo howie git push
 
-#      - name: Obtain version and tag
-#        if: startsWith(github.event.pull_request.title, 'Release:')
-#       if: branch is main
-#        # Read version file, setup some variables
-#        run: echo "Obtain version and tag"
+      - name: Obtain version and tag
+        if: ${{ steps.test_for_release.outputs.do_release }}
+        run: echo "Obtain version and tag"
 
-#      - name: Push tarball to Github Release
-#        if: startsWith(github.event.pull_request.title, 'Release:')
-#       if: branch is main
-#        run: echo "Pushing tarball to Github Release"
+      - name: Push tarball to Github Release
+        if: ${{ steps.test_for_release.outputs.do_release }}
+        run: echo "Pushing tarball to Github Release"
         
-#      - name: Tag the Release at the current commit
-#        if: startsWith(github.event.pull_request.title, 'Release:')
-#       if: branch is main
-#        run: echo "Tagging release"
-#       git tag -a "v1.2.3" -m "Release: $version"
+      - name: Tag the Release at the current commit
+        if: ${{ steps.test_for_release.outputs.do_release }}
+        run: echo "Tagging release"
+        echo git tag -a "v1.2.3" -m "Release: $version"
           
