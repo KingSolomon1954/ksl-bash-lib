@@ -56,7 +56,7 @@ jobs:
               fi; \
           fi
           
-      - name: Release: Bump version number
+      - name: Release-only bump version number
         if: ${{ steps.test_for_release.outputs.do_release }}
         run:  |
           bump_level=$(echo "${{ github.event.head_commit.message }}" | awk '{ print $2 }')
@@ -74,7 +74,7 @@ jobs:
       - name: Test tarball
         run:  make test-tarball
         
-      - name: Release: Checkin docs
+      - name: Release-only checkin docs
         if: ${{ steps.test_for_release.outputs.do_release }}
         # Performs a git checkin on docs.
         # Hence we need the paths-ignore specification
@@ -87,15 +87,15 @@ jobs:
           echo howie git commit -m "Publish documentation"
           echo howie git push
 
-      - name: Release: Obtain version and tag
+      - name: Release-only obtain version and tag
         if: ${{ steps.test_for_release.outputs.do_release }}
         run: echo "Obtain version and tag"
 
-      - name: Release: Push tarball to Github Release
+      - name: Release-only push tarball to Github Release
         if: ${{ steps.test_for_release.outputs.do_release }}
         run: echo "Pushing tarball to Github Release"
         
-      - name: Release: Tag the Release at the current commit
+      - name: Release-only tag the Release at the current commit
         if: ${{ steps.test_for_release.outputs.do_release }}
         run: |
           echo "Tagging release"
