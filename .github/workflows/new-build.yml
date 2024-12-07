@@ -98,5 +98,5 @@ jobs:
       - name: Tag the Release at the current commit
         if: ${{ steps.test_for_release.outputs.do_release }}
         run: echo "Tagging release"
-        echo git tag -a "v1.2.3" -m "Release: $version"
+        echo "git tag -a "v1.2.3" -m "Release: $version""
           
