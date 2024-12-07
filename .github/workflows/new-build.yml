@@ -49,9 +49,9 @@ jobs:
         run: |
           if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
               if [[ ${{ github.ref_name == 'CreateReleases' }} ]]; then \
-                  echo "do_release=true"  >> ${{ GIHUB_OUTPUT }}; \
+                  echo "do_release=true"  >> ${GIHUB_OUTPUT}; \
               else \
-                  echo "do_release=false" >> ${{ GIHUB_OUTPUT }}; \
+                  echo "do_release=false" >> ${GIHUB_OUTPUT}; \
               fi; \
           fi
           
