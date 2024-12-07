@@ -64,7 +64,6 @@ jobs:
           make BUMP=major bump-version
 
 #      - name: Bump minor version number
-#        if: startsWith(github.event.pull_request.title, 'Release: minor')
 #       if: branch is main
 #        run:  make BUMP=minor bump-version
         
