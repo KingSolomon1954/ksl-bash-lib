@@ -48,10 +48,11 @@ jobs:
         id: test_for_release
         run: |
           if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
-              if ${{ github.ref_name == 'main' }}; then \
+              if ${{ github.ref_name == 'CreateReleases }}; then \
                   echo "do_release=true"  >> ${GIHUB_OUTPUT}; \
               else \
                   echo "do_release=false" >> ${GIHUB_OUTPUT}; \
+              fi \
           fi
           
       - name: Bump major version number
