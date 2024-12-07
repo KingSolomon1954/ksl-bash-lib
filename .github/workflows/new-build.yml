@@ -42,20 +42,23 @@ jobs:
         run:  make unit-test
         
       - name: Bump major version number
-        if: ${{ github.event_name == "pull_request" }}
+        # if: ${{ github.event_name == "pull_request" }}
         if: ${{ startsWith(github.event.head_commit.message, 'Release:' }}
+        if: ${{ github.refs == 'main' }}
         # if: branch is main
-        run:  make BUMP=major bump-version
+        run:  |
+          echo "executing on branch: ${{ github.refs }}"
+          make BUMP=major bump-version
 
-      - name: Bump minor version number
-        if: startsWith(github.event.pull_request.title, 'Release: minor')
+#      - name: Bump minor version number
+#        if: startsWith(github.event.pull_request.title, 'Release: minor')
 #       if: branch is main
-        run:  make BUMP=minor bump-version
+#        run:  make BUMP=minor bump-version
         
-      - name: Bump patch version number
-        if: startsWith(github.event.pull_request.title, 'Release: patch')
+#      - name: Bump patch version number
+#       if: startsWith(github.event.pull_request.title, 'Release: patch')
 #       if: branch is main
-        run:  make BUMP=patch bump-version
+#        run:  make BUMP=patch bump-version
 
       - name: Build docs
         run:  make docs
@@ -69,34 +72,34 @@ jobs:
       - name: Test tarball
         run:  make test-tarball
         
-      - name: Checkin docs
-        if: startsWith(github.event.pull_request.title, 'Release:')
+#      - name: Checkin docs
+#        if: startsWith(github.event.pull_request.title, 'Release:')
 #       if: branch is main
         # Performs a git checkin on docs.
         # Hence we need the paths-ignore specification
         # at top of this action to prevent a build loop. 
         # Plus needs "contents" permission to write to repo.
-        run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name ${{ github.actor }}
-          git add -A docs/site
-          git commit -m "Publish documentation"
-          git push
+#        run: |
+#          git config --global user.email "you@example.com"
+#          git config --global user.name ${{ github.actor }}
+#          git add -A docs/site
+#          git commit -m "Publish documentation"
+#          git push
 
-      - name: Obtain version and tag
-        if: startsWith(github.event.pull_request.title, 'Release:')
+#      - name: Obtain version and tag
+#        if: startsWith(github.event.pull_request.title, 'Release:')
 #       if: branch is main
-        # Read version file, setup some variables
-        run: echo "Obtain version and tag"
+#        # Read version file, setup some variables
+#        run: echo "Obtain version and tag"
 
-      - name: Push tarball to Github Release
-        if: startsWith(github.event.pull_request.title, 'Release:')
+#      - name: Push tarball to Github Release
+#        if: startsWith(github.event.pull_request.title, 'Release:')
 #       if: branch is main
-        run: echo "Pushing tarball to Github Release"
+#        run: echo "Pushing tarball to Github Release"
         
-      - name: Tag the Release at the current commit
-        if: startsWith(github.event.pull_request.title, 'Release:')
+#      - name: Tag the Release at the current commit
+#        if: startsWith(github.event.pull_request.title, 'Release:')
 #       if: branch is main
-        run: echo "Tagging release"
+#        run: echo "Tagging release"
 #       git tag -a "v1.2.3" -m "Release: $version"
           
