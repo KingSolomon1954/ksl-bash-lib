@@ -66,6 +66,7 @@ jobs:
 #                  echo "do_release=false" >> ${GITHUB_OUTPUT}; \
 #              fi; \
 #          fi
+#
 
       - name: Bump version number (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
