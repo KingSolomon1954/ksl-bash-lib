@@ -21,8 +21,6 @@ on:
     paths-ignore:
       - docs/site/**
       - ./version
-#    branches:
-#      - CreateReleases
     
   pull_request:
     branches:
