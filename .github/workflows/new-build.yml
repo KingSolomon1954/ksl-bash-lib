@@ -56,10 +56,8 @@ jobs:
                   fi; \
               fi; \
           fi
-          echo "howie do_release=$do_release"
           echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
           cat ${GITHUB_OUTPUT}
-          
           
 #          if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
 #              if [[ ${{ github.ref_name == 'CreateReleases' }} ]]; then \
@@ -69,8 +67,7 @@ jobs:
 #              fi; \
 #          fi
           
-      - name: Release-only bump version number
-        # if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
+      - name: Bump version number (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run:  |
           bump_level=$(echo "${{ github.event.head_commit.message }}" | awk '{ print $2 }')
@@ -82,7 +79,7 @@ jobs:
       - name: Publish docs
         run:  echo make docs-publish
 
-      - name: Release-only create changelog
+      - name: Create changelog (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: echo "Create changelog"
 
@@ -92,7 +89,7 @@ jobs:
       - name: Test tarball
         run:  make test-tarball
         
-      - name: Release-only checkin docs
+      - name: Checkin docs (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         # Performs a git checkin on docs.
         # Hence we need the paths-ignore specification
@@ -105,15 +102,15 @@ jobs:
           echo howie git commit -m "Publish documentation"
           echo howie git push
 
-      - name: Release-only obtain version and tag
+      - name: Obtain version and tag (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: echo "Obtain version and tag"
 
-      - name: Release-only push tarball to Github Release
+      - name: Push tarball to Github Release (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: echo "Pushing tarball to Github Release"
         
-      - name: Release-only tag the Release at the current commit
+      - name: Tag the Release at the current commit (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: |
           echo "Tagging release"
