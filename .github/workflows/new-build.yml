@@ -1,7 +1,16 @@
 # ----------------------------------------------
 #
-# Builds all branchs and conditionally performs a release
+# Builds and possibly performs a release
 #
+# This runs on all branches including main.
+#
+# Performs additional release actions if the following
+# conditions are met:
+# 
+#     * we're executing on the main branch
+#     * triggered by a closing pull_request
+#     * the head commit starts with "Release: [major|minor|patch]"
+# 
 # ----------------------------------------------
 
 name: Build
@@ -12,8 +21,8 @@ on:
     paths-ignore:
       - docs/site/**
       - ./version
-    branches:
-      - CreateReleases
+#    branches:
+#      - CreateReleases
     
   pull_request:
     branches:
@@ -57,7 +66,6 @@ jobs:
               fi; \
           fi
           echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
-          cat ${GITHUB_OUTPUT}
           
 #          if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
 #              if [[ ${{ github.ref_name == 'CreateReleases' }} ]]; then \
@@ -111,7 +119,7 @@ jobs:
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: echo "Pushing tarball to Github Release"
         
-      - name: Tag the Release at the current commit (release-only)
+      - name: Tag the release at the current commit (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: |
           echo "Tagging release"
