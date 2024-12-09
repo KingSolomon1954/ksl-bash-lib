@@ -85,7 +85,7 @@ release-tarball-old:
 	echo "$${LIB_VERSION}" > $${D_REL}/lib-version; \
 	echo "$${LIB_NAME}"    > $${D_REL}/lib-name
 
-.PHONY: release-tarball
+.PHONY: create-tarball
 
 release-clean:
 	rm -rf $(_D_REL)
