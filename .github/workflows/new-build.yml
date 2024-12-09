@@ -128,7 +128,7 @@ jobs:
           name: ${{ steps.version_info.outputs.tagName }}
           tag_name: ${{ steps.version_info.outputs.tagName }}
           # if needed, you can set the release body here
-          body: $(basename ${{ steps.version_info.outputs.tarFile }})
+          body: Download ${{ steps.version_info.outputs.tarFile }}
           draft: false
           prerelease: false
 

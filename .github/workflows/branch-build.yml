@@ -8,10 +8,13 @@ name: Branch Build
 run-name: Branch Build ${{ github.event.head_commit.message }}
 
 on:
-  push:
-    branches-ignore:
-      - main
-      - master
+  # Allow manually triggering from GitHub Actions tab
+  workflow_dispatch:
+    
+#  push:
+#    branches-ignore:
+#      - main
+#      - master
 
 permissions:
   contents: write
