@@ -109,8 +109,8 @@ jobs:
         run: |
           git config --global user.email "you@example.com"
           git config --global user.name ${{ github.actor }}
-          git add -A docs/site version etc/changelog
-          git commit -m "Publish documentation"
+          git add -A docs/site version etc/changelog.md
+          git commit -m "Publish release documentation"
           git push
 
       - name: Obtain version and tag (release-only)
