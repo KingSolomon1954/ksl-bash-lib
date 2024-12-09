@@ -118,12 +118,13 @@ jobs:
         # Plus needs "contents" permission to write to repo.
         run: |
           git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-#         git config --global user.email "you@example.com"
-#         git config --global user.name ${{ github.actor }}
+          git config user.email github-actions[bot]@users.noreply.github.com
           git add -A docs/site version etc/changelog.md
           git commit -m "Publish release documentation"
 #         git push
+
+#         git config --global user.email "you@example.com"
+#         git config --global user.name ${{ github.actor }}
 
 #      - name: Obtain version and tag (release-only)
 #        if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
