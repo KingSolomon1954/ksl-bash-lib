@@ -1,7 +1,8 @@
 # ----------------------------------------------
 #
-# Builds and possibly performs a release
+# Builds and possibly performs a release.
 #
+# Single workflow performs all the build and deployment steps.
 # This runs on all branches including main.
 #
 # Performs additional release actions if the following
@@ -49,9 +50,7 @@ jobs:
         
       - name: Run unit tests
         run:  |
-          echo make unit-test
-          echo "commit message: ${{ github.event.head_commit.message }}"
-          echo "executing on branch: ${{ github.ref_name }}"
+          echo howie make unit-test
 
       - name: Determine if release build
         id: test_for_release
@@ -82,10 +81,10 @@ jobs:
           make BUMP=$bump_level bump-version
 
       - name: Build docs
-        run:  echo make docs
+        run:  echo howie make docs
 
       - name: Publish docs
-        run:  echo make docs-publish
+        run:  echo howie make docs-publish
 
       - name: Create changelog (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
@@ -111,7 +110,7 @@ jobs:
         
       - name: Checkin docs (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
-        # Performs a git checkin on docs, version file and changelog file
+        # Performs a checkin on docs, version file and changelog file.
         # Hence we need the paths-ignore specification
         # at top of this action to prevent a build loop. 
         # Plus needs "contents" permission to write to repo.
@@ -119,8 +118,8 @@ jobs:
           git config user.name  github-actions[bot]
           git config user.email github-actions[bot]@users.noreply.github.com
           git add -A docs/site version etc/changelog.md
-          git commit -m "Publish release documentation"
-#         git push
+          git commit -m "Release ${{ steps.version_info.outputs.tagName }}"
+          echo howie git push
 
       - name: Push tarball to Github Release (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
