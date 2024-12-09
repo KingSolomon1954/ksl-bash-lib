@@ -15,7 +15,7 @@
 # ----------------------------------------------
 
 name: Build
-run-name: Build on branch ${{ github.ref_name }} ${{ github.event.head_commit.message }}
+run-name: Build on branch \"${{ github.ref_name }}\" - ${{ github.event.head_commit.message }}
 
 on:
   push:
@@ -133,3 +133,7 @@ jobs:
           body: Download ${{ steps.version_info.outputs.tarFileBase }}
           draft: false
           prerelease: false
+
+      - name Deploy release docs
+        if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
+        uses: ./.github/workflows/deploy-gh-pages.yml
