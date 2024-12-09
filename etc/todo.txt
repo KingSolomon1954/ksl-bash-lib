@@ -28,12 +28,12 @@ main
     checkin/merge/PR to main does not trigger a release
     main can advance many times without triggering a release
     checkin/merge/PR always builds, tests, gen docs. All must pass.
-    docs are always copied/published to docs/site
-    But GH pages stays with latest release docs until newer release
+    docs are always copied to docs/site and checked in
+    But GH pages stays unchanged with latest release docs until newer release
     therefore docs/site is only deployed to GH pages when releasing
 
-    There is one build action, runs on all branches upon push including
-    main.
+    There is only one build action, runs on all branches including
+    main upon pushing.
     
     There is a second build action that runs upon release.
 
@@ -66,10 +66,6 @@ Release pipeline triggers based on main branch and title of "Release:"
     tags the release commit with version number
     git tag -a "v1.2.3" -m "Release: $version"
     deploys docs to GH pages
-
-
-Release is triggered by a PR closed pushed to main with a tag of "v*.*.*"
-deploys docs/site to gh pages (do this only on PR release merge to main)
 
 
 For automated changelog generation
