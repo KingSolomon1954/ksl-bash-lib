@@ -134,6 +134,6 @@ jobs:
           draft: false
           prerelease: false
 
-      - name Deploy release docs
+      - name: Deploy release docs
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         uses: ./.github/workflows/deploy-gh-pages.yml
