@@ -27,6 +27,8 @@ on:
   pull_request:
     branches:
       - main
+  types:
+    - completed
       
   # Allow manually triggering from GitHub Actions tab
   workflow_dispatch:
