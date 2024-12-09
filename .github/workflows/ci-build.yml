@@ -14,7 +14,7 @@
 # 
 # ----------------------------------------------
 
-name: Build
+name: CI Build
 run-name: Build ${{ github.event.head_commit.message }}
 
 on:
