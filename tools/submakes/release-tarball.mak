@@ -54,6 +54,7 @@ create-tarball:
 	cp -p etc/changelog.md $${TAR_TOP}/; \
 	cp -p -r $(D_DOCS)/site/* $${TAR_TOP}/docs/; \
 	tar -czf $${TAR_FILE} --directory=$${TAR_TOP}/.. .; \
+	# Create some handoff variables to simplify pipeline runs; \
 	echo "$$LIB_VERSION" > $(_D_REL)/lib-version; \
 	echo "$$LIB_NAME"    > $(_D_REL)/lib-name; \
 	echo "$$TAR_FILE"    > $(_D_REL)/tarfile-name
