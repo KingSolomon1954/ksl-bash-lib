@@ -10,24 +10,24 @@ Functions to manipulate directory and file names.
 
 Contains the following:
 
-- ksl::baseName()
-- ksl::dirName()
-- ksl::scriptName()
-- ksl::scriptDir()
-- ksl::suffix()
-- ksl::notSuffix()
+-  ksl::baseName()
+-  ksl::dirName()
+-  ksl::scriptName()
+-  ksl::scriptDir()
+-  ksl::suffix()
+-  ksl::notSuffix()
 
 --------------
 
 Index
 -----
 
-- `ksl::baseName <#kslbasename>`__
-- `ksl::dirName <#ksldirname>`__
-- `ksl::scriptDir <#kslscriptdir>`__
-- `ksl::scriptName <#kslscriptname>`__
-- `ksl::suffix <#kslsuffix>`__
-- `ksl::notSuffix <#kslnotsuffix>`__
+-  `ksl::baseName <#kslbasename>`__
+-  `ksl::dirName <#ksldirname>`__
+-  `ksl::scriptDir <#kslscriptdir>`__
+-  `ksl::scriptName <#kslscriptname>`__
+-  `ksl::suffix <#kslsuffix>`__
+-  `ksl::notSuffix <#kslnotsuffix>`__
 
 ksl::baseName
 ~~~~~~~~~~~~~
@@ -47,33 +47,33 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (string): the filename
+-  **$1** (string): the filename
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: error, missing args
-- **0**: in all other cases
+-  **1**: error, missing args
+-  **0**: in all other cases
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the basename
+-  the basename
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- “baseName(): missing operand”
+-  “baseName(): missing operand”
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image1|
+   |image1|
 
 ksl::dirName
 ~~~~~~~~~~~~
@@ -95,39 +95,39 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (string): the filename
+-  **$1** (string): the filename
 
 .. _exit-codes-1:
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: error, missing args
-- **0**: in all other cases
+-  **1**: error, missing args
+-  **0**: in all other cases
 
 .. _output-on-stdout-1:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the dirname
+-  the dirname
 
 .. _output-on-stderr-1:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- “dirName(): missing operand”
+-  “dirName(): missing operand”
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image2|
+   |image2|
 
 ksl::scriptDir
 ~~~~~~~~~~~~~~
@@ -154,17 +154,17 @@ Example
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the path
+-  the path
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image3|
+   |image3|
 
 ksl::scriptName
 ~~~~~~~~~~~~~~~
@@ -190,17 +190,17 @@ Example
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the script name
+-  the script name
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image4|
+   |image4|
 
 ksl::suffix
 ~~~~~~~~~~~
@@ -224,24 +224,24 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (string): the filename
+-  **$1** (string): the filename
 
 .. _output-on-stdout-4:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the suffix
+-  the suffix
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image5|
+   |image5|
 
 ksl::notSuffix
 ~~~~~~~~~~~~~~
@@ -263,24 +263,24 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (string): the filename
+-  **$1** (string): the filename
 
 .. _output-on-stdout-5:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the filename
+-  the filename
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image6|
+   |image6|
 
 .. |image1| image:: ../images/pub/divider-line.png
 .. |image2| image:: ../images/pub/divider-line.png
