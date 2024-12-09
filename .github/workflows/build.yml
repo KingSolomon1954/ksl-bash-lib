@@ -50,12 +50,12 @@ jobs:
         
       - name: Run unit tests
         run:  |
-          echo howie make unit-test
+          make unit-test
 
       - name: Determine if release build
         id: test_for_release
         run: |
-          do_release="yes"
+          do_release="no
           if ${{ github.event_name == 'pull_request' }}; then \
               if ${{ github.event.action == 'closed' }}; then \
                   if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
@@ -81,10 +81,10 @@ jobs:
           make BUMP=$bump_level bump-version
 
       - name: Build docs
-        run:  echo howie make docs
+        run:  make docs
 
       - name: Publish docs
-        run:  echo howie make docs-publish
+        run:  make docs-publish
 
       - name: Create changelog (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
@@ -119,7 +119,7 @@ jobs:
           git config user.email github-actions[bot]@users.noreply.github.com
           git add -A docs/site version etc/changelog.md
           git commit -m "Release ${{ steps.version_info.outputs.tagName }}"
-          echo howie git push
+          git push
 
       - name: Push tarball to Github Release (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
