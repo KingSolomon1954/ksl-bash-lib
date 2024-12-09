@@ -15,7 +15,7 @@
 # ----------------------------------------------
 
 name: Build
-run-name: Build ${{ github.event.head_commit.message }}
+run-name: Build on branch ${{ github.ref_name }} ${{ github.event.head_commit.message }}
 
 on:
   push:
@@ -27,6 +27,8 @@ on:
   pull_request:
     branches:
       - main
+    types:
+      - completed
       
   # Allow manually triggering from GitHub Actions tab
   workflow_dispatch:
