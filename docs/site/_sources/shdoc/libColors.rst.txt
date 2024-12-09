@@ -10,10 +10,10 @@ Functions to help with color.
 
 Contains the following:
 
--  ksl::isColorCapable()
--  ksl::enableColor()
--  ksl::disableColor()
--  ksl::useColor()
+- ksl::isColorCapable()
+- ksl::enableColor()
+- ksl::disableColor()
+- ksl::useColor()
 
 Sourcing ``libColors.bash`` implicitly calls ``ksl::enableColor()`` and
 if the terminal is capable of color, ``KSL_USE_COLOR`` is set to true.
@@ -23,71 +23,71 @@ color.
 
 Also provides the following shell variables that help with colors.
 
--  ESC
+- ESC
 
--  FG
+- FG
 
--  BG
+- BG
 
--  FG_BLACK
+- FG_BLACK
 
--  FG_RED
+- FG_RED
 
--  FG_GREEN
+- FG_GREEN
 
--  FG_YELLOW
+- FG_YELLOW
 
--  FG_BLUE
+- FG_BLUE
 
--  FG_MAGENTA
+- FG_MAGENTA
 
--  FG_CYAN
+- FG_CYAN
 
--  FG_WHITE
+- FG_WHITE
 
--  FG_ORANGE
+- FG_ORANGE
 
--  BG_BLACK
+- BG_BLACK
 
--  BG_RED
+- BG_RED
 
--  BG_GREEN
+- BG_GREEN
 
--  BG_YELLOW
+- BG_YELLOW
 
--  BG_BLUE
+- BG_BLUE
 
--  BG_MAGENTA
+- BG_MAGENTA
 
--  BG_CYAN
+- BG_CYAN
 
--  BG_WHITE
+- BG_WHITE
 
--  BG_ORANGE
+- BG_ORANGE
 
--  CLEAR
+- CLEAR
 
--  BOLD
+- BOLD
 
--  DIM
+- DIM
 
--  UNDERLINE
+- UNDERLINE
 
--  BLINK
+- BLINK
 
--  REVERSE
+- REVERSE
 
--  HIDDEN
+- HIDDEN
 
 --------------
 
 Index
 -----
 
--  `ksl::isColorCapable <#ksliscolorcapable>`__
--  `ksl::enableColor <#kslenablecolor>`__
--  `ksl::disableColor <#ksldisablecolor>`__
--  `ksl::useColor <#kslusecolor>`__
+- `ksl::isColorCapable <#ksliscolorcapable>`__
+- `ksl::enableColor <#kslenablecolor>`__
+- `ksl::disableColor <#ksldisablecolor>`__
+- `ksl::useColor <#kslusecolor>`__
 
 ksl::isColorCapable
 ~~~~~~~~~~~~~~~~~~~
@@ -106,18 +106,18 @@ Example
 Exit codes
 ^^^^^^^^^^
 
--  **0**: terminal is capable of color
--  **1**: terminal is not capable of color
+- **0**: terminal is capable of color
+- **1**: terminal is not capable of color
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image1|
+  |image1|
 
 ksl::enableColor
 ~~~~~~~~~~~~~~~~
@@ -140,26 +140,26 @@ Example
 Variables set
 ^^^^^^^^^^^^^
 
--  **KSL_USE_COLOR** (boolean): set to true or false
+- **KSL_USE_COLOR** (boolean): set to true or false
 
 .. _exit-codes-1:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: if terminal is color capable and KSL_USE_COLOR is set to true
--  **1**: terminal is not color capable and KSL_USE_COLOR remains
-   unchanged
+- **0**: if terminal is color capable and KSL_USE_COLOR is set to true
+- **1**: terminal is not color capable and KSL_USE_COLOR remains
+  unchanged
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image2|
+  |image2|
 
 ksl::disableColor
 ~~~~~~~~~~~~~~~~~
@@ -182,24 +182,24 @@ Example
 Variables set
 ^^^^^^^^^^^^^
 
--  **KSL_USE_COLOR** (boolean): sets it to false
+- **KSL_USE_COLOR** (boolean): sets it to false
 
 .. _exit-codes-2:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: in all cases
+- **0**: in all cases
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image3|
+  |image3|
 
 ksl::useColor
 ~~~~~~~~~~~~~
@@ -222,25 +222,25 @@ Example
 Variables set
 ^^^^^^^^^^^^^
 
--  **KSL_USE_COLOR** (boolean): returns value of this variable
+- **KSL_USE_COLOR** (boolean): returns value of this variable
 
 .. _exit-codes-3:
 
 Exit codes
 ^^^^^^^^^^
 
--  **0**: if KSL_USE_COLOR is true
--  **1**: if KSL_USE_COLOR is false
+- **0**: if KSL_USE_COLOR is true
+- **1**: if KSL_USE_COLOR is false
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   .. raw:: html
+  .. raw:: html
 
-      <p>
+     <p>
 
-   |image4|
+  |image4|
 
 .. |image1| image:: ../images/pub/divider-line.png
 .. |image2| image:: ../images/pub/divider-line.png
