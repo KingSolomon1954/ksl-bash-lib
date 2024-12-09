@@ -1,20 +1,32 @@
 # ----------------------------------------------
 #
-# Build main/master as a CM build.
-# Runs unit-tests followed by generating docs.
+# Builds and possibly performs a release.
 #
+# Single workflow performs all the build and deployment steps.
+# This runs on all branches including main.
+#
+# Performs additional release actions if the following
+# conditions are met:
+# 
+#     * we're executing on the main branch, and
+#     * triggered by a closing pull_request, and
+#     * the head commit starts with "Release: [major|minor|patch]"
+# 
 # ----------------------------------------------
 
-name: CI Build
-run-name: CI Build ${{ github.event.head_commit.message }}
+name: Build
+run-name: Build ${{ github.event.head_commit.message }}
 
 on:
   push:
-    branches:
-      - main
-      - master
     paths-ignore:
       - docs/site/**
+      - ./version
+      - etc/changelog
+    
+  pull_request:
+    branches:
+      - main
       
   # Allow manually triggering from GitHub Actions tab
   workflow_dispatch:
@@ -31,24 +43,91 @@ jobs:
 
     steps:
       - name: Install podman
-        run: sudo apt install -y podman
+        run:  sudo apt install -y podman
         
       - name: Checkout repository
         uses: actions/checkout@v4
         
       - name: Run unit tests
-        run: make unit-test
-        
+        run:  |
+          make unit-test
+
+      - name: Determine if release build
+        id: test_for_release
+        run: |
+          do_release="no"
+          if ${{ github.event_name == 'pull_request' }}; then \
+              if ${{ github.event.action == 'closed' }}; then \
+                  if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
+                      do_release="yes"; \
+                  fi; \
+              fi; \
+          fi
+          echo "do_release=$do_release" >> ${GITHUB_OUTPUT}
+          
+#          if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
+#              if [[ ${{ github.ref_name == 'CreateReleases' }} ]]; then \
+#                  echo "do_release=true"  >> ${GITHUB_OUTPUT}; \
+#              else \
+#                  echo "do_release=false" >> ${GITHUB_OUTPUT}; \
+#              fi; \
+#          fi
+#
+
+      - name: Bump version number (release-only)
+        if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
+        run:  |
+          bump_level=$(echo "${{ github.event.head_commit.message }}" | awk '{ print $2 }')
+          make BUMP=$bump_level bump-version
+
       - name: Build docs
-        run: make docs
+        run:  make docs
 
       - name: Publish docs
-        # This copies _build/site to docs/site and performs a git
-        # checkin. Hence we need the paths-ignore specification
-        # at top of this action to prevent a build loop. Plus needs
-        # "contents" permission to write to repo.
+        run:  make docs-publish
+
+      - name: Create changelog (release-only)
+        if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
+        run: make update-changelog
+
+      - name: Create tarball
+        id: version_info
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name ${{ github.actor }}
-          make docs-publish
+          make create-tarball
+          triplet=$(cat version)
+          libName=$(cat _build/release/lib-name)
+          tarFile=$(cat _build/release/tarfile-name)
+          tarFileBase=$(basename $tarFile)
+          tagName=v$triplet
+          echo "triplet=$triplet"          >> ${GITHUB_OUTPUT}
+          echo "libName=$libName"          >> ${GITHUB_OUTPUT}
+          echo "tarFile=$tarFile"          >> ${GITHUB_OUTPUT}
+          echo "tarFileBase=$tarFileBase"  >> ${GITHUB_OUTPUT}
+          echo "tagName=v$triplet"         >> ${GITHUB_OUTPUT}
+
+      - name: Test tarball
+        run:  make test-tarball
+        
+      - name: Checkin docs (release-only)
+        if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
+        # Performs a checkin on docs, version file and changelog file.
+        # Hence we need the paths-ignore specification
+        # at top of this action to prevent a build loop. 
+        # Plus needs "contents" permission to write to repo.
+        run: |
+          git config user.name  github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git add -A docs/site version etc/changelog.md
+          git commit -m "Release ${{ steps.version_info.outputs.tagName }}"
           git push
+
+      - name: Push tarball to Github Release (release-only)
+        if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.version_info.outputs.tarFile }}
+          name:  ${{ steps.version_info.outputs.tagName }}
+          tag_name: ${{ steps.version_info.outputs.tagName }}
+          body: Download ${{ steps.version_info.outputs.tarFileBase }}
+          draft: false
+          prerelease: false

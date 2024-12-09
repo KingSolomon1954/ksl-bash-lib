@@ -1,0 +1,97 @@
+# ----------------------------------------------
+#
+# Builds all branchs and conditionally performs a release
+#
+# ----------------------------------------------
+
+name: Build
+run-name: Build ${{ github.event.head_commit.message }}
+
+on:
+  push:
+    branches:
+      - CreateReleases
+    paths-ignore:
+      - docs/site/**
+      
+  # Allow manually triggering from GitHub Actions tab
+  workflow_dispatch:
+    
+# Sets permissions of the GITHUB_TOKEN to allow writing
+# back to the repository (see docs-publish setp below).
+permissions:
+  contents: write
+  
+jobs:
+
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install podman
+        run:  sudo apt install -y podman
+        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Run unit tests
+        run:  make unit-test
+        
+      - name: Bump major version number
+        if: startsWith(github.event.pull_request.title, 'Release: major')
+#       if: branch is main
+        run:  make BUMP=major bump-version
+
+      - name: Bump minor version number
+        if: startsWith(github.event.pull_request.title, 'Release: minor')
+#       if: branch is main
+        run:  make BUMP=minor bump-version
+        
+      - name: Bump patch version number
+        if: startsWith(github.event.pull_request.title, 'Release: patch')
+#       if: branch is main
+        run:  make BUMP=patch bump-version
+
+      - name: Build docs
+        run:  make docs
+
+      - name: Publish docs
+        run:  make docs-publish
+
+      - name: Create tarball
+        run:  make create-tarball
+
+      - name: Test tarball
+        run:  make test-tarball
+        
+      - name: Checkin docs
+        if: startsWith(github.event.pull_request.title, 'Release:')
+#       if: branch is main
+        # Performs a git checkin on docs.
+        # Hence we need the paths-ignore specification
+        # at top of this action to prevent a build loop. 
+        # Plus needs "contents" permission to write to repo.
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name ${{ github.actor }}
+          git add -A docs/site
+          git commit -m "Publish documentation"
+          git push
+
+      - name: Obtain version and tag
+        if: startsWith(github.event.pull_request.title, 'Release:')
+#       if: branch is main
+        # Read version file, setup some variables
+        run: echo "Obtain version and tag"
+
+      - name: Push tarball to Github Release
+        if: startsWith(github.event.pull_request.title, 'Release:')
+#       if: branch is main
+        run: echo "Pushing tarball to Github Release"
+        
+      - name: Tag the Release at the current commit
+        if: startsWith(github.event.pull_request.title, 'Release:')
+#       if: branch is main
+        run: echo "Tagging release"
+#       git tag -a "v1.2.3" -m "Release: $version"
+          

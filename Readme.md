@@ -14,10 +14,8 @@ A collection of useful Bash functions that simplify writing scripts.
 
 ---
 
-[![Build](https://img.shields.io/github/actions/workflow/status/kingsolomon1954/cpp-bootstrap/build.yml)](https://github.com/kingsolomon1954/cpp-bootstrap/actions/workflows/build.yml)
-[![Version](https://img.shields.io/github/v/release/kingsolomon1954/cpp-bootstrap)](https://github.com/kingsolomon1954/cpp-bootstrap/releases)
-[![Coverage](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fkingsolomon1954.github.io%2Fcpp-bootstrap%2Fcode-coverage%2Fhtml%2Fcode-coverage-badge.yml&query=badge.coverage-percent&suffix=%25&label=coverage)](https://kingsolomon1954.github.io/cpp-bootstrap/code-coverage/html/index.html)
-[![Analysis](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fkingsolomon1954.github.io%2Fcpp-bootstrap%2Fstatic-analysis%2Freport%2Fstatic-analysis-badge.yml&query=badge.error-count&suffix=%20issues&label=analysis)](https://kingsolomon1954.github.io/cpp-bootstrap/static-analysis/report/index.html)
+[![Build](https://img.shields.io/github/actions/workflow/status/kingsolomon1954/ksl-bash-lib/build.yml)](https://github.com/kingsolomon1954/ksl-bash-lib/actions/workflows/build.yml)
+[![Version](https://img.shields.io/github/v/release/kingsolomon1954/ksl-bash-lib)](https://github.com/kingsolomon1954/ksl-bash-lib/releases)
 
 ## Features
 
@@ -42,8 +40,8 @@ See the library documentation here:  [Github Pages](https://kingsolomon1954.gith
   
 ## Usage
 
-Setup environment variable `KSL_BASH_LIB` to where you installed
-  KSL Bash library
+Setup environment variable `KSL_BASH_LIB` to where you installed KSL
+Bash library.
 
 Then, in scripts that you write:
 
