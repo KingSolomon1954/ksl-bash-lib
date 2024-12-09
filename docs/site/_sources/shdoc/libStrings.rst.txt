@@ -10,70 +10,70 @@ Functions to process and manipulate shell strings.
 
 Contains the following:
 
-- ksl::strlen()
-- ksl::strlenR()
-- ksl::isEmpty()
-- ksl::isEmptyR()
-- ksl::startsWith()
-- ksl::endsWith()
-- ksl::trimRight()
-- ksl::trimLeft()
-- ksl::trimWhitespace()
-- ksl::contains()
-- ksl::toLower()
-- ksl::toUpper()
-- ksl::capitalize()
-- ksl::isAlphNum()
-- ksl::isAlpha()
-- ksl::# isAscii()
-- ksl::isBlank()
-- ksl::isCntrl()
-- ksl::isDigit()
-- ksl::isGraph()
-- ksl::isLower()
-- ksl::isInteger()
-- ksl::isPrint()
-- ksl::isPunct()
-- ksl::isSpace()
-- ksl::isUpper()
-- ksl::# isWord()
-- ksl::isXdigit()
+-  ksl::strlen()
+-  ksl::strlenR()
+-  ksl::isEmpty()
+-  ksl::isEmptyR()
+-  ksl::startsWith()
+-  ksl::endsWith()
+-  ksl::trimRight()
+-  ksl::trimLeft()
+-  ksl::trimWhitespace()
+-  ksl::contains()
+-  ksl::toLower()
+-  ksl::toUpper()
+-  ksl::capitalize()
+-  ksl::isAlphNum()
+-  ksl::isAlpha()
+-  ksl::# isAscii()
+-  ksl::isBlank()
+-  ksl::isCntrl()
+-  ksl::isDigit()
+-  ksl::isGraph()
+-  ksl::isLower()
+-  ksl::isInteger()
+-  ksl::isPrint()
+-  ksl::isPunct()
+-  ksl::isSpace()
+-  ksl::isUpper()
+-  ksl::# isWord()
+-  ksl::isXdigit()
 
 --------------
 
 Index
 -----
 
-- `ksl::strlen <#kslstrlen>`__
-- `ksl::strlenR <#kslstrlenr>`__
-- `ksl::isEmpty <#kslisempty>`__
-- `ksl::isEmptyR <#kslisemptyr>`__
-- `ksl::startsWith <#kslstartswith>`__
-- `ksl::endsWith <#kslendswith>`__
-- `ksl::contains <#kslcontains>`__
-- `ksl::trimLeft <#ksltrimleft>`__
-- `ksl::trimRight <#ksltrimright>`__
-- `ksl::trimWhitespace <#ksltrimwhitespace>`__
-- `ksl::toLower <#ksltolower>`__
-- `ksl::toUpper <#ksltoupper>`__
-- `ksl::capitalize <#kslcapitalize>`__
-- `ksl::isAlphNum <#kslisalphnum>`__
-- `ksl::isAlpha <#kslisalpha>`__
-- `ksl::isAscii <#kslisascii>`__
-- `ksl::isBlank <#kslisblank>`__
-- `ksl::isCntrl <#ksliscntrl>`__
-- `ksl::isPrint <#kslisprint>`__
-- `ksl::isGraph <#kslisgraph>`__
-- `ksl::isLower <#kslislower>`__
-- `ksl::isUpper <#kslisupper>`__
-- `ksl::isPunct <#kslispunct>`__
-- `ksl::isSpace <#kslisspace>`__
-- `ksl::isWord <#kslisword>`__
-- `ksl::isDigit <#kslisdigit>`__
-- `ksl::isInteger <#kslisinteger>`__
-- `ksl::isNumber <#kslisnumber>`__
-- `ksl::isFloat <#kslisfloat>`__
-- `ksl::isXdigit <#kslisxdigit>`__
+-  `ksl::strlen <#kslstrlen>`__
+-  `ksl::strlenR <#kslstrlenr>`__
+-  `ksl::isEmpty <#kslisempty>`__
+-  `ksl::isEmptyR <#kslisemptyr>`__
+-  `ksl::startsWith <#kslstartswith>`__
+-  `ksl::endsWith <#kslendswith>`__
+-  `ksl::contains <#kslcontains>`__
+-  `ksl::trimLeft <#ksltrimleft>`__
+-  `ksl::trimRight <#ksltrimright>`__
+-  `ksl::trimWhitespace <#ksltrimwhitespace>`__
+-  `ksl::toLower <#ksltolower>`__
+-  `ksl::toUpper <#ksltoupper>`__
+-  `ksl::capitalize <#kslcapitalize>`__
+-  `ksl::isAlphNum <#kslisalphnum>`__
+-  `ksl::isAlpha <#kslisalpha>`__
+-  `ksl::isAscii <#kslisascii>`__
+-  `ksl::isBlank <#kslisblank>`__
+-  `ksl::isCntrl <#ksliscntrl>`__
+-  `ksl::isPrint <#kslisprint>`__
+-  `ksl::isGraph <#kslisgraph>`__
+-  `ksl::isLower <#kslislower>`__
+-  `ksl::isUpper <#kslisupper>`__
+-  `ksl::isPunct <#kslispunct>`__
+-  `ksl::isSpace <#kslisspace>`__
+-  `ksl::isWord <#kslisword>`__
+-  `ksl::isDigit <#kslisdigit>`__
+-  `ksl::isInteger <#kslisinteger>`__
+-  `ksl::isNumber <#kslisnumber>`__
+-  `ksl::isFloat <#kslisfloat>`__
+-  `ksl::isXdigit <#kslisxdigit>`__
 
 ksl::strlen
 ~~~~~~~~~~~
@@ -92,27 +92,27 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string of interest
+-  **$1** (…): the string of interest
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the string length
+-  the string length
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image1|
+   |image1|
 
 ksl::strlenR
 ~~~~~~~~~~~~
@@ -136,31 +136,31 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the variable name holding a string
+-  **$1** (…): the variable name holding a string
 
 .. _exit-codes-1:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-1:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the string length
+-  the string length
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image2|
+   |image2|
 
 ksl::isEmpty
 ~~~~~~~~~~~~
@@ -184,25 +184,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string of interest
+-  **$1** (…): the string of interest
 
 .. _exit-codes-2:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: if string is empty (true)
-- **1**: if string is non-empty (false)
+-  **0**: if string is empty (true)
+-  **1**: if string is non-empty (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image3|
+   |image3|
 
 ksl::isEmptyR
 ~~~~~~~~~~~~~
@@ -226,25 +226,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the variable name holding a string
+-  **$1** (…): the variable name holding a string
 
 .. _exit-codes-3:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: if string variable is empty (true)
-- **1**: if string variable is non-empty (false)
+-  **0**: if string variable is empty (true)
+-  **1**: if string variable is non-empty (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image4|
+   |image4|
 
 ksl::startsWith
 ~~~~~~~~~~~~~~~
@@ -266,26 +266,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the major string to test
-- **$2** (…): the minor string to look for
+-  **$1** (…): the major string to test
+-  **$2** (…): the minor string to look for
 
 .. _exit-codes-4:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the major string starts with the minor string (true)
-- **1**: the major string does not start with the minor string (false)
+-  **0**: the major string starts with the minor string (true)
+-  **1**: the major string does not start with the minor string (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image5|
+   |image5|
 
 ksl::endsWith
 ~~~~~~~~~~~~~
@@ -307,26 +307,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the major string to test
-- **$2** (…): the minor string to look for
+-  **$1** (…): the major string to test
+-  **$2** (…): the minor string to look for
 
 .. _exit-codes-5:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the major string ends with the minor string (true)
-- **1**: the major string does not end with the minor string (false)
+-  **0**: the major string ends with the minor string (true)
+-  **1**: the major string does not end with the minor string (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image6|
+   |image6|
 
 ksl::contains
 ~~~~~~~~~~~~~
@@ -348,26 +348,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the major string to test
-- **$2** (…): the minor string to look for
+-  **$1** (…): the major string to test
+-  **$2** (…): the minor string to look for
 
 .. _exit-codes-6:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the major string contains the minor string (true)
-- **1**: the major string does not contain the minor string (false)
+-  **0**: the major string contains the minor string (true)
+-  **1**: the major string does not contain the minor string (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image7|
+   |image7|
 
 ksl::trimLeft
 ~~~~~~~~~~~~~
@@ -394,32 +394,32 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the major string to operate on
-- **$2** (…): the minor string to look for
+-  **$1** (…): the major string to operate on
+-  **$2** (…): the minor string to look for
 
 .. _exit-codes-7:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-2:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the resulting string
+-  the resulting string
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image8|
+   |image8|
 
 ksl::trimRight
 ~~~~~~~~~~~~~~
@@ -446,32 +446,32 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the major string to operate on
-- **$2** (…): the minor string to look for
+-  **$1** (…): the major string to operate on
+-  **$2** (…): the minor string to look for
 
 .. _exit-codes-8:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-3:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the resulting string
+-  the resulting string
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image9|
+   |image9|
 
 ksl::trimWhitespace
 ~~~~~~~~~~~~~~~~~~~
@@ -495,31 +495,31 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-9:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-4:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the resulting string
+-  the resulting string
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image10|
+   |image10|
 
 ksl::toLower
 ~~~~~~~~~~~~
@@ -542,31 +542,31 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-10:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-5:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the resulting string
+-  the resulting string
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image11|
+   |image11|
 
 ksl::toUpper
 ~~~~~~~~~~~~
@@ -589,31 +589,31 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-11:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-6:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the resulting string
+-  the resulting string
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image12|
+   |image12|
 
 ksl::capitalize
 ~~~~~~~~~~~~~~~
@@ -637,31 +637,31 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-12:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-7:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the resulting string
+-  the resulting string
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image13|
+   |image13|
 
 ksl::isAlphNum
 ~~~~~~~~~~~~~~
@@ -684,26 +684,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-13:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only alpha numeric characters (true)
-- **1**: the string contains more than just alpha numeric characters
-  (false)
+-  **0**: the string contains only alpha numeric characters (true)
+-  **1**: the string contains more than just alpha numeric characters
+   (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image14|
+   |image14|
 
 ksl::isAlpha
 ~~~~~~~~~~~~
@@ -726,25 +726,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-14:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only alpha characters (true)
-- **1**: the string contains more than just alpha characters (false)
+-  **0**: the string contains only alpha characters (true)
+-  **1**: the string contains more than just alpha characters (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image15|
+   |image15|
 
 ksl::isAscii
 ~~~~~~~~~~~~
@@ -769,25 +769,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-15:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only ASCII characters (true)
-- **1**: the string contains more than just ASCII characters (false)
+-  **0**: the string contains only ASCII characters (true)
+-  **1**: the string contains more than just ASCII characters (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image16|
+   |image16|
 
 ksl::isBlank
 ~~~~~~~~~~~~
@@ -810,25 +810,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-16:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only blank characters (true)
-- **1**: the string contains more than just blank characters (false)
+-  **0**: the string contains only blank characters (true)
+-  **1**: the string contains more than just blank characters (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image17|
+   |image17|
 
 ksl::isCntrl
 ~~~~~~~~~~~~
@@ -851,25 +851,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-17:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only control characters (true)
-- **1**: the string contains more than just control characters (false)
+-  **0**: the string contains only control characters (true)
+-  **1**: the string contains more than just control characters (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image18|
+   |image18|
 
 ksl::isPrint
 ~~~~~~~~~~~~
@@ -892,25 +892,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-18:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only printable characters (true)
-- **1**: the string contains more than just printable characters (false)
+-  **0**: the string contains only printable characters (true)
+-  **1**: the string contains more than just printable characters
+   (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image19|
+   |image19|
 
 ksl::isGraph
 ~~~~~~~~~~~~
@@ -933,25 +934,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-19:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only digit characters (true)
-- **1**: the string contains more than just digit characters (false)
+-  **0**: the string contains only digit characters (true)
+-  **1**: the string contains more than just digit characters (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image20|
+   |image20|
 
 ksl::isLower
 ~~~~~~~~~~~~
@@ -974,25 +975,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-20:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only lowercase characters (true)
-- **1**: the string contains more than just lowercase characters (false)
+-  **0**: the string contains only lowercase characters (true)
+-  **1**: the string contains more than just lowercase characters
+   (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image21|
+   |image21|
 
 ksl::isUpper
 ~~~~~~~~~~~~
@@ -1015,26 +1017,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-21:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only upper case characters (true)
-- **1**: the string contains more than just upper case characters
-  (false)
+-  **0**: the string contains only upper case characters (true)
+-  **1**: the string contains more than just upper case characters
+   (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image22|
+   |image22|
 
 ksl::isPunct
 ~~~~~~~~~~~~
@@ -1057,26 +1059,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-22:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only punctuation characters (true)
-- **1**: the string contains more than just punctuation characters
-  (false)
+-  **0**: the string contains only punctuation characters (true)
+-  **1**: the string contains more than just punctuation characters
+   (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image23|
+   |image23|
 
 ksl::isSpace
 ~~~~~~~~~~~~
@@ -1099,25 +1101,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-23:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only space characters (true)
-- **1**: the string contains more than just space characters (false)
+-  **0**: the string contains only space characters (true)
+-  **1**: the string contains more than just space characters (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image24|
+   |image24|
 
 ksl::isWord
 ~~~~~~~~~~~
@@ -1142,25 +1144,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-24:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains a valid word (true)
-- **1**: the string contains more than a word (false)
+-  **0**: the string contains a valid word (true)
+-  **1**: the string contains more than a word (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image25|
+   |image25|
 
 ksl::isDigit
 ~~~~~~~~~~~~
@@ -1185,25 +1187,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-25:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only digit characters (true)
-- **1**: the string contains more than just digit characters (false)
+-  **0**: the string contains only digit characters (true)
+-  **1**: the string contains more than just digit characters (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image26|
+   |image26|
 
 ksl::isInteger
 ~~~~~~~~~~~~~~
@@ -1228,25 +1230,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-26:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains a valid integer (true)
-- **1**: the string contains more than just an integer (false)
+-  **0**: the string contains a valid integer (true)
+-  **1**: the string contains more than just an integer (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image27|
+   |image27|
 
 ksl::isNumber
 ~~~~~~~~~~~~~
@@ -1268,25 +1270,25 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-27:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains a valid number (true)
-- **1**: the string contains more than just a number (false)
+-  **0**: the string contains a valid number (true)
+-  **1**: the string contains more than just a number (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image28|
+   |image28|
 
 ksl::isFloat
 ~~~~~~~~~~~~
@@ -1308,26 +1310,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-28:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains a valid floating point number (true)
-- **1**: the string contains more than just a floating point number
-  (false)
+-  **0**: the string contains a valid floating point number (true)
+-  **1**: the string contains more than just a floating point number
+   (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image29|
+   |image29|
 
 ksl::isXdigit
 ~~~~~~~~~~~~~
@@ -1349,26 +1351,26 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): the string to operate on
+-  **$1** (…): the string to operate on
 
 .. _exit-codes-29:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: the string contains only hexadecimal characters (true)
-- **1**: the string contains more than just hexadecimal characters
-  (false)
+-  **0**: the string contains only hexadecimal characters (true)
+-  **1**: the string contains more than just hexadecimal characters
+   (false)
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image30|
+   |image30|
 
 .. |image1| image:: ../images/pub/divider-line.png
 .. |image2| image:: ../images/pub/divider-line.png

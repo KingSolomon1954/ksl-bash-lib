@@ -10,30 +10,30 @@ Functions to help with arrays.
 
 Contains the following:
 
-- ksl::arrayExists()
-- ksl::arraySize()
-- ksl::arrayHasKey()
-- ksl::arrayGetValue()
-- ksl::arraySetValue()
-- ksl::arrayDeleteElement()
-- ksl::arrayAppendValue()
-- ksl::arrayPrependValue()
-- ksl::arrayVisit()
+-  ksl::arrayExists()
+-  ksl::arraySize()
+-  ksl::arrayHasKey()
+-  ksl::arrayGetValue()
+-  ksl::arraySetValue()
+-  ksl::arrayDeleteElement()
+-  ksl::arrayAppendValue()
+-  ksl::arrayPrependValue()
+-  ksl::arrayVisit()
 
 --------------
 
 Index
 -----
 
-- `ksl::arrayExists <#kslarrayexists>`__
-- `ksl::arraySize <#kslarraysize>`__
-- `ksl::arrayHasKey <#kslarrayhaskey>`__
-- `ksl::arraySetValue <#kslarraysetvalue>`__
-- `ksl::arrayGetValue <#kslarraygetvalue>`__
-- `ksl::arrayAppendValue <#kslarrayappendvalue>`__
-- `ksl::arrayPrependValue <#kslarrayprependvalue>`__
-- `ksl::arrayDeleteElement <#kslarraydeleteelement>`__
-- `ksl::arrayVisit <#kslarrayvisit>`__
+-  `ksl::arrayExists <#kslarrayexists>`__
+-  `ksl::arraySize <#kslarraysize>`__
+-  `ksl::arrayHasKey <#kslarrayhaskey>`__
+-  `ksl::arraySetValue <#kslarraysetvalue>`__
+-  `ksl::arrayGetValue <#kslarraygetvalue>`__
+-  `ksl::arrayAppendValue <#kslarrayappendvalue>`__
+-  `ksl::arrayPrependValue <#kslarrayprependvalue>`__
+-  `ksl::arrayDeleteElement <#kslarraydeleteelement>`__
+-  `ksl::arrayVisit <#kslarrayvisit>`__
 
 ksl::arrayExists
 ~~~~~~~~~~~~~~~~
@@ -50,33 +50,33 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): the name of the array
+-  **$1** (array): the name of the array
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: not an array or missing args
-- **0**: it is an array that exists
+-  **1**: not an array or missing args
+-  **0**: it is an array that exists
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- no output
+-  no output
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arrayExists() missing args
+-  arrayExists() missing args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image1|
+   |image1|
 
 ksl::arraySize
 ~~~~~~~~~~~~~~
@@ -99,40 +99,40 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): the name of the array
+-  **$1** (array): the name of the array
 
 .. _exit-codes-1:
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: not an array or missing args
-- **0**: success
+-  **1**: not an array or missing args
+-  **0**: success
 
 .. _output-on-stdout-1:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the size of the array
+-  the size of the array
 
 .. _output-on-stderr-1:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arraySize() missing args:
-- arraySize() no such array:
+-  arraySize() missing args:
+-  arraySize() no such array:
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image2|
+   |image2|
 
 ksl::arrayHasKey
 ~~~~~~~~~~~~~~~~
@@ -153,41 +153,41 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): the name of the array
-- **$2** (string): the name of the key
+-  **$1** (array): the name of the array
+-  **$2** (string): the name of the key
 
 .. _exit-codes-2:
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: not an array or missing args
-- **0**: success
+-  **1**: not an array or missing args
+-  **0**: success
 
 .. _output-on-stdout-2:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- no output
+-  no output
 
 .. _output-on-stderr-2:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arrayHasKey() missing args
-- arrayHasKey() no such array:
+-  arrayHasKey() missing args
+-  arrayHasKey() no such array:
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image3|
+   |image3|
 
 ksl::arraySetValue
 ~~~~~~~~~~~~~~~~~~
@@ -211,42 +211,42 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): the name of the array
-- **$2** (string): the name of the key
-- **$3** (string): the value to set for this element
+-  **$1** (array): the name of the array
+-  **$2** (string): the name of the key
+-  **$3** (string): the value to set for this element
 
 .. _exit-codes-3:
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: not an array or missing args
-- **0**: success
+-  **1**: not an array or missing args
+-  **0**: success
 
 .. _output-on-stdout-3:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- no output
+-  no output
 
 .. _output-on-stderr-3:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arraySetValue() missing args
-- arraySetValue() no such array:
+-  arraySetValue() missing args
+-  arraySetValue() no such array:
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image4|
+   |image4|
 
 ksl::arrayGetValue
 ~~~~~~~~~~~~~~~~~~
@@ -267,42 +267,42 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): the name of the array
-- **$2** (string): the name of the key
+-  **$1** (array): the name of the array
+-  **$2** (string): the name of the key
 
 .. _exit-codes-4:
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: not an array, no such key, or missing args
-- **0**: success
+-  **1**: not an array, no such key, or missing args
+-  **0**: success
 
 .. _output-on-stdout-4:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- the value
+-  the value
 
 .. _output-on-stderr-4:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arrayGetValue() missing args
-- arrayGetValue() no such array:
-- arrayGetValue() no such key:
+-  arrayGetValue() missing args
+-  arrayGetValue() no such array:
+-  arrayGetValue() no such key:
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image5|
+   |image5|
 
 ksl::arrayAppendValue
 ~~~~~~~~~~~~~~~~~~~~~
@@ -325,43 +325,43 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): the name of the array
-- **$2** (string): the name of the key
-- **$3** (string): the value to append for this element
+-  **$1** (array): the name of the array
+-  **$2** (string): the name of the key
+-  **$3** (string): the value to append for this element
 
 .. _exit-codes-5:
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: not an array, no such key, or missing args
-- **0**: success
+-  **1**: not an array, no such key, or missing args
+-  **0**: success
 
 .. _output-on-stdout-5:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- no output
+-  no output
 
 .. _output-on-stderr-5:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arrayAppendValue() missing args
-- arrayAppendValue() no such array:
-- arrayAppendValue() no such key:
+-  arrayAppendValue() missing args
+-  arrayAppendValue() no such array:
+-  arrayAppendValue() no such key:
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image6|
+   |image6|
 
 ksl::arrayPrependValue
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -384,43 +384,43 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): the name of the array
-- **$2** (string): the name of the key
-- **$3** (string): the value to prepend for this element
+-  **$1** (array): the name of the array
+-  **$2** (string): the name of the key
+-  **$3** (string): the value to prepend for this element
 
 .. _exit-codes-6:
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: not an array, no such key, or missing args
-- **0**: success
+-  **1**: not an array, no such key, or missing args
+-  **0**: success
 
 .. _output-on-stdout-6:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- no output
+-  no output
 
 .. _output-on-stderr-6:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arrayPrependValue() missing args
-- arrayPrependValue() no such array:
-- arrayPrependValue() no such key:
+-  arrayPrependValue() missing args
+-  arrayPrependValue() no such array:
+-  arrayPrependValue() no such key:
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image7|
+   |image7|
 
 ksl::arrayDeleteElement
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -443,41 +443,41 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): - the name of the array
-- **$2** (string): - the name of the key
+-  **$1** (array): - the name of the array
+-  **$2** (string): - the name of the key
 
 .. _exit-codes-7:
 
 Exit codes
 ^^^^^^^^^^
 
-- **1**: not an array, no such key, or missing args
-- **0**: success
+-  **1**: not an array, no such key, or missing args
+-  **0**: success
 
 .. _output-on-stdout-7:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- no output
+-  no output
 
 .. _output-on-stderr-7:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arrayDeleteElement() missing args
-- arrayDeleteElement() no such array:
+-  arrayDeleteElement() missing args
+-  arrayDeleteElement() no such array:
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image8|
+   |image8|
 
 ksl::arrayVisit
 ~~~~~~~~~~~~~~~
@@ -487,10 +487,10 @@ Visits each element in an array and invokes your function on it.
 Your function is called with three args, plus any additional args you
 provide:
 
-- <value> - $1 the value from the array
-- <key|index> - $2 the array’s key or index where this value is found
-- <array name> - $3 the array name
-- [additonal args…] - user provided args, if any
+-  <value> - $1 the value from the array
+-  <key|index> - $2 the array’s key or index where this value is found
+-  <array name> - $3 the array name
+-  [additonal args…] - user provided args, if any
 
 If your function returns 10 or 11, then visit() will stop visiting
 remaining elements. Typically use 10 to exit early with success, and 11
@@ -499,10 +499,10 @@ values as they both exit early for whatever reason.
 
 Returns
 
-- 0 - success if all elements have been visited
-- 1 - fail missing or bad args
-- 10 - success if your function stopped visiting with a 10
-- 11 - error if your function stopped visiting with an 11
+-  0 - success if all elements have been visited
+-  1 - fail missing or bad args
+-  10 - success if your function stopped visiting with a 10
+-  11 - error if your function stopped visiting with an 11
 
 .. _example-8:
 
@@ -532,45 +532,45 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (array): the name of array (required)
-- **$2** (function): the function to call on each element (required)
-- **$3** ([args…]): additional arguments (optional) to pass into your
-  function
+-  **$1** (array): the name of array (required)
+-  **$2** (function): the function to call on each element (required)
+-  **$3** ([args…]): additional arguments (optional) to pass into your
+   function
 
 .. _exit-codes-8:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: success - all elements visited
-- **1**: fail - not an array or missing args
-- **10**: success if your function stopped visiting with a 10
-- **11**: error if your function stopped visiting with an 11
+-  **0**: success - all elements visited
+-  **1**: fail - not an array or missing args
+-  **10**: success if your function stopped visiting with a 10
+-  **11**: error if your function stopped visiting with an 11
 
 .. _output-on-stdout-8:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- no output
+-  no output
 
 .. _output-on-stderr-8:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- arrayVisit() missing args
-- arrayVisit() no such array:
+-  arrayVisit() missing args
+-  arrayVisit() no such array:
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image9|
+   |image9|
 
 .. |image1| image:: ../images/pub/divider-line.png
 .. |image2| image:: ../images/pub/divider-line.png

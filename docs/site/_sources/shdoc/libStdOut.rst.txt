@@ -10,14 +10,14 @@ Functions to help print consistent messages.
 
 Contains the following:
 
-- ksl::stdOut()
-- ksl::stdErr()
-- ksl::stdTrace() - prepends [TRACE] to the message
-- ksl::stdDebug() - prepends [DEBUG] to the message
-- ksl::stdInfo() - prepends [INFO] to the message
-- ksl::stdWarn() - prepends [WARN] to the message
-- ksl::stdError() - prepends [ERROR] to the message
-- ksl::stdFatal() - prepends [FATAL] to the message
+-  ksl::stdOut()
+-  ksl::stdErr()
+-  ksl::stdTrace() - prepends [TRACE] to the message
+-  ksl::stdDebug() - prepends [DEBUG] to the message
+-  ksl::stdInfo() - prepends [INFO] to the message
+-  ksl::stdWarn() - prepends [WARN] to the message
+-  ksl::stdError() - prepends [ERROR] to the message
+-  ksl::stdFatal() - prepends [FATAL] to the message
 
 |image1|
 
@@ -30,29 +30,29 @@ message would be displayed in the ``COLOR_TRACE_TEXT`` color. If
 ksl::useColor()\` is true, then the following colors are applied to
 introducers and text.
 
-- ``COLOR_TRACE_INTRO=${FG_MAGENTA}``
+-  ``COLOR_TRACE_INTRO=${FG_MAGENTA}``
 
-- ``COLOR_DEBUG_INTRO=${FG_MAGENTA}``
+-  ``COLOR_DEBUG_INTRO=${FG_MAGENTA}``
 
-- ``COLOR_INFO_INTRO=${FG_GREEN}``
+-  ``COLOR_INFO_INTRO=${FG_GREEN}``
 
-- ``COLOR_WARN_INTRO=${FG_YELLOW}``
+-  ``COLOR_WARN_INTRO=${FG_YELLOW}``
 
-- ``COLOR_ERROR_INTRO=${FG_RED}``
+-  ``COLOR_ERROR_INTRO=${FG_RED}``
 
-- ``COLOR_FATAL_INTRO=${BOLD}${FG_RED}``
+-  ``COLOR_FATAL_INTRO=${BOLD}${FG_RED}``
 
-- ``COLOR_TRACE_TEXT=`` # default is terminal color
+-  ``COLOR_TRACE_TEXT=`` # default is terminal color
 
-- ``COLOR_DEBUG_TEXT=`` # default is terminal color
+-  ``COLOR_DEBUG_TEXT=`` # default is terminal color
 
-- ``COLOR_INFO_TEXT=`` # default is terminal color
+-  ``COLOR_INFO_TEXT=`` # default is terminal color
 
-- ``COLOR_WARN_TEXT=${FG_YELLOW}``
+-  ``COLOR_WARN_TEXT=${FG_YELLOW}``
 
-- ``COLOR_ERROR_TEXT=${FG_RED}``
+-  ``COLOR_ERROR_TEXT=${FG_RED}``
 
-- ``COLOR_FATAL_TEXT=${FG_RED}``
+-  ``COLOR_FATAL_TEXT=${FG_RED}``
 
 An application can modify these colors as desired. See
 `libColors <libColors.html>`__ for color setup.
@@ -62,14 +62,14 @@ An application can modify these colors as desired. See
 Index
 -----
 
-- `ksl::stdOut <#kslstdout>`__
-- `ksl::stdErr <#kslstderr>`__
-- `ksl::stdTrace <#kslstdtrace>`__
-- `ksl::stdDebug <#kslstddebug>`__
-- `ksl::stdInfo <#kslstdinfo>`__
-- `ksl::stdWarn <#kslstdwarn>`__
-- `ksl::stdError <#kslstderror>`__
-- `ksl::stdFatal <#kslstdfatal>`__
+-  `ksl::stdOut <#kslstdout>`__
+-  `ksl::stdErr <#kslstderr>`__
+-  `ksl::stdTrace <#kslstdtrace>`__
+-  `ksl::stdDebug <#kslstddebug>`__
+-  `ksl::stdInfo <#kslstdinfo>`__
+-  `ksl::stdWarn <#kslstdwarn>`__
+-  `ksl::stdError <#kslstderror>`__
+-  `ksl::stdFatal <#kslstdfatal>`__
 
 ksl::stdOut
 ~~~~~~~~~~~
@@ -88,27 +88,27 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): all args are printed to stdout
+-  **$1** (…): all args are printed to stdout
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- all the args
+-  all the args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image2|
+   |image2|
 
 ksl::stdErr
 ~~~~~~~~~~~
@@ -131,29 +131,29 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): all args are printed to stdout
+-  **$1** (…): all args are printed to stdout
 
 .. _exit-codes-1:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- all the args
+-  all the args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image3|
+   |image3|
 
 ksl::stdTrace
 ~~~~~~~~~~~~~
@@ -178,38 +178,38 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): all args are printed to stdout
+-  **$1** (…): all args are printed to stdout
 
 Variables set
 ^^^^^^^^^^^^^
 
-- **COLOR_TRACE_INTRO** (string): the color to use for the introducer
-- **COLOR_TRACE_TEXT** (string): the color to use for the text following
-  the introducer
+-  **COLOR_TRACE_INTRO** (string): the color to use for the introducer
+-  **COLOR_TRACE_TEXT** (string): the color to use for the text
+   following the introducer
 
 .. _exit-codes-2:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-1:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- [TRACE] followed by all the args
+-  [TRACE] followed by all the args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image4|
+   |image4|
 
 ksl::stdDebug
 ~~~~~~~~~~~~~
@@ -234,40 +234,40 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): all args are printed to stdout
+-  **$1** (…): all args are printed to stdout
 
 .. _variables-set-1:
 
 Variables set
 ^^^^^^^^^^^^^
 
-- **COLOR_DEBUG_INTRO** (string): the color to use for the introducer
-- **COLOR_DEBUG_TEXT** (string): the color to use for the text following
-  the introducer
+-  **COLOR_DEBUG_INTRO** (string): the color to use for the introducer
+-  **COLOR_DEBUG_TEXT** (string): the color to use for the text
+   following the introducer
 
 .. _exit-codes-3:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-2:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- [DEBUG] followed by all the args
+-  [DEBUG] followed by all the args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image5|
+   |image5|
 
 ksl::stdInfo
 ~~~~~~~~~~~~
@@ -292,40 +292,40 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): all args are printed to stdout
+-  **$1** (…): all args are printed to stdout
 
 .. _variables-set-2:
 
 Variables set
 ^^^^^^^^^^^^^
 
-- **COLOR_INFO_INTRO** (string): the color to use for the introducer
-- **COLOR_INFO_TEXT** (string): the color to use for the text following
-  the introducer
+-  **COLOR_INFO_INTRO** (string): the color to use for the introducer
+-  **COLOR_INFO_TEXT** (string): the color to use for the text following
+   the introducer
 
 .. _exit-codes-4:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-3:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- [INFO] followed by all the args
+-  [INFO] followed by all the args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image6|
+   |image6|
 
 ksl::stdWarn
 ~~~~~~~~~~~~
@@ -350,40 +350,40 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): all args are printed to stdout
+-  **$1** (…): all args are printed to stdout
 
 .. _variables-set-3:
 
 Variables set
 ^^^^^^^^^^^^^
 
-- **COLOR_WARN_INTRO** (string): the color to use for the introducer
-- **COLOR_WARN_TEXT** (string): the color to use for the text following
-  the introducer
+-  **COLOR_WARN_INTRO** (string): the color to use for the introducer
+-  **COLOR_WARN_TEXT** (string): the color to use for the text following
+   the introducer
 
 .. _exit-codes-5:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stdout-4:
 
 Output on stdout
 ^^^^^^^^^^^^^^^^
 
-- [WARN] followed by all the args
+-  [WARN] followed by all the args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image7|
+   |image7|
 
 ksl::stdError
 ~~~~~~~~~~~~~
@@ -408,40 +408,40 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): all args are printed to stderr
+-  **$1** (…): all args are printed to stderr
 
 .. _variables-set-4:
 
 Variables set
 ^^^^^^^^^^^^^
 
-- **COLOR_ERROR_INTRO** (string): the color to use for the introducer
-- **COLOR_ERROR_TEXT** (string): the color to use for the text following
-  the introducer
+-  **COLOR_ERROR_INTRO** (string): the color to use for the introducer
+-  **COLOR_ERROR_TEXT** (string): the color to use for the text
+   following the introducer
 
 .. _exit-codes-6:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stderr-1:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- [ERROR] followed by all the args
+-  [ERROR] followed by all the args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image8|
+   |image8|
 
 ksl::stdFatal
 ~~~~~~~~~~~~~
@@ -466,40 +466,40 @@ Example
 Arguments
 ^^^^^^^^^
 
-- **$1** (…): all args are printed to stderr
+-  **$1** (…): all args are printed to stderr
 
 .. _variables-set-5:
 
 Variables set
 ^^^^^^^^^^^^^
 
-- **COLOR_FATAL_INTRO** (string): the color to use for the introducer
-- **COLOR_FATAL_TEXT** (string): the color to use for the text following
-  the introducer
+-  **COLOR_FATAL_INTRO** (string): the color to use for the introducer
+-  **COLOR_FATAL_TEXT** (string): the color to use for the text
+   following the introducer
 
 .. _exit-codes-7:
 
 Exit codes
 ^^^^^^^^^^
 
-- **0**: in all cases
+-  **0**: in all cases
 
 .. _output-on-stderr-2:
 
 Output on stderr
 ^^^^^^^^^^^^^^^^
 
-- [FATAL] followed by all the args
+-  [FATAL] followed by all the args
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  .. raw:: html
+   .. raw:: html
 
-     <p>
+      <p>
 
-  |image9|
+   |image9|
 
 .. |image1| image:: ../images/pub/stdout-example.png
 .. |image2| image:: ../images/pub/divider-line.png
