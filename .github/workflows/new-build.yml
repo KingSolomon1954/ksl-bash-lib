@@ -85,10 +85,10 @@ jobs:
           make BUMP=$bump_level bump-version
 
       - name: Build docs
-        run:  make docs
+        run:  echo make docs
 
       - name: Publish docs
-        run:  make docs-publish
+        run:  echo make docs-publish
 
       - name: Create changelog (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
@@ -111,15 +111,19 @@ jobs:
           git config --global user.name ${{ github.actor }}
           git add -A docs/site version etc/changelog.md
           git commit -m "Publish release documentation"
-          git push
+#         git push
 
       - name: Obtain version and tag (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
-        run: echo "Obtain version and tag"
+        run: |
+          echo "Obtain version and tag"
+          env.tagName="howie"
 
       - name: Push tarball to Github Release (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
-        run: echo "Pushing tarball to Github Release"
+        run: |
+          echo "Pushing tarball to Github Release"
+          echo howie ${{ env.tagName }}
         
       - name: Tag the release at the current commit (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
