@@ -15,7 +15,7 @@
 # ----------------------------------------------
 
 name: Build
-run-name: Build on branch ""${{ github.ref_name }}"" - ${{ github.event.head_commit.message }}
+run-name: Build on branch "${{ github.ref_name }}" - ${{ github.event.head_commit.message }}
 
 on:
   push:
