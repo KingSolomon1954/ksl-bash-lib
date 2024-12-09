@@ -117,7 +117,7 @@ jobs:
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: |
           echo "Obtain version and tag"
-          env.tagName="howie"
+          ${{ env.tagName="howie" }}
 
       - name: Push tarball to Github Release (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
