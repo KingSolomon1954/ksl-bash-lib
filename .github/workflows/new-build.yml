@@ -98,7 +98,7 @@ jobs:
         id: version_info
         run: |
           make create-tarball
-          triplet=$(cat _build/release/version)
+          triplet=$(cat version)
           libName=$(cat _build/release/lib-name)
           tarFile=$(cat _build/release/tarfile-name)
           tagName=v$triplet
