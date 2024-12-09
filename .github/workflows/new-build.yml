@@ -21,6 +21,7 @@ on:
     paths-ignore:
       - docs/site/**
       - ./version
+      - etc/changelog
     
   pull_request:
     branches:
@@ -88,7 +89,7 @@ jobs:
 
       - name: Create changelog (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
-        run: echo "Create changelog"
+        run: make update-changelog
 
       - name: Create tarball
         run:  echo make create-tarball
@@ -122,4 +123,5 @@ jobs:
         run: |
           echo "Tagging release"
           echo howie git tag -a "v1.2.3" -m "Release: $version"
+          echo howie git push --follow-tags
           

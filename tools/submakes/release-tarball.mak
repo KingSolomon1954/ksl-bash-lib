@@ -39,7 +39,7 @@ bump-version:
 
 update-changelog:
 	@echo "Updating changelog"
-	@touch etc/changelog.txt
+	@$(D_SCP)/update-changelog.bash > etc/changelog.md
 
 _D_REL:=$(D_BLD)/release
 
@@ -88,6 +88,7 @@ release-clean:
 HELP_TXT += "\n\
 create-tarball, Creates a release tarball\n\
 release-clean,   Deletes release artifacts\n\
+update-changelog, Updates changelog\n\
 "
 
 endif
