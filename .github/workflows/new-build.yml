@@ -141,7 +141,7 @@ jobs:
       - name: Tag the release at the current commit (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: |
-          echo "Tagging release"
+          echo "Tagging release is it needed"
           echo howie git tag -a "v1.2.3" -m "Release: $version"
           echo howie git push --follow-tags
           
