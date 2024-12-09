@@ -123,6 +123,7 @@ jobs:
       - name: Push tarball to Github Release (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         uses: softprops/action-gh-release@v2
+        with:
           files: ${{ steps.version_info.outputs.tarFile }}
           name: Release ${{ steps.version_info.outputs.triplet }}
           tag_name: ${{ steps.version_info.outputs.tagName }}
