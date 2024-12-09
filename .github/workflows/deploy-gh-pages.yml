@@ -10,14 +10,16 @@ name: Publish docs to GitHub Pages
 run-name: Publish docs to GitHub Pages
 
 on:
-  workflow_run:
-    workflows: ["Build"]
-    types:
-      - completed
-    branches:
-      - main
-    paths:
-      - ./version
+  workflow_call:
+  
+#  workflow_run:
+#    workflows: ["Build"]
+#    types:
+#      - completed
+#    branches:
+#      - main
+#    paths:
+#      - ./version
 
   # Allow manually triggering from GitHub Actions tab
   workflow_dispatch:
