@@ -7,8 +7,8 @@
 # Performs additional release actions if the following
 # conditions are met:
 # 
-#     * we're executing on the main branch
-#     * triggered by a closing pull_request
+#     * we're executing on the main branch, and
+#     * triggered by a closing pull_request, and
 #     * the head commit starts with "Release: [major|minor|patch]"
 # 
 # ----------------------------------------------
@@ -35,6 +35,9 @@ on:
 permissions:
   contents: write
   
+env:
+  tagName: "unknown"
+
 jobs:
 
   Build:
@@ -56,7 +59,7 @@ jobs:
       - name: Determine if release build
         id: test_for_release
         run: |
-          do_release="no"
+          do_release="yes"
           if ${{ github.event_name == 'pull_request' }}; then \
               if ${{ github.event.action == 'closed' }}; then \
                   if ${{ startsWith(github.event.head_commit.message, 'Release:') }}; then \
@@ -82,17 +85,17 @@ jobs:
           make BUMP=$bump_level bump-version
 
       - name: Build docs
-        run:  echo make docs
+        run:  make docs
 
       - name: Publish docs
-        run:  echo make docs-publish
+        run:  make docs-publish
 
       - name: Create changelog (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}
         run: make update-changelog
 
       - name: Create tarball
-        run:  echo make create-tarball
+        run:  make create-tarball
 
       - name: Test tarball
         run:  make test-tarball
@@ -106,9 +109,9 @@ jobs:
         run: |
           git config --global user.email "you@example.com"
           git config --global user.name ${{ github.actor }}
-          git add -A docs/site
-          echo howie git commit -m "Publish documentation"
-          echo howie git push
+          git add -A docs/site version etc/changelog
+          git commit -m "Publish documentation"
+          git push
 
       - name: Obtain version and tag (release-only)
         if: ${{ steps.test_for_release.outputs.do_release == 'yes' }}

@@ -43,7 +43,6 @@ update-changelog:
 
 _D_REL:=$(D_BLD)/release
 
-# add version file, and changelog file to tarball
 create-tarball:
 	LIB_VERSION=$$(cat version);\
 	LIB_NAME="ksl-bash-lib-$${LIB_VERSION}" ;\
@@ -51,11 +50,13 @@ create-tarball:
 	TAR_TOP=$(_D_REL)/staging/$${LIB_NAME}; \
 	mkdir -p $${TAR_TOP} $${TAR_TOP}/docs; \
 	cp -p $(D_LIB)/* $${TAR_TOP}/; \
+	cp -p version $${TAR_TOP}/; \
+	cp -p etc/changelog.md $${TAR_TOP}/; \
 	cp -p -r $(D_DOCS)/site/* $${TAR_TOP}/docs/; \
 	tar -czf $${TAR_FILE} --directory=$${TAR_TOP}/.. .
 
 test-tarball:
-	@echo "testing tarball"
+	@echo "TODO: testing tarball"
 
 # TAG_NAME=${LIB_NAME_FULL}-${{ github.ref_name }}
 #	echo "TAR_FILE=${TAR_FILE}"       >> ${GITHUB_OUTPUT}
