@@ -23,7 +23,9 @@ on:
       - docs/site/**
       - ./version
       - etc/changelog
-    
+    branches-ignore:
+      - main
+      
   pull_request:
     branches:
       - main
