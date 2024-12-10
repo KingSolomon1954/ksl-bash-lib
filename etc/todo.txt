@@ -68,7 +68,7 @@ Release pipeline triggers based on main branch and title of "Release:"
     deploys docs to GH pages
 
 
-For automated changelog generation:
+For automated changelog generation, use these:
 
 feat:
 chore:
