@@ -103,4 +103,3 @@ jobs:
           body: Download ${{ steps.version_info.outputs.tarFileBase }}
           draft: false
           prerelease: false
-          token: ${{ secrets.GITHUB_TOKEN }}
