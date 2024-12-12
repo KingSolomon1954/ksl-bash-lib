@@ -95,13 +95,11 @@ jobs:
 
       - name: Push tarball to Github Release (release-only)
         if: ${{ inputs.do-release == 'yes' }}
-        run: echo Invoking release action
-
-#        uses: softprops/action-gh-release@v2
-#        with:
-#          files: ${{ steps.version_info.outputs.tarFile }}
-#          name:  ${{ steps.version_info.outputs.tagName }}
-#          tag_name: ${{ steps.version_info.outputs.tagName }}
-#          body: Download ${{ steps.version_info.outputs.tarFileBase }}
-#          draft: false
-#          prerelease: false
+        uses: softprops/action-gh-release@v2
+        with:
+          files:    ${{ steps.version_info.outputs.tarFile }}
+          name:     ${{ steps.version_info.outputs.tagName }}
+          tag_name: ${{ steps.version_info.outputs.tagName }}
+          body: Download ${{ steps.version_info.outputs.tarFileBase }}
+          draft: false
+          prerelease: false
