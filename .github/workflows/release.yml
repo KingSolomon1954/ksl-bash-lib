@@ -1,0 +1,29 @@
+# ----------------------------------------------
+#
+# 
+# ----------------------------------------------
+
+name: Release
+run-name: Release on branch "${{ github.ref_name }}"
+
+on:
+  workflow_dispatch: # Manually triggered workflow
+    inputs:
+      level:
+        description: Semantic version level to bump
+        required: true
+        default: patch
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+
+  build-and-release:
+    uses: ./.github/workflows/shared-build.yml
+    with:
+      do-release: 'yes'
+      release-level: ${{ inputs.level }}
+    secrets: inherit  # Pass repository secrets to the shared workflow
