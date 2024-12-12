@@ -13,6 +13,11 @@ on:
       - ./version
       - etc/changelog
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
 
   do-build:
