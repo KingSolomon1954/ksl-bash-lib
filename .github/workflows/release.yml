@@ -1,6 +1,16 @@
 # ----------------------------------------------
 #
-# 
+# Creates a release
+#
+# * triggered manually at GitHub GUI
+# * prompts for release level [major, minor, patch]
+# * bumps version number accordingly
+# * creates a changelog
+# * runs a fresh build
+# * checks in docs with new version number
+# * checks in version file and changelog
+# * tags commit of release with "vMajor,Minor,Patch"
+#
 # ----------------------------------------------
 
 name: Release

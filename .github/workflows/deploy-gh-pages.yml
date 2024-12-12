@@ -1,6 +1,6 @@
 # ----------------------------------------------
 #
-# Publishes docs to GitHub Pages.
+# Publishes docs to GitHub Pages
 #
 # Self-triggers after a successful Release workflow.
 #
@@ -20,7 +20,7 @@ on:
       - completed
     branches:
       - main
-      
+
   workflow_dispatch:  # Allow manually triggering
 
 # Sets permissions on the GITHUB_TOKEN to allow deployment
@@ -42,26 +42,26 @@ concurrency:
 jobs:
 
   deploy-to-git-hub-pages:
-    
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      
+
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: lookee lookee
         run: |
           echo "event name: ${{ github.event_name }}"
           echo "action: ${{ github.action }}"
           echo "event commit msg: ${{ github.event.head_commit.message }}"
-        
+
 #      - name: Setup Pages
 #        uses: actions/configure-pages@v5
-#        
+#
 #      - name: Upload artifact
 #        uses: actions/upload-pages-artifact@v3
 #        with:

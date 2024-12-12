@@ -7,7 +7,7 @@ name: Shared Build
 run-name: Shared Build on branch "${{ github.ref_name }}" - ${{ github.event.head_commit.message }}
 
 on:
-  
+
   workflow_call:
     inputs:
       do-release:
@@ -18,26 +18,26 @@ on:
         description: The release level [major, minor, patch]
         required: true
         type: string
-        
+
 # permissions:
 #   contents: read
 #   pages: write
 #   id-token: write
-  
+
 jobs:
 
   shared-build:
-    
+
     runs-on: ubuntu-latest
 
     steps:
-      
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install podman
-        run:  echo sudo apt install -y podman
-        
+        run:  sudo apt install -y podman
+
       - name: lookee lookee
         run: |
           echo "github.event name: ${{ github.event_name }}"
@@ -48,57 +48,55 @@ jobs:
           echo "inputs.release-level: ${{ inputs.release-level }}"
 
       - name: Run unit tests
-        run:  |
-          echo make unit-test
+        run:  make unit-test
 
       - name: Bump version number (release-only)
         if: ${{ inputs.do-release == 'yes' }}
-        run: echo make BUMP=${{ inputs.release-level }} bump-version
+        run: make BUMP=${{ inputs.release-level }} bump-version
 
       - name: Build docs
-        run:  echo make docs
+        run:  make docs
 
       - name: Publish docs
-        run:  echo make docs-publish
+        run:  make docs-publish
 
       - name: Create changelog (release-only)
         if: ${{ inputs.do-release == 'yes' }}
-        run: echo make update-changelog
+        run: make update-changelog
 
       - name: Create tarball
         id: version_info
         run: |
-          echo make create-tarball
-          
-#          triplet=$(cat version)
-#          libName=$(cat _build/release/lib-name)
-#          tarFile=$(cat _build/release/tarfile-name)
-#          tarFileBase=$(basename $tarFile)
-#          tagName=v$triplet
-#          echo "triplet=$triplet"          >> ${GITHUB_OUTPUT}
-#          echo "libName=$libName"          >> ${GITHUB_OUTPUT}
-#          echo "tarFile=$tarFile"          >> ${GITHUB_OUTPUT}
-#          echo "tarFileBase=$tarFileBase"  >> ${GITHUB_OUTPUT}
-#          echo "tagName=v$triplet"         >> ${GITHUB_OUTPUT}
-#
+          make create-tarball
+          triplet=$(cat version)
+          libName=$(cat _build/release/lib-name)
+          tarFile=$(cat _build/release/tarfile-name)
+          tarFileBase=$(basename $tarFile)
+          tagName=v$triplet
+          echo "triplet=$triplet"          >> ${GITHUB_OUTPUT}
+          echo "libName=$libName"          >> ${GITHUB_OUTPUT}
+          echo "tarFile=$tarFile"          >> ${GITHUB_OUTPUT}
+          echo "tarFileBase=$tarFileBase"  >> ${GITHUB_OUTPUT}
+          echo "tagName=v$triplet"         >> ${GITHUB_OUTPUT}
+
       - name: Test tarball
-        run:  echo make test-tarball
-        
-      - name: Checkin docs (release-only)
+        run:  make test-tarball
+
+      - name: Checkin artifacts (release-only)
         if: ${{ inputs.do-release == 'yes' }}
-        # Performs a checkin on docs, version file and changelog file
-        # therefore needs "contents" permission to write to repo.
+        # Performs a checkin on docs, version file and changelog.
+        # Therefore needs "contents" permission to write to repo.
         run: |
           echo git config user.name  github-actions[bot]
           echo git config user.email github-actions[bot]@users.noreply.github.com
-          echo git add -A docs/site version etc/changelog.md
+          echo git add docs/site version etc/changelog.md
           echo git commit -m "Release ${{ steps.version_info.outputs.tagName }}"
           echo git push
 
       - name: Push tarball to Github Release (release-only)
         if: ${{ inputs.do-release == 'yes' }}
         run: echo Invoking release action
-        
+
 #        uses: softprops/action-gh-release@v2
 #        with:
 #          files: ${{ steps.version_info.outputs.tarFile }}
