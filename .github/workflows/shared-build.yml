@@ -13,7 +13,7 @@ on:
       do-release:
         description: Perform a release in addition to a build
         required: true
-        type: string
+        type: boolean
       release-level:
         description: The release level [major, minor, patch]
         required: true
@@ -51,7 +51,7 @@ jobs:
         run:  make unit-test
 
       - name: Bump version number (release-only)
-        if: ${{ inputs.do-release == 'yes' }}
+        if: ${{ inputs.do-release }}
         run: make BUMP=${{ inputs.release-level }} bump-version
 
       - name: Build docs
@@ -61,7 +61,7 @@ jobs:
         run:  make docs-publish
 
       - name: Create changelog (release-only)
-        if: ${{ inputs.do-release == 'yes' }}
+        if: ${{ inputs.do-release }}
         run: make update-changelog
 
       - name: Create tarball
@@ -83,7 +83,7 @@ jobs:
         run:  make test-tarball
 
       - name: Checkin artifacts (release-only)
-        if: ${{ inputs.do-release == 'yes' }}
+        if: ${{ inputs.do-release }}
         # Performs a checkin on docs, version file and changelog.
         # Therefore needs "contents" permission to write to repo.
         run: |
@@ -94,7 +94,7 @@ jobs:
           echo git push
 
       - name: Push tarball to Github Release (release-only)
-        if: ${{ inputs.do-release == 'yes' }}
+        if: ${{ inputs.do-release }}
         uses: softprops/action-gh-release@v2
         with:
           files:    ${{ steps.version_info.outputs.tarFile }}
