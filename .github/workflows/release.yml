@@ -1,15 +1,16 @@
 # ----------------------------------------------
 #
-# Creates a release
+# Creates a new release on GitHub
 #
 # * triggered manually at GitHub GUI
 # * prompts for release level [major, minor, patch]
 # * bumps version number accordingly
 # * creates a changelog
 # * runs a fresh build
+# * packages release in tarball: e.g. ksl-bash-lib-1.0.0.tgz
 # * checks in docs with new version number
 # * checks in version file and changelog
-# * tags commit of release with "vMajor,Minor,Patch"
+# * tags commit of release with "vMajor.Minor.Patch"
 #
 # ----------------------------------------------
 
@@ -31,7 +32,6 @@ on:
 
 permissions:
   contents: write
-# pages: write
   id-token: write
 
 jobs:
