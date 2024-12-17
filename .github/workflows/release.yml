@@ -30,7 +30,7 @@ on:
           - patch
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -41,6 +41,4 @@ jobs:
     with:
       do-release: true
       release-level: ${{ inputs.level }}
-      permissions:
-        contents: write
     secrets: inherit  # Pass repository secrets to the shared workflow
