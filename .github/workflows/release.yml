@@ -41,4 +41,6 @@ jobs:
     with:
       do-release: true
       release-level: ${{ inputs.level }}
+      permissions:
+        contents: write
     secrets: inherit  # Pass repository secrets to the shared workflow
