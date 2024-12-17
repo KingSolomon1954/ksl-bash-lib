@@ -53,21 +53,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: lookee lookee
-        run: |
-          echo "event name: ${{ github.event_name }}"
-          echo "action: ${{ github.action }}"
-          echo "event commit msg: ${{ github.event.head_commit.message }}"
-
-#      - name: Setup Pages
-#        uses: actions/configure-pages@v5
-#
-#      - name: Upload artifact
-#        uses: actions/upload-pages-artifact@v3
-#        with:
-#          # Upload entire site folder
-#          path: './docs/site'
-#      - name: Deploy to GitHub Pages
-#        id: deployment
-#        uses: actions/deploy-pages@v4
-#
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs/site'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
