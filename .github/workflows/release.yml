@@ -31,7 +31,7 @@ on:
 
 permissions:
   contents: write
-  pages: write
+# pages: write
   id-token: write
 
 jobs:
