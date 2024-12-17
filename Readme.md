@@ -62,41 +62,55 @@ source "${KSL_BASH_LIB}"/libStdOut.bash
 
 ## Installation
 
-KSL Bash library is installed by one of the following methods Then set
-KSL_BASH_LIB to where you put it. For example:
+KSL Bash library is installed by one of the following methods.
+Then set KSL_BASH_LIB to where you placed it.
+
+### Via GitHub Release 
+
+1. Grab the latest release from here:
+
+https://github.com/KingSolomon1954/ksl-bash-lib/releases
+
+Download the ksl-bash-lib-x.y.z.tgz file.
+
+2. Untar it to a location of your choosing.
 
 ``` bash
-export KSL_BASH_LIB=$HOME/bin/ksl-bash-lib
+cd $HOME/bin
+tar -xzf ~/downloads/ksl-bash-lib-x.y.z.tgz
 ```
 
-### Via curl
+3. Setup environment variable to point to it.
 
-TODO
+``` bash
+export KSL_BASH_LIB=$HOME/bin/ksl-bash-lib-x.y.z
+```
 
-This will install KSL Bash library in your current working directory:
+4. Examine docs
 
-    bash <(curl -s https://raw.githubusercontent.com/KingSolomon1954/ksl-bash-lib/master/install.sh)
-
-### Via git release
-
-TODO
-
-You can also download it from the https://github.com/KingSolomon1954/ksl-bash-lib/releases[release page].
-
-https://github.com/kingsolomon1954/ksl-bash-lib/tags
-
+``` bash
+firefox $HOME/bin/ksl-bash-lib-x.y.z/docs/index.html
+```
 
 ### Via git clone
 
-```shell
-git clone https://github.com/KingSolomon1954/ksl-bash-lib.git $HOME/bin/ksl-bash-lib
-export KSL_BASH_LIB=$HOME/bin/ksl-bash-lib/lib
-open $HOME/bin/ksl-bash-lib/docs/site/index.html
+1. Clone the repo
+
+``` bash
+git clone https://github.com/KingSolomon1954/ksl-bash-lib.git $HOME/dev/ksl-bash-lib
 ```
 
-### Via wget
+2. Setup environment variable to point to it.
 
-TODO
+``` bash
+export KSL_BASH_LIB=$HOME/dev/ksl-bash-lib/lib
+```
+
+3. Examine docs
+
+``` bash
+firefox $HOME/dev/ksl-bash-lib/docs/site/index.html
+```
 
 ## Developing the KSL Bash Library
 
@@ -107,7 +121,7 @@ developing the KSL Bash library.
 
 - GNU Makefile
 - Podman or Docker
-- Some typical Linux command line utilities
+- Typical Linux command line utilities
 
 ### Containerized Tools
 
@@ -237,8 +251,12 @@ make lib/libStrings.sta
 
 ### GitHub Workflows
 
-* Workflow for "CI build" - triggers upon merge to main
-* Workflow for "Branch build" - triggers upon checkin to branch
+Four workflows manage this repo.
+
+1. build.yml - builds on any push
+2. release.yml - manually triggered when a release is desired
+3. shared-build.yml - performs both build and release activities
+4. deploy-gh-pages.yml - updates GitHub pages after a release
 
 ### Documentation Generation
 
