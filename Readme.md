@@ -278,29 +278,15 @@ firefox _build/site/index.html
 
 #### Pubishing the Docs
 
-When satisfied with the generated site docs, from top level folder,
-invoke the following to publish the site.
+When satisfied with the generated site docs, the release workflow
+will invoke this makefile target:
 
 ```bash
 make docs-publish
 ```
 
 The generated static website sitting in `_build/site`, is copied over to
-the `docs/site` folder and then checked into Git (not pushed yet). Later
-when the branch is merged to main, a GitHub action kicks in and
-publishes `docs/site` folder to the actual GitHub Pages website. The
-`docs/site` folder is hard coded into the `deploy-gh-pages.yml` GitHub
-action.
-
-The makefile `docs-publish` rule looks something like this:
-
-``` bash
-> make -n docs-publish
-git rm -r --ignore-unmatch ./docs/site/*
-mkdir -p ./docs/site
-cp -r ./_build/site/* ./docs/site/
-touch ./docs/site/.nojekyll
-git add -A ./docs/site
-git commit -m "Publish docs"
-
-```
+the `docs/site` folder and checked-in to Git. A follow-on workflow kicks
+in and publishes `docs/site` folder to the actual GitHub Pages
+website. The `docs/site` folder is hard coded into the
+`deploy-gh-pages.yml` GitHub action.
