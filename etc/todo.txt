@@ -3,8 +3,6 @@ KSL_BASH_LIB
 TODO: consider https://github.com/bats-core/bats-core for testing
 TODO: multi-layered config feature, yaml parsing
 TODO: Investigate [Keep a Changelog](http://keepachangelog.com/en/1.0.0/
-TODO: Fix badges
-TODO: Implement test for release ksl-bash-lib-x.y.z.tgz
 
 Done: add shellcheck https://github.com/koalaman/shellcheck
 Done: automation using shdoc embedded comments https://github.com/reconquest/shdoc
@@ -23,6 +21,8 @@ Done: etc/changelog.md enough for now
 Done: form a releaseable ksl shell library
 Done: GitHub actions and automated release
 Done: Readme.md needs updates for release and installation
+Done: Fix badges
+Done: Implement test for release ksl-bash-lib-x.y.z.tgz
 
 For automated changelog generation, use these:
 

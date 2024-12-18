@@ -37,10 +37,14 @@ include $(D_MAK)/help.mak
 
 all-relay: unit-tests
 
-.PHONY: all all-relay
+clean:
+	rm -rf $(D_BLD)
+
+.PHONY: all all-relay clean
 
 # ------------ Help Section ------------
 
 HELP_TXT += "\n\
 all,   Build the repo\n\
+clean, Deletes $(BLD)\n\
 "
