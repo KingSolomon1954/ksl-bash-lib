@@ -9,19 +9,22 @@
 # $1 = build directory   _build
 # $2 = tar-file          _build/release/ksl-bash-lib-0.0.3.tgz
 
-b=$(basename $2)        # ksl-bash-lib-0.0.3.tgz
-release="${b%%".tgz"}"  # strip .tgz
+b=$(basename $2)         # ksl-bash-lib-0.0.3.tgz
+release="${b%%".tgz"}"   # strip .tgz
 
-rm -rf   $1/test-tarball
-mkdir -p $1/test-tarball
-tar -xzf $2 --directory=$1/test-tarball
-cd    $1/test-tarball
-[ ! -d $release ]                 && exit 1
-[ ! -d $release/docs ]            && exit 1
-[ ! -f $release/docs/index.html ] && exit 1
-(( $(ls $release/*.bash | wc -l) < 7 )) && exit 1
+testdir=$1/test-tarball
+rm -rf   $testdir
+mkdir -p $testdir
+tar -xzf $2 --directory=$testdir
 
-export KSL_BASH_LIB=$release
+releaseDir=$testdir/$release
+
+[ ! -d $releaseDir ]                 && exit 1
+[ ! -d $releaseDir/docs ]            && exit 1
+[ ! -f $releaseDir/docs/index.html ] && exit 1
+(( $(ls $releaseDir/*.bash | wc -l) < 7 )) && exit 1
+
+export KSL_BASH_LIB=$releaseDir
 
 source $KSL_BASH_LIB/libStrings.bash
 
