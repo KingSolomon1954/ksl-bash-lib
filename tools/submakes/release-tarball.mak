@@ -26,9 +26,16 @@ release-minor: release
 release-patch: BUMP := patch
 release-patch: release
 
-# release: bump-version update-changelog docs docs-publish create-tarball test-tarball
-# release: bump-version update-changelog docs docs-site create-tarball test-tarball
-release: bump-version update-changelog create-tarball test-tarball
+# Runs all the release targets similar to the Release workflow, but here
+# nothing is actually checked-in or tagged. This allows for developing,
+# debugging and confirming release targets and artifacts.
+
+release: bump-version \
+	 update-changelog \
+	 docs \
+	 docs-publish \
+	 create-tarball \
+	 test-tarball
 
 bump-version:
 	@git checkout version   # Always start fresh, allow back-to-back runs
@@ -60,40 +67,27 @@ create-tarball:
 	echo "$$TAR_FILE"    > $(_D_REL)/tarfile-name
 
 test-tarball:
-	@echo "TODO: testing tarball"
-
-# TAG_NAME=${LIB_NAME_FULL}-${{ github.ref_name }}
-#	echo "TAR_FILE=${TAR_FILE}"       >> ${GITHUB_OUTPUT}
-#	echo "LIB_VERSION=${LIB_VERSION}" >> ${GITHUB_OUTPUT}
-#	echo "TAG_NAME=${TAG_NAME}"       >> ${GITHUB_OUTPUT}
-
-# Create the release tarball in _build folder.
-# Create 3 associated artifacts (files) to support
-# handoff to GitHub release.
-#
-release-tarball-old:
-	LIB_VERSION=v$$(cat version);\
-	LIB_NAME="ksl-bash-lib-$${LIB_VERSION}" ;\
-	D_REL=$(D_BLD)/release; \
-	D_REL_FILES=$(D_BLD)/release/version/$${LIB_NAME}; \
-	TAR_FILE=$${D_REL}/$${LIB_NAME}.tgz; \
-	mkdir -p $${D_REL_FILES} $${D_REL_FILES}/docs; \
-	cp -p $(D_LIB)/* $${D_REL_FILES}/; \
-	cp -p -r $(D_DOCS)/site/* $${D_REL_FILES}/docs/; \
-	tar -czf $${TAR_FILE} --directory=$${D_REL_FILES}/.. .; \
-	echo "$${TAR_FILE}"    > $${D_REL}/tarfile-name; \
-	echo "$${LIB_VERSION}" > $${D_REL}/lib-version; \
-	echo "$${LIB_NAME}"    > $${D_REL}/lib-name
-
-.PHONY: create-tarball
+	@echo "Testing tarball"
+	@$(D_SCP)/test-tarball.bash $(D_BLD) $$(cat $(_D_REL)/tarfile-name)
 
 release-clean:
 	rm -rf $(_D_REL)
 
+.PHONY: create-tarball bump-version \
+        update-changelog test-tarball \
+        release-major release-minor \
+        release-patch release-clean
+
+# ------------ Help Section ------------
+
 HELP_TXT += "\n\
-create-tarball, Creates a release tarball\n\
-release-clean,   Deletes release artifacts\n\
+create-tarball,   Creates a release tarball\n\
 update-changelog, Updates changelog\n\
+bump-version,     Update version file\n\
+release-major,    Runs makefile targets for a major release\n\
+release-minor,    Runs makefile targets for a minor release\n\
+release-patch,    Runs makefile targets for a patch release\n\
+release-clean,    Deletes release $(_D_REL) artifacts\n\
 "
 
 endif
