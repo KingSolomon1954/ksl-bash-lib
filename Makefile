@@ -23,7 +23,6 @@ D_ETC   := $(TOP)/etc
 D_BLD   := $(TOP)/_build
 D_MAK   := $(D_TOOLS)/submakes
 D_SCP   := $(D_TOOLS)/scripts
-D_CNTRS := $(D_TOOLS)/containers
 D_EXA   := $(D_ETC)/examples
 
 all: all-relay
